@@ -237,7 +237,7 @@ Mọi loại trên đều có thể xuất hiện trong file Excel, CSV, JSON, P
 
 **Quy ước.** Sinh bằng script có seed cố định (Faker, locale vi_VN) để tái lập; vài trăm đến vài nghìn document mỗi collection, trừ collection lớn. Mockup có đủ trường lồng nhau, mảng, kiểu BSON (ObjectId, ngày, số thập phân), chuỗi rỗng và null. Bộ file giả sinh bằng cùng script. Repo chỉ chứa mockup; dữ liệu masked của mentor lưu ngoài repo và không commit.
 
-## 10. Rủi ro, phụ thuộc và giả định cần xác nhận
+## 10. Rủi ro và phụ thuộc
 
 Bốn rủi ro mức cao là dữ liệu MongoDB và log object lồng nhau, nhiều định dạng file log và tài liệu (đọc rồi ghi lại dễ mất cấu trúc), nguy cơ lộ dữ liệu qua LLM hoặc tracing, và bỏ sót PII trong văn bản tiếng Việt.
 
@@ -258,19 +258,3 @@ Bốn rủi ro mức cao là dữ liệu MongoDB và log object lồng nhau, nhi
 | Log văn bản thuần (.log) không có tên trường, nhiều dạng dòng: chỉ dựa vào nội dung nên dễ sót hoặc che nhầm (IP, token, mã định danh)                                           | Trung bình | Quét từng dòng theo nội dung; mockup có nhiều dạng dòng log; đo recall và precision riêng cho log                                                                 | Sprint 1     |
 | Che làm hỏng log hoặc file: JSON không hợp lệ, mất khóa hay đổi kiểu cột nên không phân tích được nữa                                                                            | Trung bình | Che tại chỗ theo đường dẫn trường, giữ nguyên khóa và kiểu; kiểm tra JSON hợp lệ và mở lại được file sau khi che, trước khi mentor up lại lên S3                  | Sprint 1–2   |
 | Tích hợp phụ thuộc vào Trung                                                                                                                                                     | Thấp       | Tiến độ độc lập: ứng dụng chạy riêng, tích hợp là phần cộng thêm                                                                                                  | Sprint 1–2   |
-
-**Câu hỏi cần mentor xác nhận**
-
-| \#  | Câu hỏi                                                                                                                                                              | Trả lời |
-|-----|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
-| 1   | Phần vấn đề, người dùng và phạm vi (mục 1, 2, 4) em đã cập nhật theo góp ý (tool, API che, danh mục trường PII, che file bị đánh lỗi), anh xem đã đúng ý anh chưa ạ? |         |
-| 2   | Ba loại DB (MongoDB, PostgreSQL, MySQL) và phần xử lý file nên làm theo thứ tự ưu tiên nào ạ?                                                                        |         |
-| 3   | Các chỉ số và ngưỡng ở mục 5 anh thấy hợp lý chưa ạ?                                                                                                                 |         |
-| 4   | Kiến trúc sơ bộ (mục 6) có phù hợp với cách anh định dùng không ạ?                                                                                                   |         |
-| 5   | Các mức rubric (mục 7) anh xem có cao hay thấp quá không ạ?                                                                                                          |         |
-| 6   | Pair contract với Trung (mục 8) anh xem có ổn không ạ?                                                                                                               |         |
-| 7   | Anh gửi giúp em tài liệu quy chuẩn PII của ANBM để em đối chiếu danh sách loại PII ở mục 9 ạ? Số seri, IMEI, số khung, số máy xe có thuộc PII theo chuẩn đó không ạ? |         |
-| 8   | Bộ dữ liệu mockup em định dựng (mục 9) có sát với dữ liệu thật không, cần thêm loại nào không ạ?                                                                     |         |
-| 9   | File danh mục trường PII cần những thông tin nào để bên .NET dùng được làm allowlist khi export ạ?                                                                   |         |
-| 10  | Khi các hệ thống gọi API che trước khi lưu log, độ trễ tối đa chấp nhận được là bao nhiêu ms ạ?                                                                      |         |
-| 11  | Nếu API che lỗi hoặc quá thời gian thì hệ thống nên chặn lưu log hay vẫn lưu ạ?                                                                                      |         |
