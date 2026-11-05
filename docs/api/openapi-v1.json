@@ -1,0 +1,300 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "PII Masking API",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/health": {
+      "get": {
+        "summary": "Health",
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/mask/text": {
+      "post": {
+        "summary": "Mask",
+        "operationId": "mask_v1_mask_text_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MaskTextRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MaskTextResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MaskTextError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MaskTextError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "EntityOut": {
+        "properties": {
+          "type": {
+            "type": "string",
+            "title": "Type"
+          },
+          "start": {
+            "type": "integer",
+            "title": "Start",
+            "description": "Vị trí trên văn bản gốc"
+          },
+          "end": {
+            "type": "integer",
+            "title": "End"
+          }
+        },
+        "type": "object",
+        "required": [
+          "type",
+          "start",
+          "end"
+        ],
+        "title": "EntityOut"
+      },
+      "FieldError": {
+        "properties": {
+          "field": {
+            "type": "string",
+            "title": "Field"
+          },
+          "type": {
+            "type": "string",
+            "title": "Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "field",
+          "type"
+        ],
+        "title": "FieldError"
+      },
+      "HealthResponse": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "OK",
+              "ERROR"
+            ],
+            "title": "Status"
+          },
+          "maskerVersion": {
+            "type": "string",
+            "title": "Maskerversion"
+          },
+          "nerEnabled": {
+            "type": "boolean",
+            "title": "Nerenabled",
+            "description": "false nghĩa là chỉ có regex và từ điển, chưa che được họ tên và địa chỉ"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "maskerVersion",
+          "nerEnabled"
+        ],
+        "title": "HealthResponse"
+      },
+      "MaskTextError": {
+        "properties": {
+          "schemaVersion": {
+            "type": "integer",
+            "const": 1,
+            "title": "Schemaversion"
+          },
+          "requestId": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Requestid"
+          },
+          "maskerVersion": {
+            "type": "string",
+            "title": "Maskerversion"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ERROR",
+              "INVALID_REQUEST"
+            ],
+            "title": "Status"
+          },
+          "errors": {
+            "items": {
+              "$ref": "#/components/schemas/FieldError"
+            },
+            "type": "array",
+            "title": "Errors"
+          }
+        },
+        "type": "object",
+        "required": [
+          "schemaVersion",
+          "requestId",
+          "maskerVersion",
+          "status"
+        ],
+        "title": "MaskTextError",
+        "description": "Không có maskedText, requestId rỗng nếu yêu cầu không đọc được."
+      },
+      "MaskTextRequest": {
+        "properties": {
+          "schemaVersion": {
+            "type": "integer",
+            "const": 1,
+            "title": "Schemaversion"
+          },
+          "requestId": {
+            "type": "string",
+            "maxLength": 128,
+            "minLength": 1,
+            "title": "Requestid"
+          },
+          "context": {
+            "type": "string",
+            "enum": [
+              "faq",
+              "ocr",
+              "ticket",
+              "log"
+            ],
+            "title": "Context"
+          },
+          "locale": {
+            "type": "string",
+            "title": "Locale"
+          },
+          "text": {
+            "type": "string",
+            "title": "Text"
+          },
+          "keep": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Keep",
+            "description": "Các loại không che, ví dụ METER_ID"
+          }
+        },
+        "type": "object",
+        "required": [
+          "schemaVersion",
+          "requestId",
+          "context",
+          "locale",
+          "text"
+        ],
+        "title": "MaskTextRequest"
+      },
+      "MaskTextResponse": {
+        "properties": {
+          "schemaVersion": {
+            "type": "integer",
+            "const": 1,
+            "title": "Schemaversion"
+          },
+          "requestId": {
+            "type": "string",
+            "title": "Requestid"
+          },
+          "maskerVersion": {
+            "type": "string",
+            "title": "Maskerversion"
+          },
+          "status": {
+            "type": "string",
+            "const": "OK",
+            "title": "Status"
+          },
+          "maskedText": {
+            "type": "string",
+            "title": "Maskedtext"
+          },
+          "entities": {
+            "items": {
+              "$ref": "#/components/schemas/EntityOut"
+            },
+            "type": "array",
+            "title": "Entities"
+          }
+        },
+        "type": "object",
+        "required": [
+          "schemaVersion",
+          "requestId",
+          "maskerVersion",
+          "status",
+          "maskedText",
+          "entities"
+        ],
+        "title": "MaskTextResponse"
+      }
+    }
+  }
+}
