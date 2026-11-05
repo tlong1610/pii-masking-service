@@ -6,11 +6,12 @@ import pytest
 from bson import json_util
 from bson.decimal128 import Decimal128
 from bson.objectid import ObjectId
+from openpyxl import load_workbook
 
 from mockup.generate import build_collections, write_mockup
 from mockup.labels import PII_FIELDS, field_labels, field_paths
 
-SIZES = {"customers": 120, "battery_bills": 200, "tickets": 400, "devices": 40}
+SIZES = {"customers": 120, "battery_bills": 200, "tickets": 400, "devices": 40, "file_rows": 40, "log_lines": 40}
 
 
 @pytest.fixture(scope="module")
@@ -23,8 +24,13 @@ def test_same_seed_writes_identical_files(tmp_path):
         write_mockup(tmp_path / name / "data", tmp_path / name / "labels", seed=7, sizes=SIZES)
     files = sorted(path.relative_to(tmp_path / "a") for path in (tmp_path / "a").rglob("*") if path.is_file())
     assert files
+    # File .xlsx có dấu thời gian lúc ghi nên so theo ô.
     for file in files:
-        assert (tmp_path / "a" / file).read_bytes() == (tmp_path / "b" / file).read_bytes()
+        if file.suffix != ".xlsx":
+            assert (tmp_path / "a" / file).read_bytes() == (tmp_path / "b" / file).read_bytes()
+    first, second = (load_workbook(tmp_path / name / "data/files/excel/khach_hang.xlsx") for name in ("a", "b"))
+    for sheet in first.sheetnames:
+        assert list(first[sheet].values) == list(second[sheet].values)
 
 
 def test_different_seed_changes_values():
@@ -35,8 +41,9 @@ def test_different_seed_changes_values():
 
 def test_every_declared_label_exists_in_documents(mockup):
     collections, _ = mockup
-    for name, labels in PII_FIELDS.items():
-        paths = {path for doc in collections[name] for path in field_paths(doc)}
+    for name, docs in collections.items():
+        labels = PII_FIELDS[name]
+        paths = {path for doc in docs for path in field_paths(doc)}
         assert set(labels) <= paths
 
 

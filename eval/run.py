@@ -5,6 +5,7 @@ số đo tái lập được. Báo cáo ghi rõ nguồn dữ liệu là mockup.
 """
 
 import argparse
+import gzip
 import json
 import subprocess
 import sys
@@ -79,6 +80,34 @@ def evaluate_tickets(collections: dict, labels_dir: Path, pipeline: NERPipelines
     return score_spans([(item["labels"], found) for item, found in zip(spans, predictions, strict=True)]), elapsed
 
 
+def evaluate_logs(data_dir: Path, labels_dir: Path, pipeline: NERPipelines) -> tuple[dict, float, int]:
+    """Quét file .log và .gz theo từng dòng; dòng JSON cũng quét như văn bản vì chưa có bộ đọc log."""
+    spans = [item for item in _read_jsonl(labels_dir / "file_spans.jsonl") if "line" in item]
+    contents = {}
+    for file in sorted({item["file"] for item in spans}):
+        path = data_dir / "files" / file
+        raw = gzip.decompress(path.read_bytes()) if path.suffix == ".gz" else path.read_bytes()
+        contents[file] = raw.decode("utf-8").splitlines()
+
+    texts = [contents[item["file"]][item["line"] - 1] for item in spans]
+    started = time.perf_counter()
+    predictions = scan_texts(pipeline, texts)
+    elapsed = time.perf_counter() - started
+    result = score_spans([(item["labels"], found) for item, found in zip(spans, predictions, strict=True)])
+    return result, elapsed, len(texts)
+
+
+def evaluate_events(data_dir: Path, labels_dir: Path) -> dict:
+    """Log object quét qua cùng luồng theo trường; chưa tách chuỗi JSON lồng."""
+    events = _read_jsonl(data_dir / "files/log/events.jsonl")
+    gold = [
+        {**label, "key": f"app_events.{label['column']}"}
+        for label in _read_jsonl(labels_dir / "file_fields.jsonl")
+        if label["file"] == "log/events.jsonl"
+    ]
+    return score_fields(gold, scan_fields({"app_events": events}))
+
+
 def _commit() -> str:
     result = subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=_REPO, capture_output=True, text=True)
     return result.stdout.strip()
@@ -118,17 +147,21 @@ def build_report(data_dir: Path, labels_dir: Path) -> dict:
 
     fields, field_seconds = evaluate_fields(collections, labels_dir)
     tickets, ticket_seconds = evaluate_tickets(collections, labels_dir, pipeline)
+    logs, log_seconds, log_count = evaluate_logs(data_dir, labels_dir, pipeline)
+    events = evaluate_events(data_dir, labels_dir)
     documents = sum(len(docs) for docs in collections.values())
     return {
         "data_source": "mockup",
         "seed": DEFAULT_SEED,
         "commit": _commit(),
         "detector": "regex + quy tắc, GLiNER tắt",
-        "sections": {"mongo_fields": fields, "mongo_free_text": tickets},
+        "sections": {"mongo_fields": fields, "mongo_free_text": tickets, "log_lines": logs, "log_events": events},
+        "not_measured": "CSV, Excel, JSON, Parquet: chưa có bộ đọc file",
         "performance": {
             "documents": documents,
             "field_scan_seconds": round(field_seconds, 2),
             "text_records_per_second": round(len(collections["tickets"]) / ticket_seconds),
+            "log_lines_per_second": round(log_count / log_seconds),
         },
     }
 
@@ -145,6 +178,9 @@ def main() -> None:
     print(f"Nguồn: {report['data_source']}, bộ phát hiện: {report['detector']}, commit {report['commit']}")
     print_section("Theo trường (MongoDB)", report["sections"]["mongo_fields"])
     print_section("Văn bản tự do (tickets)", report["sections"]["mongo_free_text"])
+    print_section("Dòng log (.log, .gz)", report["sections"]["log_lines"])
+    print_section("Log object (events.jsonl)", report["sections"]["log_events"])
+    print(f"\nChưa đo: {report['not_measured']}")
     print(f"\nHiệu năng: {report['performance']}")
 
     if args.baseline.exists() and args.baseline.resolve() != args.out.resolve():

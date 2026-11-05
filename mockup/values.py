@@ -86,6 +86,21 @@ class FakeValues:
     def vin(self) -> str:
         return "DEMO" + "".join(self.rng.choice("ABCDEFGHJKLMNPRSTUVWXYZ0123456789") for _ in range(13))
 
+    def ip(self) -> str:
+        return f"10.{self.rng.randint(0, 255)}.{self.rng.randint(0, 255)}.{self.rng.randint(1, 254)}"
+
+    def session_id(self) -> str:
+        return "sess_" + self.hex_upper(24).lower()
+
+    def token(self) -> str:
+        return "tok_" + self.hex_upper(32).lower()
+
+    def password(self) -> str:
+        return "Demo" + self.hex_upper(6).lower() + "!"
+
+    def gps(self) -> str:
+        return f"{self.rng.uniform(8.5, 23.0):.5f},{self.rng.uniform(102.0, 109.5):.5f}"
+
     def object_id(self) -> ObjectId:
         return ObjectId(bytes(self.rng.getrandbits(8) for _ in range(12)))
 

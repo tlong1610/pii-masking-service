@@ -71,6 +71,17 @@ PII_FIELDS: dict[str, dict[str, dict]] = {
     },
     # Thiết bị không gắn với khách: Serial, Imei không phải dữ liệu cá nhân, giữ làm hard negative.
     "devices": {},
+    # Log object trong log/events.jsonl. payload là chuỗi JSON lồng.
+    "app_events": {
+        "actor.user.email": _pii("EMAIL", "HMAC"),
+        "actor.user.full_name": _pii("FULL_NAME", "MASK"),
+        "meta.ip": _pii("IP_ADDRESS", "HMAC"),
+        "meta.session": _pii("SESSION_ID", "HMAC"),
+        "payload": _pii("FREE_TEXT", "REDACT"),
+        "message": _pii("FREE_TEXT", "REDACT"),
+        "device.location.gps": _pii("GPS", "MASK"),
+        "context.request.headers.authorization": _pii("TOKEN", "MASK"),
+    },
 }
 
 
