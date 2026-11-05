@@ -254,7 +254,7 @@ def _spaced_phone(phone: str) -> str:
     return f"{phone[:4]} {phone[4:7]} {phone[7:]}"
 
 
-def _build_text(parts: list) -> tuple[str, list[dict]]:
+def build_text(parts: list) -> tuple[str, list[dict]]:
     """parts gồm chuỗi thường và cặp (loại PII, giá trị); trả văn bản và vị trí từng thực thể."""
     text, spans = "", []
     for part in parts:
@@ -292,7 +292,7 @@ def make_ticket(v: FakeValues, customer: dict, index: int) -> tuple[dict, list[d
         ["Xuất hóa đơn theo mã số thuế ", tax_code, " cho hợp đồng mới."],
         ["Hoàn tiền vào thẻ ", card, " trong 3 ngày làm việc."],
     ]
-    note, spans = _build_text(v.rng.choice(templates))
+    note, spans = build_text(v.rng.choice(templates))
     doc = {
         "_id": v.object_id(),
         "TicketNo": f"TK-{index:06d}",

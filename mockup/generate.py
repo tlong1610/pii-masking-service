@@ -1,4 +1,4 @@
-"""Sinh mockup MongoDB, nhãn chuẩn và danh mục chuẩn: python -m mockup.generate"""
+"""Sinh mockup MongoDB, bộ file, nhãn chuẩn và danh mục chuẩn: python -m mockup.generate"""
 
 import argparse
 import json
@@ -7,11 +7,19 @@ from pathlib import Path
 from bson import json_util
 
 from mockup.documents import make_bill, make_contract, make_customer, make_device, make_ticket
+from mockup.files import write_files
 from mockup.labels import catalog, field_labels
 from mockup.values import FakeValues
 
 DEFAULT_SEED = 20261105
-DEFAULT_SIZES = {"customers": 500, "battery_bills": 1000, "tickets": 450, "devices": 300}
+DEFAULT_SIZES = {
+    "customers": 500,
+    "battery_bills": 1000,
+    "tickets": 450,
+    "devices": 300,
+    "file_rows": 300,
+    "log_lines": 600,
+}
 
 _MOCKUP_DIR = Path(__file__).parent
 
@@ -53,6 +61,7 @@ def _write_jsonl(path: Path, lines: list[str]) -> None:
 
 def write_mockup(data_dir: Path, labels_dir: Path, seed: int = DEFAULT_SEED, sizes: dict | None = None) -> None:
     """Dữ liệu ghi vào data_dir (không commit); nhãn và danh mục không chứa giá trị, ghi vào labels_dir."""
+    sizes = {**DEFAULT_SIZES, **(sizes or {})}
     collections, text_spans = build_collections(seed, sizes)
 
     all_labels = []
@@ -71,6 +80,13 @@ def write_mockup(data_dir: Path, labels_dir: Path, seed: int = DEFAULT_SEED, siz
 
     _write_jsonl(labels_dir / "fields.jsonl", [json.dumps(item, ensure_ascii=False) for item in all_labels])
     _write_jsonl(labels_dir / "text_spans.jsonl", [json.dumps(item, ensure_ascii=False) for item in text_spans])
+
+    # Bộ sinh riêng để thêm file không làm đổi dữ liệu MongoDB.
+    file_fields, file_spans = write_files(
+        data_dir / "files", FakeValues(seed + 1), collections["customers"], sizes["file_rows"], sizes["log_lines"]
+    )
+    _write_jsonl(labels_dir / "file_fields.jsonl", [json.dumps(item, ensure_ascii=False) for item in file_fields])
+    _write_jsonl(labels_dir / "file_spans.jsonl", [json.dumps(item, ensure_ascii=False) for item in file_spans])
 
 
 def main() -> None:

@@ -1,7 +1,7 @@
 {
   "data_source": "mockup",
   "seed": 20261105,
-  "commit": "c7b71f0",
+  "commit": "f9d3fa8",
   "detector": "regex + quy tắc, GLiNER tắt",
   "sections": {
     "mongo_fields": {
@@ -156,11 +156,122 @@
           "recall": 1.0
         }
       }
+    },
+    "log_lines": {
+      "recall": 0.5432,
+      "precision": 0.7708,
+      "total": 1922,
+      "found": 1044,
+      "false_positives": 314,
+      "recall_nhay_cam": 0.0,
+      "by_type": {
+        "CCCD": {
+          "total": 288,
+          "found": 288,
+          "recall": 1.0
+        },
+        "EMAIL": {
+          "total": 310,
+          "found": 310,
+          "recall": 1.0
+        },
+        "FULL_NAME": {
+          "total": 158,
+          "found": 0,
+          "recall": 0.0
+        },
+        "GPS": {
+          "total": 150,
+          "found": 0,
+          "recall": 0.0
+        },
+        "IP_ADDRESS": {
+          "total": 130,
+          "found": 0,
+          "recall": 0.0
+        },
+        "PASSWORD": {
+          "total": 166,
+          "found": 0,
+          "recall": 0.0
+        },
+        "PHONE": {
+          "total": 446,
+          "found": 446,
+          "recall": 1.0
+        },
+        "SESSION_ID": {
+          "total": 130,
+          "found": 0,
+          "recall": 0.0
+        },
+        "TOKEN": {
+          "total": 144,
+          "found": 0,
+          "recall": 0.0
+        }
+      }
+    },
+    "log_events": {
+      "recall": 0.5,
+      "precision": 1.0,
+      "total": 8,
+      "found": 4,
+      "false_positives": 0,
+      "recall_nhay_cam": 0.0,
+      "by_type": {
+        "EMAIL": {
+          "total": 1,
+          "found": 1,
+          "recall": 1.0
+        },
+        "FREE_TEXT": {
+          "total": 2,
+          "found": 1,
+          "recall": 0.5
+        },
+        "FULL_NAME": {
+          "total": 1,
+          "found": 1,
+          "recall": 1.0
+        },
+        "GPS": {
+          "total": 1,
+          "found": 0,
+          "recall": 0.0
+        },
+        "IP_ADDRESS": {
+          "total": 1,
+          "found": 1,
+          "recall": 1.0
+        },
+        "SESSION_ID": {
+          "total": 1,
+          "found": 0,
+          "recall": 0.0
+        },
+        "TOKEN": {
+          "total": 1,
+          "found": 0,
+          "recall": 0.0
+        }
+      },
+      "fields": 14,
+      "undecided": 6,
+      "missed": [
+        "app_events.context.request.headers.authorization",
+        "app_events.device.location.gps",
+        "app_events.meta.session",
+        "app_events.payload"
+      ],
+      "false_positive_fields": []
     }
   },
+  "not_measured": "CSV, Excel, JSON, Parquet: chưa có bộ đọc file",
   "performance": {
     "documents": 2750,
-    "field_scan_seconds": 0.25,
-    "text_records_per_second": 60973
+    "field_scan_seconds": 0.21,
+    "text_records_per_second": 70602,
+    "log_lines_per_second": 56074
   }
 }
