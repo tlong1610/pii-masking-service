@@ -1,7 +1,7 @@
 # pii-masking-service
 
 Service phát hiện và che PII cho dữ liệu báo cáo và log của các hệ thống (Cặp A – Đoàn Tuấn Long).
-Kế hoạch và phạm vi: [docs/gate-0/gate-0.md](docs/gate-0/gate-0.md).
+Kế hoạch và phạm vi: [docs/gate-0/gate-0.md](docs/gate-0/gate-0.md). Quy trình làm MVP: [docs/quy-trinh-mvp.md](docs/quy-trinh-mvp.md).
 
 Sản phẩm gồm hai đầu ra dùng chung một lõi `piimask`:
 
