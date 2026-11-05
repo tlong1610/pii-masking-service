@@ -10,6 +10,7 @@ venv/
 .vscode/
 .idea/
 .DS_Store
+CLAUDE.md
 
 # Không bao giờ commit dữ liệu thật hay dữ liệu masked; mockup sinh lại bằng script.
 data/
