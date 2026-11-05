@@ -1,0 +1,18 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.env
+.env.*
+.pytest_cache/
+.ruff_cache/
+.vscode/
+.idea/
+.DS_Store
+
+# Không bao giờ commit dữ liệu thật hay dữ liệu masked; mockup sinh lại bằng script.
+data/
+*.parquet
+*.xlsx
+*.gz

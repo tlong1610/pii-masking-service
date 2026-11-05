@@ -1,0 +1,11 @@
+# Lõi piimask
+pydantic>=2.10.0
+pydantic-settings>=2.7.0
+flashtext>=2.7
+
+# Bộ đọc cơ sở dữ liệu
+pymongo>=4.8.0
+psycopg[binary]>=3.2.0
+
+# Tầng NER cho văn bản tự do (tùy chọn, bật bằng ENABLE_NER=true)
+# gliner>=0.2.0
