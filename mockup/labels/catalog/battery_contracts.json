@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "engine": "mongodb",
+  "collection": "battery_contracts",
+  "fields": [
+    {
+      "path": "Address",
+      "group": "co_ban",
+      "pii_type": "ADDRESS",
+      "action": "MASK"
+    },
+    {
+      "path": "Batteries[].Serial",
+      "group": "co_ban",
+      "pii_type": "VIN",
+      "action": "HMAC",
+      "when": {
+        "field": "EnterpriseCustomer",
+        "equals": false
+      },
+      "decision": "theo_ngu_canh"
+    },
+    {
+      "path": "Batteries[].Stock",
+      "group": "co_ban",
+      "pii_type": "VIN",
+      "action": "HMAC",
+      "when": {
+        "field": "EnterpriseCustomer",
+        "equals": false
+      },
+      "decision": "theo_ngu_canh"
+    },
+    {
+      "path": "CreatedBy",
+      "group": "co_ban",
+      "pii_type": "EMAIL",
+      "action": "HMAC"
+    },
+    {
+      "path": "CustomerId",
+      "group": "co_ban",
+      "pii_type": "CUSTOMER_ID",
+      "action": "HMAC",
+      "when": {
+        "field": "EnterpriseCustomer",
+        "equals": false
+      }
+    },
+    {
+      "path": "Email",
+      "group": "co_ban",
+      "pii_type": "EMAIL",
+      "action": "HMAC"
+    },
+    {
+      "path": "FullName",
+      "group": "co_ban",
+      "pii_type": "FULL_NAME",
+      "action": "MASK"
+    },
+    {
+      "path": "IdNumber",
+      "group": "co_ban",
+      "pii_type": "CCCD",
+      "action": "HMAC"
+    },
+    {
+      "path": "ModifiedBy",
+      "group": "co_ban",
+      "pii_type": "EMAIL",
+      "action": "HMAC"
+    },
+    {
+      "path": "PhoneNumber",
+      "group": "co_ban",
+      "pii_type": "PHONE",
+      "action": "PARTIAL"
+    },
+    {
+      "path": "SapCustomerId",
+      "group": "co_ban",
+      "pii_type": "CUSTOMER_ID",
+      "action": "HMAC",
+      "when": {
+        "field": "EnterpriseCustomer",
+        "equals": false
+      }
+    },
+    {
+      "path": "TaxRegistrationName",
+      "group": "co_ban",
+      "pii_type": "FULL_NAME",
+      "action": "MASK",
+      "when": {
+        "field": "EnterpriseCustomer",
+        "equals": false
+      }
+    },
+    {
+      "path": "TaxRegistrationNumber",
+      "group": "co_ban",
+      "pii_type": "TAX_CODE",
+      "action": "MASK",
+      "when": {
+        "field": "EnterpriseCustomer",
+        "equals": false
+      }
+    },
+    {
+      "path": "VehicleId",
+      "group": "co_ban",
+      "pii_type": "VIN",
+      "action": "HMAC",
+      "when": {
+        "field": "EnterpriseCustomer",
+        "equals": false
+      },
+      "decision": "theo_ngu_canh"
+    }
+  ]
+}

@@ -15,6 +15,13 @@ class DataClassification(StrEnum):
     NOT_PERSONAL_DATA = "NOT_PERSONAL_DATA"
 
 
+class LegalGroup(StrEnum):
+    """Nhóm theo pháp luật: cơ bản (Điều 3) và nhạy cảm (Điều 4) của Nghị định 356/2025/NĐ-CP."""
+
+    CO_BAN = "co_ban"
+    NHAY_CAM = "nhay_cam"
+
+
 class PIIType(StrEnum):
     CCCD = "CCCD"
     PHONE = "PHONE"
@@ -77,6 +84,17 @@ PII_TAXONOMY: dict[str, dict[str, Any]] = {
     }
 }
 
+
+
+# CCCD là cơ bản, chỉ ảnh thẻ căn cước mới là nhạy cảm. Loại không có ở đây được coi là cơ bản (Điều 3 k11).
+_NHAY_CAM_TYPES = frozenset({"BANK_ACCOUNT", "CREDIT_CARD", "PASSWORD", "TOKEN", "GPS"})
+
+
+def legal_group(pii_type: str | None) -> str | None:
+    """Nhóm pháp lý của một loại PII; None nếu không phải dữ liệu cá nhân."""
+    if pii_type is None:
+        return None
+    return (LegalGroup.NHAY_CAM if pii_type in _NHAY_CAM_TYPES else LegalGroup.CO_BAN).value
 
 
 # Closed label set the LLM tier may answer with (prompt + output validation share it).
