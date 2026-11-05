@@ -38,7 +38,7 @@ class NERPipelines:
             for pii_type, keywords in dict_configs.items():
                 self.dict_scanner.load_dictionary(pii_type, keywords)
 
-    def _tiers(self) -> list:
+    def tiers(self) -> list:
         tiers: list = [self.regex_scanner, self.dict_scanner]
         if self.ml_scanner is not None:
             tiers.append(self.ml_scanner)
@@ -49,7 +49,7 @@ class NERPipelines:
         if not text:
             return text, []
         found: list[EntityMatch] = []
-        for scanner in self._tiers():
+        for scanner in self.tiers():
             matches = scanner.scan_text(text)
             found.extend(matches)
             text = TextRedactor.redact(text, matches)
