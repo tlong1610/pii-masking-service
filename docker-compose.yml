@@ -1,0 +1,23 @@
+# MongoDB mockup và service che PII. Chỉ dùng cho dữ liệu giả, cổng chỉ mở trên máy này.
+services:
+  mongo:
+    image: mongo:7.0
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MOCKUP_MONGO_ROOT_USER:-admin}
+      MONGO_INITDB_ROOT_PASSWORD: ${MOCKUP_MONGO_ROOT_PASSWORD:-admin}
+      MOCKUP_MONGO_DB: ${MOCKUP_MONGO_DB:-mockup}
+      MOCKUP_MONGO_READONLY_USER: ${MOCKUP_MONGO_READONLY_USER:-mockup_ro}
+      MOCKUP_MONGO_READONLY_PASSWORD: ${MOCKUP_MONGO_READONLY_PASSWORD:-mockup_ro}
+    ports:
+      - "127.0.0.1:27017:27017"
+    volumes:
+      - mongo-data:/data/db
+      - ./docker/mongo-init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  mongo-data:
