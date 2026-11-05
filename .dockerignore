@@ -1,0 +1,8 @@
+*
+!requirements.txt
+!requirements-dev.txt
+!piimask
+!api
+!tool
+!mockup
+**/__pycache__
