@@ -6,6 +6,7 @@ and constructs DatabaseProfile for AI scanning and verification.
 
 import logging
 import os
+from collections.abc import Iterator
 from datetime import date, datetime
 from pathlib import Path
 from typing import Any
@@ -355,6 +356,14 @@ class MongoConnector:
                     "system_recommendation": col.system_recommendation
                 })
         return tasks
+
+    def iter_documents(self, collection_name: str, batch_size: int = 1000) -> Iterator[dict[str, Any]]:
+        """Đọc từng document theo lô của server, không nạp cả collection vào bộ nhớ."""
+        client = self._open_client()
+        try:
+            yield from client[self.database_name][collection_name].find({}).batch_size(batch_size)
+        finally:
+            self._release_client(client)
 
     def export_profile_to_json(self, output_path: str, sample_size: int = 5):
         """

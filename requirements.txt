@@ -7,5 +7,12 @@ flashtext>=2.7
 pymongo>=4.8.0
 psycopg[binary]>=3.2.0
 
+# Xuất dữ liệu đã che
+openpyxl>=3.1.0
+
+# API che PII
+fastapi>=0.115.0
+uvicorn>=0.32.0
+
 # Tầng NER cho văn bản tự do (tùy chọn, bật bằng ENABLE_NER=true)
 # gliner>=0.2.0
