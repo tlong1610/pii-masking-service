@@ -1,0 +1,450 @@
+{"collection": "tickets", "id": "TK-000000", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 19}, {"type": "PHONE", "start": 30, "end": 42}]}
+{"collection": "tickets", "id": "TK-000001", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 42}]}
+{"collection": "tickets", "id": "TK-000002", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 12}, {"type": "PHONE", "start": 23, "end": 33}]}
+{"collection": "tickets", "id": "TK-000003", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 41}]}
+{"collection": "tickets", "id": "TK-000004", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 40}]}
+{"collection": "tickets", "id": "TK-000005", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 39}, {"type": "BANK_ACCOUNT", "start": 65, "end": 75}]}
+{"collection": "tickets", "id": "TK-000006", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000007", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 4, "end": 12}, {"type": "ADDRESS", "start": 15, "end": 102}]}
+{"collection": "tickets", "id": "TK-000008", "path": "Note", "labels": [{"type": "DOB", "start": 16, "end": 26}]}
+{"collection": "tickets", "id": "TK-000009", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 18}, {"type": "PHONE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000010", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 35}, {"type": "BANK_ACCOUNT", "start": 61, "end": 71}]}
+{"collection": "tickets", "id": "TK-000011", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000012", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 38}, {"type": "BANK_ACCOUNT", "start": 64, "end": 76}]}
+{"collection": "tickets", "id": "TK-000013", "path": "Note", "labels": [{"type": "DOB", "start": 16, "end": 26}]}
+{"collection": "tickets", "id": "TK-000014", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000015", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 22}]}
+{"collection": "tickets", "id": "TK-000016", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000017", "path": "Note", "labels": [{"type": "DOB", "start": 16, "end": 26}]}
+{"collection": "tickets", "id": "TK-000018", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000019", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000020", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000021", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000022", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000023", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 20}]}
+{"collection": "tickets", "id": "TK-000024", "path": "Note", "labels": [{"type": "DOB", "start": 16, "end": 26}]}
+{"collection": "tickets", "id": "TK-000025", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000026", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 4, "end": 13}, {"type": "ADDRESS", "start": 16, "end": 80}]}
+{"collection": "tickets", "id": "TK-000027", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 36}, {"type": "BANK_ACCOUNT", "start": 62, "end": 74}]}
+{"collection": "tickets", "id": "TK-000028", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 4, "end": 12}, {"type": "ADDRESS", "start": 15, "end": 97}]}
+{"collection": "tickets", "id": "TK-000029", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 15}, {"type": "PHONE", "start": 26, "end": 36}]}
+{"collection": "tickets", "id": "TK-000030", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 17}, {"type": "PHONE", "start": 28, "end": 38}]}
+{"collection": "tickets", "id": "TK-000031", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000032", "path": "Note", "labels": [{"type": "DOB", "start": 16, "end": 26}]}
+{"collection": "tickets", "id": "TK-000033", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 4, "end": 18}, {"type": "ADDRESS", "start": 21, "end": 76}]}
+{"collection": "tickets", "id": "TK-000034", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 20}]}
+{"collection": "tickets", "id": "TK-000035", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 33}, {"type": "BANK_ACCOUNT", "start": 59, "end": 69}]}
+{"collection": "tickets", "id": "TK-000036", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 4, "end": 19}, {"type": "ADDRESS", "start": 22, "end": 96}]}
+{"collection": "tickets", "id": "TK-000037", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000038", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000039", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 22}]}
+{"collection": "tickets", "id": "TK-000040", "path": "Note", "labels": [{"type": "DOB", "start": 16, "end": 26}]}
+{"collection": "tickets", "id": "TK-000041", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 40}, {"type": "BANK_ACCOUNT", "start": 66, "end": 76}]}
+{"collection": "tickets", "id": "TK-000042", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000043", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 40}, {"type": "BANK_ACCOUNT", "start": 66, "end": 78}]}
+{"collection": "tickets", "id": "TK-000044", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 14}, {"type": "PHONE", "start": 25, "end": 35}]}
+{"collection": "tickets", "id": "TK-000045", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 20}]}
+{"collection": "tickets", "id": "TK-000046", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 33}, {"type": "BANK_ACCOUNT", "start": 59, "end": 71}]}
+{"collection": "tickets", "id": "TK-000047", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 15}, {"type": "PHONE", "start": 26, "end": 36}]}
+{"collection": "tickets", "id": "TK-000048", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 41}]}
+{"collection": "tickets", "id": "TK-000049", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 21}, {"type": "PHONE", "start": 32, "end": 42}]}
+{"collection": "tickets", "id": "TK-000050", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 20}, {"type": "PHONE", "start": 31, "end": 41}]}
+{"collection": "tickets", "id": "TK-000051", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 22}]}
+{"collection": "tickets", "id": "TK-000052", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 34}, {"type": "BANK_ACCOUNT", "start": 60, "end": 72}]}
+{"collection": "tickets", "id": "TK-000053", "path": "Note", "labels": [{"type": "DOB", "start": 16, "end": 26}]}
+{"collection": "tickets", "id": "TK-000054", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000055", "path": "Note", "labels": [{"type": "DOB", "start": 16, "end": 26}]}
+{"collection": "tickets", "id": "TK-000056", "path": "Note", "labels": [{"type": "DOB", "start": 16, "end": 26}]}
+{"collection": "tickets", "id": "TK-000057", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 17}, {"type": "PHONE", "start": 28, "end": 38}]}
+{"collection": "tickets", "id": "TK-000058", "path": "Note", "labels": [{"type": "DOB", "start": 16, "end": 26}]}
+{"collection": "tickets", "id": "TK-000059", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 40}]}
+{"collection": "tickets", "id": "TK-000060", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000061", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 20}]}
+{"collection": "tickets", "id": "TK-000062", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 39}]}
+{"collection": "tickets", "id": "TK-000063", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000064", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 18}, {"type": "PHONE", "start": 29, "end": 41}]}
+{"collection": "tickets", "id": "TK-000065", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 45}]}
+{"collection": "tickets", "id": "TK-000066", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 15}, {"type": "PHONE", "start": 26, "end": 36}]}
+{"collection": "tickets", "id": "TK-000067", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 41}]}
+{"collection": "tickets", "id": "TK-000068", "path": "Note", "labels": [{"type": "DOB", "start": 16, "end": 26}]}
+{"collection": "tickets", "id": "TK-000069", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000070", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000071", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 4, "end": 16}, {"type": "ADDRESS", "start": 19, "end": 80}]}
+{"collection": "tickets", "id": "TK-000072", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 4, "end": 11}, {"type": "ADDRESS", "start": 14, "end": 80}]}
+{"collection": "tickets", "id": "TK-000073", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000074", "path": "Note", "labels": [{"type": "DOB", "start": 16, "end": 26}]}
+{"collection": "tickets", "id": "TK-000075", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 20}]}
+{"collection": "tickets", "id": "TK-000076", "path": "Note", "labels": [{"type": "DOB", "start": 16, "end": 26}]}
+{"collection": "tickets", "id": "TK-000077", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 44}]}
+{"collection": "tickets", "id": "TK-000078", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000079", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 42}]}
+{"collection": "tickets", "id": "TK-000080", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 20}]}
+{"collection": "tickets", "id": "TK-000081", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000082", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000083", "path": "Note", "labels": [{"type": "DOB", "start": 16, "end": 26}]}
+{"collection": "tickets", "id": "TK-000084", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000085", "path": "Note", "labels": [{"type": "DOB", "start": 16, "end": 26}]}
+{"collection": "tickets", "id": "TK-000086", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 20}]}
+{"collection": "tickets", "id": "TK-000087", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000088", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 36}, {"type": "BANK_ACCOUNT", "start": 62, "end": 76}]}
+{"collection": "tickets", "id": "TK-000089", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 4, "end": 12}, {"type": "ADDRESS", "start": 15, "end": 64}]}
+{"collection": "tickets", "id": "TK-000090", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000091", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000092", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 4, "end": 16}, {"type": "ADDRESS", "start": 19, "end": 53}]}
+{"collection": "tickets", "id": "TK-000093", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 4, "end": 22}, {"type": "ADDRESS", "start": 25, "end": 60}]}
+{"collection": "tickets", "id": "TK-000094", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 20}, {"type": "PHONE", "start": 31, "end": 43}]}
+{"collection": "tickets", "id": "TK-000095", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 4, "end": 13}, {"type": "ADDRESS", "start": 16, "end": 75}]}
+{"collection": "tickets", "id": "TK-000096", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 18}, {"type": "PHONE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000097", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 20}]}
+{"collection": "tickets", "id": "TK-000098", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 4, "end": 16}, {"type": "ADDRESS", "start": 19, "end": 74}]}
+{"collection": "tickets", "id": "TK-000099", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 4, "end": 16}, {"type": "ADDRESS", "start": 19, "end": 74}]}
+{"collection": "tickets", "id": "TK-000100", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000101", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 43}]}
+{"collection": "tickets", "id": "TK-000102", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 4, "end": 17}, {"type": "ADDRESS", "start": 20, "end": 79}]}
+{"collection": "tickets", "id": "TK-000103", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000104", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000105", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000106", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 19}, {"type": "PHONE", "start": 30, "end": 42}]}
+{"collection": "tickets", "id": "TK-000107", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 21}, {"type": "PHONE", "start": 32, "end": 42}]}
+{"collection": "tickets", "id": "TK-000108", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 41}, {"type": "BANK_ACCOUNT", "start": 67, "end": 81}]}
+{"collection": "tickets", "id": "TK-000109", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 44}]}
+{"collection": "tickets", "id": "TK-000110", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000111", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000112", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 18}, {"type": "PHONE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000113", "path": "Note", "labels": [{"type": "DOB", "start": 16, "end": 26}]}
+{"collection": "tickets", "id": "TK-000114", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 44}]}
+{"collection": "tickets", "id": "TK-000115", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 20}]}
+{"collection": "tickets", "id": "TK-000116", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000117", "path": "Note", "labels": [{"type": "DOB", "start": 16, "end": 26}]}
+{"collection": "tickets", "id": "TK-000118", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000119", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000120", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 40}, {"type": "BANK_ACCOUNT", "start": 66, "end": 78}]}
+{"collection": "tickets", "id": "TK-000121", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 35}, {"type": "BANK_ACCOUNT", "start": 61, "end": 71}]}
+{"collection": "tickets", "id": "TK-000122", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000123", "path": "Note", "labels": [{"type": "DOB", "start": 16, "end": 26}]}
+{"collection": "tickets", "id": "TK-000124", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 4, "end": 17}, {"type": "ADDRESS", "start": 20, "end": 95}]}
+{"collection": "tickets", "id": "TK-000125", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 4, "end": 14}, {"type": "ADDRESS", "start": 17, "end": 74}]}
+{"collection": "tickets", "id": "TK-000126", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 22}]}
+{"collection": "tickets", "id": "TK-000127", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 4, "end": 12}, {"type": "ADDRESS", "start": 15, "end": 85}]}
+{"collection": "tickets", "id": "TK-000128", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000129", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000130", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 37}, {"type": "BANK_ACCOUNT", "start": 63, "end": 75}]}
+{"collection": "tickets", "id": "TK-000131", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 43}]}
+{"collection": "tickets", "id": "TK-000132", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000133", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 20}]}
+{"collection": "tickets", "id": "TK-000134", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 39}, {"type": "BANK_ACCOUNT", "start": 65, "end": 75}]}
+{"collection": "tickets", "id": "TK-000135", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000136", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 4, "end": 19}, {"type": "ADDRESS", "start": 22, "end": 93}]}
+{"collection": "tickets", "id": "TK-000137", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000138", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 36}, {"type": "BANK_ACCOUNT", "start": 62, "end": 72}]}
+{"collection": "tickets", "id": "TK-000139", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000140", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000141", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 39}]}
+{"collection": "tickets", "id": "TK-000142", "path": "Note", "labels": [{"type": "DOB", "start": 16, "end": 26}]}
+{"collection": "tickets", "id": "TK-000143", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 4, "end": 17}, {"type": "ADDRESS", "start": 20, "end": 89}]}
+{"collection": "tickets", "id": "TK-000144", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 20}]}
+{"collection": "tickets", "id": "TK-000145", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000146", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000147", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 20}]}
+{"collection": "tickets", "id": "TK-000148", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 44}]}
+{"collection": "tickets", "id": "TK-000149", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000150", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000151", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 4, "end": 12}, {"type": "ADDRESS", "start": 15, "end": 76}]}
+{"collection": "tickets", "id": "TK-000152", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 20}]}
+{"collection": "tickets", "id": "TK-000153", "path": "Note", "labels": [{"type": "DOB", "start": 16, "end": 26}]}
+{"collection": "tickets", "id": "TK-000154", "path": "Note", "labels": [{"type": "DOB", "start": 16, "end": 26}]}
+{"collection": "tickets", "id": "TK-000155", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000156", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 39}, {"type": "BANK_ACCOUNT", "start": 65, "end": 75}]}
+{"collection": "tickets", "id": "TK-000157", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000158", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 4, "end": 21}, {"type": "ADDRESS", "start": 24, "end": 103}]}
+{"collection": "tickets", "id": "TK-000159", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 4, "end": 17}, {"type": "ADDRESS", "start": 20, "end": 53}]}
+{"collection": "tickets", "id": "TK-000160", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 36}, {"type": "BANK_ACCOUNT", "start": 62, "end": 72}]}
+{"collection": "tickets", "id": "TK-000161", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 19}, {"type": "PHONE", "start": 30, "end": 40}]}
+{"collection": "tickets", "id": "TK-000162", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000163", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000164", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 4, "end": 11}, {"type": "ADDRESS", "start": 14, "end": 44}]}
+{"collection": "tickets", "id": "TK-000165", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000166", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000167", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000168", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 4, "end": 18}, {"type": "ADDRESS", "start": 21, "end": 52}]}
+{"collection": "tickets", "id": "TK-000169", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000170", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 43}]}
+{"collection": "tickets", "id": "TK-000171", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 38}, {"type": "BANK_ACCOUNT", "start": 64, "end": 78}]}
+{"collection": "tickets", "id": "TK-000172", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 44}]}
+{"collection": "tickets", "id": "TK-000173", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000174", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 39}, {"type": "BANK_ACCOUNT", "start": 65, "end": 75}]}
+{"collection": "tickets", "id": "TK-000175", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000176", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000177", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 17}, {"type": "PHONE", "start": 28, "end": 38}]}
+{"collection": "tickets", "id": "TK-000178", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000179", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000180", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000181", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000182", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 33}, {"type": "BANK_ACCOUNT", "start": 59, "end": 71}]}
+{"collection": "tickets", "id": "TK-000183", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 20}]}
+{"collection": "tickets", "id": "TK-000184", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000185", "path": "Note", "labels": [{"type": "DOB", "start": 16, "end": 26}]}
+{"collection": "tickets", "id": "TK-000186", "path": "Note", "labels": [{"type": "DOB", "start": 16, "end": 26}]}
+{"collection": "tickets", "id": "TK-000187", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 4, "end": 16}, {"type": "ADDRESS", "start": 19, "end": 53}]}
+{"collection": "tickets", "id": "TK-000188", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000189", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000190", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000191", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 33}, {"type": "BANK_ACCOUNT", "start": 59, "end": 69}]}
+{"collection": "tickets", "id": "TK-000192", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000193", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 20}, {"type": "PHONE", "start": 31, "end": 43}]}
+{"collection": "tickets", "id": "TK-000194", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000195", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 20}]}
+{"collection": "tickets", "id": "TK-000196", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000197", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000198", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 33}, {"type": "BANK_ACCOUNT", "start": 59, "end": 73}]}
+{"collection": "tickets", "id": "TK-000199", "path": "Note", "labels": [{"type": "DOB", "start": 16, "end": 26}]}
+{"collection": "tickets", "id": "TK-000200", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000201", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 18}, {"type": "PHONE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000202", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 4, "end": 17}, {"type": "ADDRESS", "start": 20, "end": 88}]}
+{"collection": "tickets", "id": "TK-000203", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 4, "end": 16}, {"type": "ADDRESS", "start": 19, "end": 72}]}
+{"collection": "tickets", "id": "TK-000204", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 43}]}
+{"collection": "tickets", "id": "TK-000205", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000206", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 4, "end": 14}, {"type": "ADDRESS", "start": 17, "end": 83}]}
+{"collection": "tickets", "id": "TK-000207", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000208", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000209", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 35}, {"type": "BANK_ACCOUNT", "start": 61, "end": 71}]}
+{"collection": "tickets", "id": "TK-000210", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 22}]}
+{"collection": "tickets", "id": "TK-000211", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 37}, {"type": "BANK_ACCOUNT", "start": 63, "end": 73}]}
+{"collection": "tickets", "id": "TK-000212", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 20}]}
+{"collection": "tickets", "id": "TK-000213", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 22}, {"type": "PHONE", "start": 33, "end": 43}]}
+{"collection": "tickets", "id": "TK-000214", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 37}, {"type": "BANK_ACCOUNT", "start": 63, "end": 75}]}
+{"collection": "tickets", "id": "TK-000215", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 13}, {"type": "PHONE", "start": 24, "end": 34}]}
+{"collection": "tickets", "id": "TK-000216", "path": "Note", "labels": [{"type": "DOB", "start": 16, "end": 26}]}
+{"collection": "tickets", "id": "TK-000217", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 20}]}
+{"collection": "tickets", "id": "TK-000218", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 43}]}
+{"collection": "tickets", "id": "TK-000219", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 41}, {"type": "BANK_ACCOUNT", "start": 67, "end": 77}]}
+{"collection": "tickets", "id": "TK-000220", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 4, "end": 21}, {"type": "ADDRESS", "start": 24, "end": 86}]}
+{"collection": "tickets", "id": "TK-000221", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000222", "path": "Note", "labels": [{"type": "DOB", "start": 16, "end": 26}]}
+{"collection": "tickets", "id": "TK-000223", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 38}, {"type": "BANK_ACCOUNT", "start": 64, "end": 74}]}
+{"collection": "tickets", "id": "TK-000224", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 42}]}
+{"collection": "tickets", "id": "TK-000225", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000226", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000227", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 35}, {"type": "BANK_ACCOUNT", "start": 61, "end": 71}]}
+{"collection": "tickets", "id": "TK-000228", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000229", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 42}]}
+{"collection": "tickets", "id": "TK-000230", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 4, "end": 16}, {"type": "ADDRESS", "start": 19, "end": 92}]}
+{"collection": "tickets", "id": "TK-000231", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 45}]}
+{"collection": "tickets", "id": "TK-000232", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000233", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 41}]}
+{"collection": "tickets", "id": "TK-000234", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 20}]}
+{"collection": "tickets", "id": "TK-000235", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 35}, {"type": "BANK_ACCOUNT", "start": 61, "end": 73}]}
+{"collection": "tickets", "id": "TK-000236", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 18}, {"type": "PHONE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000237", "path": "Note", "labels": [{"type": "DOB", "start": 16, "end": 26}]}
+{"collection": "tickets", "id": "TK-000238", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000239", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000240", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 36}, {"type": "BANK_ACCOUNT", "start": 62, "end": 72}]}
+{"collection": "tickets", "id": "TK-000241", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 45}]}
+{"collection": "tickets", "id": "TK-000242", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000243", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 35}, {"type": "BANK_ACCOUNT", "start": 61, "end": 75}]}
+{"collection": "tickets", "id": "TK-000244", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 45}]}
+{"collection": "tickets", "id": "TK-000245", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 42}]}
+{"collection": "tickets", "id": "TK-000246", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000247", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000248", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 18}, {"type": "PHONE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000249", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000250", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000251", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000252", "path": "Note", "labels": [{"type": "DOB", "start": 16, "end": 26}]}
+{"collection": "tickets", "id": "TK-000253", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 39}]}
+{"collection": "tickets", "id": "TK-000254", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 46}]}
+{"collection": "tickets", "id": "TK-000255", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 43}]}
+{"collection": "tickets", "id": "TK-000256", "path": "Note", "labels": [{"type": "DOB", "start": 16, "end": 26}]}
+{"collection": "tickets", "id": "TK-000257", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000258", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000259", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 20}]}
+{"collection": "tickets", "id": "TK-000260", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 20}]}
+{"collection": "tickets", "id": "TK-000261", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000262", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 20}]}
+{"collection": "tickets", "id": "TK-000263", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000264", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 41}]}
+{"collection": "tickets", "id": "TK-000265", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 4, "end": 19}, {"type": "ADDRESS", "start": 22, "end": 83}]}
+{"collection": "tickets", "id": "TK-000266", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 41}, {"type": "BANK_ACCOUNT", "start": 67, "end": 81}]}
+{"collection": "tickets", "id": "TK-000267", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 20}]}
+{"collection": "tickets", "id": "TK-000268", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 20}]}
+{"collection": "tickets", "id": "TK-000269", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 19}, {"type": "PHONE", "start": 30, "end": 40}]}
+{"collection": "tickets", "id": "TK-000270", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000271", "path": "Note", "labels": [{"type": "DOB", "start": 16, "end": 26}]}
+{"collection": "tickets", "id": "TK-000272", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 44}]}
+{"collection": "tickets", "id": "TK-000273", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000274", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 20}, {"type": "PHONE", "start": 31, "end": 41}]}
+{"collection": "tickets", "id": "TK-000275", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 15}, {"type": "PHONE", "start": 26, "end": 36}]}
+{"collection": "tickets", "id": "TK-000276", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000277", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 4, "end": 13}, {"type": "ADDRESS", "start": 16, "end": 47}]}
+{"collection": "tickets", "id": "TK-000278", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000279", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000280", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 46}]}
+{"collection": "tickets", "id": "TK-000281", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000282", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 36}, {"type": "BANK_ACCOUNT", "start": 62, "end": 76}]}
+{"collection": "tickets", "id": "TK-000283", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 22}, {"type": "PHONE", "start": 33, "end": 43}]}
+{"collection": "tickets", "id": "TK-000284", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000285", "path": "Note", "labels": [{"type": "DOB", "start": 16, "end": 26}]}
+{"collection": "tickets", "id": "TK-000286", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 4, "end": 19}, {"type": "ADDRESS", "start": 22, "end": 53}]}
+{"collection": "tickets", "id": "TK-000287", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 20}, {"type": "PHONE", "start": 31, "end": 41}]}
+{"collection": "tickets", "id": "TK-000288", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 4, "end": 15}, {"type": "ADDRESS", "start": 18, "end": 50}]}
+{"collection": "tickets", "id": "TK-000289", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 17}, {"type": "PHONE", "start": 28, "end": 38}]}
+{"collection": "tickets", "id": "TK-000290", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 20}]}
+{"collection": "tickets", "id": "TK-000291", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000292", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 16}, {"type": "PHONE", "start": 27, "end": 39}]}
+{"collection": "tickets", "id": "TK-000293", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000294", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 4, "end": 17}, {"type": "ADDRESS", "start": 20, "end": 55}]}
+{"collection": "tickets", "id": "TK-000295", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 44}]}
+{"collection": "tickets", "id": "TK-000296", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 44}]}
+{"collection": "tickets", "id": "TK-000297", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000298", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 47}]}
+{"collection": "tickets", "id": "TK-000299", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000300", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 35}, {"type": "BANK_ACCOUNT", "start": 61, "end": 75}]}
+{"collection": "tickets", "id": "TK-000301", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 35}, {"type": "BANK_ACCOUNT", "start": 61, "end": 73}]}
+{"collection": "tickets", "id": "TK-000302", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 13}, {"type": "PHONE", "start": 24, "end": 34}]}
+{"collection": "tickets", "id": "TK-000303", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 35}, {"type": "BANK_ACCOUNT", "start": 61, "end": 73}]}
+{"collection": "tickets", "id": "TK-000304", "path": "Note", "labels": [{"type": "DOB", "start": 16, "end": 26}]}
+{"collection": "tickets", "id": "TK-000305", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 43}]}
+{"collection": "tickets", "id": "TK-000306", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 40}, {"type": "BANK_ACCOUNT", "start": 66, "end": 80}]}
+{"collection": "tickets", "id": "TK-000307", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 38}, {"type": "BANK_ACCOUNT", "start": 64, "end": 78}]}
+{"collection": "tickets", "id": "TK-000308", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 37}]}
+{"collection": "tickets", "id": "TK-000309", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 35}, {"type": "BANK_ACCOUNT", "start": 61, "end": 73}]}
+{"collection": "tickets", "id": "TK-000310", "path": "Note", "labels": [{"type": "DOB", "start": 16, "end": 26}]}
+{"collection": "tickets", "id": "TK-000311", "path": "Note", "labels": [{"type": "DOB", "start": 16, "end": 26}]}
+{"collection": "tickets", "id": "TK-000312", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 44}]}
+{"collection": "tickets", "id": "TK-000313", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 36}, {"type": "BANK_ACCOUNT", "start": 62, "end": 74}]}
+{"collection": "tickets", "id": "TK-000314", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000315", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000316", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 41}]}
+{"collection": "tickets", "id": "TK-000317", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 34}, {"type": "BANK_ACCOUNT", "start": 60, "end": 72}]}
+{"collection": "tickets", "id": "TK-000318", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000319", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000320", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000321", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 20}]}
+{"collection": "tickets", "id": "TK-000322", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000323", "path": "Note", "labels": [{"type": "DOB", "start": 16, "end": 26}]}
+{"collection": "tickets", "id": "TK-000324", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000325", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000326", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000327", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000328", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000329", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 41}]}
+{"collection": "tickets", "id": "TK-000330", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 34}, {"type": "BANK_ACCOUNT", "start": 60, "end": 70}]}
+{"collection": "tickets", "id": "TK-000331", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000332", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 20}]}
+{"collection": "tickets", "id": "TK-000333", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 20}]}
+{"collection": "tickets", "id": "TK-000334", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 15}, {"type": "PHONE", "start": 26, "end": 36}]}
+{"collection": "tickets", "id": "TK-000335", "path": "Note", "labels": [{"type": "DOB", "start": 16, "end": 26}]}
+{"collection": "tickets", "id": "TK-000336", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 21}, {"type": "PHONE", "start": 32, "end": 44}]}
+{"collection": "tickets", "id": "TK-000337", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000338", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000339", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 36}, {"type": "BANK_ACCOUNT", "start": 62, "end": 72}]}
+{"collection": "tickets", "id": "TK-000340", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000341", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000342", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 20}]}
+{"collection": "tickets", "id": "TK-000343", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000344", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000345", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000346", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 20}]}
+{"collection": "tickets", "id": "TK-000347", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 16}, {"type": "PHONE", "start": 27, "end": 37}]}
+{"collection": "tickets", "id": "TK-000348", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000349", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000350", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000351", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000352", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000353", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 44}]}
+{"collection": "tickets", "id": "TK-000354", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000355", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000356", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 20}]}
+{"collection": "tickets", "id": "TK-000357", "path": "Note", "labels": [{"type": "DOB", "start": 16, "end": 26}]}
+{"collection": "tickets", "id": "TK-000358", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000359", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000360", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000361", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 20}]}
+{"collection": "tickets", "id": "TK-000362", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000363", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 35}, {"type": "BANK_ACCOUNT", "start": 61, "end": 73}]}
+{"collection": "tickets", "id": "TK-000364", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000365", "path": "Note", "labels": [{"type": "DOB", "start": 16, "end": 26}]}
+{"collection": "tickets", "id": "TK-000366", "path": "Note", "labels": [{"type": "DOB", "start": 16, "end": 26}]}
+{"collection": "tickets", "id": "TK-000367", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000368", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000369", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000370", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 20}]}
+{"collection": "tickets", "id": "TK-000371", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000372", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000373", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000374", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 33}, {"type": "BANK_ACCOUNT", "start": 59, "end": 69}]}
+{"collection": "tickets", "id": "TK-000375", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 42}]}
+{"collection": "tickets", "id": "TK-000376", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 18}, {"type": "PHONE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000377", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 20}]}
+{"collection": "tickets", "id": "TK-000378", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 18}, {"type": "PHONE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000379", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 20}]}
+{"collection": "tickets", "id": "TK-000380", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 45}]}
+{"collection": "tickets", "id": "TK-000381", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000382", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 20}]}
+{"collection": "tickets", "id": "TK-000383", "path": "Note", "labels": [{"type": "DOB", "start": 16, "end": 26}]}
+{"collection": "tickets", "id": "TK-000384", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 20}]}
+{"collection": "tickets", "id": "TK-000385", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 20}]}
+{"collection": "tickets", "id": "TK-000386", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000387", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 20}]}
+{"collection": "tickets", "id": "TK-000388", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000389", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 20}]}
+{"collection": "tickets", "id": "TK-000390", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000391", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000392", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000393", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 45}]}
+{"collection": "tickets", "id": "TK-000394", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000395", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 35}, {"type": "BANK_ACCOUNT", "start": 61, "end": 75}]}
+{"collection": "tickets", "id": "TK-000396", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 20}]}
+{"collection": "tickets", "id": "TK-000397", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 20}]}
+{"collection": "tickets", "id": "TK-000398", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 4, "end": 24}, {"type": "ADDRESS", "start": 27, "end": 85}]}
+{"collection": "tickets", "id": "TK-000399", "path": "Note", "labels": [{"type": "DOB", "start": 16, "end": 26}]}
+{"collection": "tickets", "id": "TK-000400", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 19}, {"type": "PHONE", "start": 30, "end": 40}]}
+{"collection": "tickets", "id": "TK-000401", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 35}, {"type": "BANK_ACCOUNT", "start": 61, "end": 71}]}
+{"collection": "tickets", "id": "TK-000402", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 4, "end": 24}, {"type": "ADDRESS", "start": 27, "end": 78}]}
+{"collection": "tickets", "id": "TK-000403", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 4, "end": 15}, {"type": "ADDRESS", "start": 18, "end": 77}]}
+{"collection": "tickets", "id": "TK-000404", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 20}]}
+{"collection": "tickets", "id": "TK-000405", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 4, "end": 15}, {"type": "ADDRESS", "start": 18, "end": 62}]}
+{"collection": "tickets", "id": "TK-000406", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000407", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 15}, {"type": "PHONE", "start": 26, "end": 36}]}
+{"collection": "tickets", "id": "TK-000408", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 45}]}
+{"collection": "tickets", "id": "TK-000409", "path": "Note", "labels": [{"type": "DOB", "start": 16, "end": 26}]}
+{"collection": "tickets", "id": "TK-000410", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 18}, {"type": "PHONE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000411", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000412", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 20}]}
+{"collection": "tickets", "id": "TK-000413", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 21}, {"type": "PHONE", "start": 32, "end": 42}]}
+{"collection": "tickets", "id": "TK-000414", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 33}, {"type": "BANK_ACCOUNT", "start": 59, "end": 69}]}
+{"collection": "tickets", "id": "TK-000415", "path": "Note", "labels": [{"type": "DOB", "start": 16, "end": 26}]}
+{"collection": "tickets", "id": "TK-000416", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 20}, {"type": "PHONE", "start": 31, "end": 41}]}
+{"collection": "tickets", "id": "TK-000417", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000418", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000419", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 19}, {"type": "PHONE", "start": 30, "end": 42}]}
+{"collection": "tickets", "id": "TK-000420", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 20}]}
+{"collection": "tickets", "id": "TK-000421", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 41}]}
+{"collection": "tickets", "id": "TK-000422", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000423", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000424", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000425", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000426", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 4, "end": 18}, {"type": "ADDRESS", "start": 21, "end": 84}]}
+{"collection": "tickets", "id": "TK-000427", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000428", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 33}, {"type": "BANK_ACCOUNT", "start": 59, "end": 69}]}
+{"collection": "tickets", "id": "TK-000429", "path": "Note", "labels": [{"type": "PHONE", "start": 8, "end": 22}]}
+{"collection": "tickets", "id": "TK-000430", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000431", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 37}, {"type": "BANK_ACCOUNT", "start": 63, "end": 73}]}
+{"collection": "tickets", "id": "TK-000432", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000433", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 44}]}
+{"collection": "tickets", "id": "TK-000434", "path": "Note", "labels": [{"type": "DOB", "start": 16, "end": 26}]}
+{"collection": "tickets", "id": "TK-000435", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000436", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 38}, {"type": "BANK_ACCOUNT", "start": 64, "end": 76}]}
+{"collection": "tickets", "id": "TK-000437", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000438", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000439", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000440", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 47}]}
+{"collection": "tickets", "id": "TK-000441", "path": "Note", "labels": [{"type": "CCCD", "start": 14, "end": 26}, {"type": "FULL_NAME", "start": 31, "end": 43}]}
+{"collection": "tickets", "id": "TK-000442", "path": "Note", "labels": [{"type": "CREDIT_CARD", "start": 18, "end": 34}]}
+{"collection": "tickets", "id": "TK-000443", "path": "Note", "labels": []}
+{"collection": "tickets", "id": "TK-000444", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 6, "end": 21}, {"type": "PHONE", "start": 32, "end": 44}]}
+{"collection": "tickets", "id": "TK-000445", "path": "Note", "labels": [{"type": "EMAIL", "start": 15, "end": 35}, {"type": "BANK_ACCOUNT", "start": 61, "end": 75}]}
+{"collection": "tickets", "id": "TK-000446", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 4, "end": 15}, {"type": "ADDRESS", "start": 18, "end": 68}]}
+{"collection": "tickets", "id": "TK-000447", "path": "Note", "labels": [{"type": "FULL_NAME", "start": 4, "end": 16}, {"type": "ADDRESS", "start": 19, "end": 94}]}
+{"collection": "tickets", "id": "TK-000448", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}
+{"collection": "tickets", "id": "TK-000449", "path": "Note", "labels": [{"type": "TAX_CODE", "start": 29, "end": 39}]}

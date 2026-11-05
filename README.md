@@ -20,10 +20,11 @@ LangGraph, vault, audit, RAG và các phụ thuộc LLM.
 | `piimask/transform/` | Áp dụng hành động che: MASK, PARTIAL, HMAC, REDACT, DROP, NULLIFY, KEEP |
 | `piimask/connectors/` | Đọc profile từ MongoDB và PostgreSQL (MySQL sẽ bổ sung) |
 | `piimask/schemas.py`, `piimask/config.py` | Kiểu dữ liệu dùng chung, cấu hình qua biến môi trường |
+| `mockup/` | Sinh mockup MongoDB có nhãn: `python -m mockup.generate`. Nhãn và danh mục chuẩn ở `mockup/labels/`, dữ liệu ghi vào `data/mockup/` (không commit) |
 | `tests/` | Test của các phần trên |
 | `docs/gate-0/` | Tài liệu Gate 0 |
 
-Sẽ bổ sung: bộ đọc file, API che, tool, sinh danh mục trường PII, script sinh mockup, Docker.
+Sẽ bổ sung: bộ đọc file, API che, tool, sinh danh mục trường PII, `eval/`, Docker.
 
 ## Chạy test
 
