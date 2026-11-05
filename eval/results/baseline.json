@@ -273,5 +273,41 @@
     "field_scan_seconds": 0.21,
     "text_records_per_second": 70602,
     "log_lines_per_second": 56074
+  },
+  "performance_large": {
+    "data_source": "mockup, chỉ đo tốc độ",
+    "commit": "f1c8c76",
+    "cpu_count": 14,
+    "detector": "regex + quy tắc, GLiNER tắt",
+    "csv": {
+      "formats": [
+        "csv"
+      ],
+      "documents": 100000,
+      "rows_written": 200000,
+      "scan_seconds": 0.041,
+      "total_seconds": 19.75,
+      "documents_per_second": 5062,
+      "rows_per_second": 10125
+    },
+    "csv_xlsx": {
+      "formats": [
+        "csv",
+        "xlsx"
+      ],
+      "documents": 100000,
+      "rows_written": 200000,
+      "scan_seconds": 0.03,
+      "total_seconds": 89.2,
+      "documents_per_second": 1121,
+      "rows_per_second": 2242
+    },
+    "peak_memory_mb": 133,
+    "api": {
+      "requests": 500,
+      "text_chars": 156,
+      "p50_ms": 1.36,
+      "p95_ms": 1.84
+    }
   }
 }
