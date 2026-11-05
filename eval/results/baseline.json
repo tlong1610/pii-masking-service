@@ -1,0 +1,166 @@
+{
+  "data_source": "mockup",
+  "seed": 20261105,
+  "commit": "c7b71f0",
+  "detector": "regex + quy tắc, GLiNER tắt",
+  "sections": {
+    "mongo_fields": {
+      "recall": 0.6047,
+      "precision": 0.8387,
+      "total": 43,
+      "found": 26,
+      "false_positives": 5,
+      "recall_nhay_cam": 1.0,
+      "by_type": {
+        "ADDRESS": {
+          "total": 3,
+          "found": 3,
+          "recall": 1.0
+        },
+        "BANK_ACCOUNT": {
+          "total": 1,
+          "found": 1,
+          "recall": 1.0
+        },
+        "CCCD": {
+          "total": 4,
+          "found": 4,
+          "recall": 1.0
+        },
+        "CREDIT_CARD": {
+          "total": 1,
+          "found": 1,
+          "recall": 1.0
+        },
+        "CUSTOMER_ID": {
+          "total": 7,
+          "found": 0,
+          "recall": 0.0
+        },
+        "DOB": {
+          "total": 1,
+          "found": 1,
+          "recall": 1.0
+        },
+        "EMAIL": {
+          "total": 8,
+          "found": 6,
+          "recall": 0.75
+        },
+        "FREE_TEXT": {
+          "total": 1,
+          "found": 1,
+          "recall": 1.0
+        },
+        "FULL_NAME": {
+          "total": 5,
+          "found": 3,
+          "recall": 0.6
+        },
+        "PHONE": {
+          "total": 4,
+          "found": 3,
+          "recall": 0.75
+        },
+        "TAX_CODE": {
+          "total": 3,
+          "found": 3,
+          "recall": 1.0
+        },
+        "VIN": {
+          "total": 5,
+          "found": 0,
+          "recall": 0.0
+        }
+      },
+      "fields": 200,
+      "undecided": 68,
+      "missed": [
+        "battery_bills.BatterySerial",
+        "battery_bills.CreatedBy",
+        "battery_bills.CustomerId",
+        "battery_bills.ModifiedBy",
+        "battery_bills.SapCustomerId",
+        "battery_bills.VehicleId",
+        "battery_contracts.Batteries[].Serial",
+        "battery_contracts.Batteries[].Stock",
+        "battery_contracts.CustomerId",
+        "battery_contracts.SapCustomerId",
+        "battery_contracts.TaxRegistrationName",
+        "battery_contracts.VehicleId",
+        "customers.CustomerId",
+        "customers.SapCustomerId",
+        "customers.TaxRegistrationName",
+        "customers.c2",
+        "tickets.CustomerId"
+      ],
+      "false_positive_fields": [
+        "battery_bills.PaidAt.AccountCashInBank",
+        "battery_bills.PaidAt.AccountCashInTransit",
+        "battery_bills.PaidAt.StoreAddress",
+        "battery_bills.PaidAt.TransactionId",
+        "customers.c3"
+      ]
+    },
+    "mongo_free_text": {
+      "recall": 0.5169,
+      "precision": 0.7531,
+      "total": 590,
+      "found": 305,
+      "false_positives": 100,
+      "recall_nhay_cam": 0.8966,
+      "by_type": {
+        "ADDRESS": {
+          "total": 42,
+          "found": 0,
+          "recall": 0.0
+        },
+        "BANK_ACCOUNT": {
+          "total": 53,
+          "found": 41,
+          "recall": 0.7736
+        },
+        "CCCD": {
+          "total": 50,
+          "found": 50,
+          "recall": 1.0
+        },
+        "CREDIT_CARD": {
+          "total": 63,
+          "found": 63,
+          "recall": 1.0
+        },
+        "DOB": {
+          "total": 44,
+          "found": 0,
+          "recall": 0.0
+        },
+        "EMAIL": {
+          "total": 53,
+          "found": 53,
+          "recall": 1.0
+        },
+        "FULL_NAME": {
+          "total": 137,
+          "found": 0,
+          "recall": 0.0
+        },
+        "PHONE": {
+          "total": 95,
+          "found": 45,
+          "recall": 0.4737
+        },
+        "TAX_CODE": {
+          "total": 53,
+          "found": 53,
+          "recall": 1.0
+        }
+      }
+    }
+  },
+  "performance": {
+    "documents": 2750,
+    "field_scan_seconds": 0.25,
+    "text_records_per_second": 60973
+  }
+}
