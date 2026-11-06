@@ -69,7 +69,10 @@ def test_bson_types_survive_jsonl_round_trip(mockup):
     collections, _ = mockup
     options = json_util.RELAXED_JSON_OPTIONS.with_options(tz_aware=True)
     for doc in (collections["battery_contracts"][0], collections["battery_bills"][0]):
-        assert json_util.loads(json_util.dumps(doc, json_options=json_util.RELAXED_JSON_OPTIONS), json_options=options) == doc
+        assert (
+            json_util.loads(json_util.dumps(doc, json_options=json_util.RELAXED_JSON_OPTIONS), json_options=options)
+            == doc
+        )
 
 
 def test_keys_join_across_collections(mockup):

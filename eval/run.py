@@ -29,6 +29,8 @@ from tool.export import export_database
 _REPO = Path(__file__).resolve().parent.parent
 _DATABASE = "mockup"
 _BSON_OPTIONS = json_util.RELAXED_JSON_OPTIONS.with_options(tz_aware=True)
+_APP_LOGS = ("log/app.log", "log/app.log.gz")
+_SECRET_LOGS = ("log/secrets.log",)
 
 
 def _read_jsonl(path: Path) -> list[dict]:
@@ -88,9 +90,11 @@ def evaluate_tickets(collections: dict, labels_dir: Path, pipeline: NERPipelines
     return score_spans([(item["labels"], found) for item, found in zip(spans, predictions, strict=True)]), elapsed
 
 
-def evaluate_logs(data_dir: Path, labels_dir: Path, pipeline: NERPipelines) -> tuple[dict, float, int]:
-    """Quét file .log và .gz theo từng dòng; dòng JSON cũng quét như văn bản vì chưa có bộ đọc log."""
-    spans = [item for item in _read_jsonl(labels_dir / "file_spans.jsonl") if "line" in item]
+def evaluate_logs(
+    data_dir: Path, labels_dir: Path, pipeline: NERPipelines, files: tuple[str, ...] = _APP_LOGS
+) -> tuple[dict, float, int]:
+    """Quét file log theo từng dòng; dòng JSON cũng quét như văn bản vì chưa có bộ đọc log."""
+    spans = [item for item in _read_jsonl(labels_dir / "file_spans.jsonl") if item.get("file") in files]
     contents = {}
     for file in sorted({item["file"] for item in spans}):
         path = data_dir / "files" / file
@@ -180,6 +184,7 @@ def build_report(data_dir: Path, labels_dir: Path) -> dict:
     fields, field_seconds = evaluate_fields(collections, labels_dir)
     tickets, ticket_seconds = evaluate_tickets(collections, labels_dir, pipeline)
     logs, log_seconds, log_count = evaluate_logs(data_dir, labels_dir, pipeline)
+    secrets, _, _ = evaluate_logs(data_dir, labels_dir, pipeline, _SECRET_LOGS)
     events = evaluate_events(data_dir, labels_dir)
     leak = evaluate_leak(collections, labels_dir)
     documents = sum(len(docs) for docs in collections.values())
@@ -188,7 +193,13 @@ def build_report(data_dir: Path, labels_dir: Path) -> dict:
         "seed": DEFAULT_SEED,
         "commit": _commit(),
         "detector": "regex + quy tắc, GLiNER tắt",
-        "sections": {"mongo_fields": fields, "mongo_free_text": tickets, "log_lines": logs, "log_events": events},
+        "sections": {
+            "mongo_fields": fields,
+            "mongo_free_text": tickets,
+            "log_lines": logs,
+            "log_secrets": secrets,
+            "log_events": events,
+        },
         "leak": leak,
         "not_measured": "CSV, Excel, JSON, Parquet: chưa có bộ đọc file",
         "performance": {
@@ -214,6 +225,7 @@ def main() -> None:
     print_section("Theo trường (MongoDB)", report["sections"]["mongo_fields"])
     print_section("Văn bản tự do (tickets)", report["sections"]["mongo_free_text"])
     print_section("Dòng log (.log, .gz)", report["sections"]["log_lines"])
+    print_section("Log bí mật (secrets.log)", report["sections"]["log_secrets"])
     print_section("Log object (events.jsonl)", report["sections"]["log_events"])
     print(f"\nRò rỉ trên bộ nhỏ: {report['leak']}")
     print(f"\nChưa đo: {report['not_measured']}")
