@@ -6,6 +6,7 @@ import logging
 from typing import Any
 
 from piimask.transform.hmac_hasher import hash_value
+from piimask.transform.text_masker import mask_text
 
 MASK_PLACEHOLDER = "***"
 
@@ -48,10 +49,8 @@ def redact_value(value: Any) -> Any:
         return None
     if not isinstance(value, str):
         return "[REDACTED]"
-    from piimask.detection.ner_orchestrator import redact_free_text
-
     try:
-        return redact_free_text(value)
+        return mask_text(value).text
     except Exception as exc:
         # Fail closed: ô không che được bị thay toàn bộ, không ghi giá trị gốc, và một ô lỗi không dừng cả lượt xuất.
         # Chỉ ghi loại lỗi, không ghi giá trị.

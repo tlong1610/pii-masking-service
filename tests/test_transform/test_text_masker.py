@@ -1,3 +1,7 @@
+import json
+
+import pytest
+
 from piimask.detection.ner_orchestrator import NERPipelines
 from piimask.detection.regex_ner import EntityMatch
 from piimask.transform.text_masker import Entity, mask_text
@@ -70,3 +74,31 @@ def test_later_match_across_a_tag_absorbs_it():
 def test_text_without_pii_is_unchanged():
     assert mask_text("không có gì", pipeline=_pipeline()).text == "không có gì"
     assert mask_text("", pipeline=_pipeline()).entities == []
+
+
+def test_number_in_json_gets_quoted_tag():
+    text = '{"cccd":123456789012,"amount":1500000}'
+    result = mask_text(text, pipeline=_pipeline())
+    assert json.loads(result.text) == {"cccd": "[CCCD]", "amount": 1500000}
+    assert result.entities == [Entity("CCCD", 8, 20)]
+
+
+def test_string_in_json_keeps_single_quotes_and_nested_json_stays_valid():
+    text = '[{"a":{"phone":"gọi 0912345678 nhé"}},1]'
+    assert json.loads(mask_text(text, pipeline=_pipeline()).text) == [{"a": {"phone": "gọi [PHONE] nhé"}}, 1]
+
+
+def test_quote_inside_json_string_does_not_confuse_position():
+    text = r'{"note":"a \"b\" 0912345678","n":123456789012}'
+    assert json.loads(mask_text(text, pipeline=_pipeline()).text) == {"note": 'a "b" [PHONE]', "n": "[CCCD]"}
+
+
+def test_text_that_only_looks_like_json_is_masked_as_text():
+    assert mask_text("{gọi 0912345678", pipeline=_pipeline()).text == "{gọi [PHONE]"
+
+
+def test_mask_that_would_break_json_fails_instead_of_returning_broken_text():
+    # Thực thể chỉ phủ phần nguyên của số thực nên không thể thay mà giữ được JSON hợp lệ.
+    with pytest.raises(ValueError) as failure:
+        mask_text('{"a":123456789012.5}', pipeline=_pipeline())
+    assert "123456789012" not in str(failure.value)

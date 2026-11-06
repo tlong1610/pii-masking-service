@@ -1,7 +1,4 @@
-"""Che theo thực thể cho văn bản tự do: Regex -> Từ điển -> GLiNER, mỗi tầng che xong mới chuyển cho tầng sau.
-
-Dùng cho hành động REDACT và API. Giá trị khớp chỉ ở trong bộ nhớ.
-"""
+"""Các tầng phát hiện cho văn bản tự do: Regex -> Từ điển -> GLiNER. Che ở piimask.transform.text_masker."""
 
 from __future__ import annotations
 
@@ -10,8 +7,7 @@ import logging
 import threading
 
 from piimask.detection.dict_ner import DictionaryNERScanner
-from piimask.detection.redactor import TextRedactor
-from piimask.detection.regex_ner import EntityMatch, RegexNERScanner
+from piimask.detection.regex_ner import RegexNERScanner
 
 logger = logging.getLogger(__name__)
 
@@ -41,23 +37,6 @@ class NERPipelines:
         if self.ml_scanner is not None:
             tiers.append(self.ml_scanner)
         return tiers
-
-    def redact_with_matches(self, text: str) -> tuple[str, list[EntityMatch]]:
-        """Redact text tier by tier; return the clean text and every entity found (in memory only)."""
-        if not text:
-            return text, []
-        found: list[EntityMatch] = []
-        for scanner in self.tiers():
-            matches = scanner.scan_text(text)
-            found.extend(matches)
-            text = TextRedactor.redact(text, matches)
-        return text, found
-
-    def redact_document(self, text: str) -> str:
-        """
-        Thực hiện toàn bộ luồng pipeline để làm sạch một đoạn văn bản.
-        """
-        return self.redact_with_matches(text)[0]
 
 
 _pipeline: NERPipelines | None = None
@@ -95,8 +74,3 @@ def get_ner_pipeline() -> NERPipelines:
                                    type(exc).__name__)
                 _pipeline = NERPipelines(dictionary, use_ml=False)
     return _pipeline
-
-
-def redact_free_text(text: str) -> str:
-    """Thay mỗi thực thể bằng thẻ loại của nó, ví dụ 'gọi 0912345678' -> 'gọi [PHONE]'."""
-    return get_ner_pipeline().redact_document(text)

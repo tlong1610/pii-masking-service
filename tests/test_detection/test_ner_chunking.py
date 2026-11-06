@@ -48,5 +48,5 @@ def test_redact_value_fails_closed_when_ner_errors(monkeypatch):
     def boom(_text: str) -> str:
         raise RuntimeError("model failure")
 
-    monkeypatch.setattr("piimask.detection.ner_orchestrator.redact_free_text", boom)
+    monkeypatch.setattr("piimask.transform.mask_engine.mask_text", boom)
     assert redact_value("Gọi 0912345678") == "[REDACTED]"

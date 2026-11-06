@@ -88,7 +88,7 @@ def test_log_line_that_cannot_be_masked_is_withheld_and_line_count_stays(tmp_pat
     def boom(text):
         raise RuntimeError("lỗi")
 
-    monkeypatch.setattr("piimask.detection.ner_orchestrator.redact_free_text", boom)
+    monkeypatch.setattr("piimask.transform.mask_engine.mask_text", boom)
     source = tmp_path / "in.log"
     source.write_text("gọi 0912345678\nb\n", encoding="utf-8")
     mask_log(source, tmp_path / "out.log", **KEYS)
