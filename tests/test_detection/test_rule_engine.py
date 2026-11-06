@@ -18,11 +18,9 @@ def test_tracking_code_not_cccd(scanner):
         is_primary_key=False,
         is_foreign_key=False,
         samples=["400691172582", "123456789012"],
-        system_recommendation=None
     )
     result = scanner.classify(profile)
     assert result.inferred_pii_type == PIIType.TRACKING_CODE.value
-    assert result.recommended_action == "KEEP"
 
 
 def test_order_id_not_pii(scanner):
@@ -33,11 +31,9 @@ def test_order_id_not_pii(scanner):
         is_primary_key=True,
         is_foreign_key=False,
         samples=["ORD123", "ORD456"],
-        system_recommendation=None
     )
     result = scanner.classify(profile)
     assert result.inferred_pii_type == PIIType.TRACKING_CODE.value
-    assert result.recommended_action == "KEEP"
 
 
 def test_org_email_detected_as_email(scanner):
@@ -48,7 +44,6 @@ def test_org_email_detected_as_email(scanner):
         is_primary_key=False,
         is_foreign_key=False,
         samples=["support@company.vn", "contact@exoticliquids.co.uk"],
-        system_recommendation=None
     )
     result = scanner.classify(profile)
     # Rule engine bắt bằng regex email nên sẽ ra EMAIL.
@@ -63,11 +58,9 @@ def test_money_alone_non_personal(scanner):
         is_primary_key=False,
         is_foreign_key=False,
         samples=["1000.50", "200.0"],
-        system_recommendation=None
     )
     result = scanner.classify(profile)
     assert result.inferred_pii_type == PIIType.MONEY_ALONE.value
-    assert result.recommended_action == "KEEP"
 
 
 def test_cccd_regex_strict_12_digits(scanner):
@@ -78,7 +71,6 @@ def test_cccd_regex_strict_12_digits(scanner):
         is_primary_key=False,
         is_foreign_key=False,
         samples=["123456789"],  # CMND cũ 9 số
-        system_recommendation=None
     )
     result = scanner.classify(profile_9_digits)
     # Không còn khớp CCCD vì regex đã siết chặt lại thành 12 số
@@ -90,7 +82,6 @@ def test_cccd_regex_strict_12_digits(scanner):
         is_primary_key=False,
         is_foreign_key=False,
         samples=["033254456184"],
-        system_recommendation=None
     )
     result_12 = scanner.classify(profile_12_digits)
     assert result_12.inferred_pii_type == PIIType.CCCD.value
@@ -103,11 +94,9 @@ def test_tax_code(scanner):
         is_primary_key=False,
         is_foreign_key=False,
         samples=["8023456789"],
-        system_recommendation=None
     )
     result = scanner.classify(profile)
     assert result.inferred_pii_type == PIIType.TAX_CODE.value
-
 
 
 def _profile(name: str, samples: list[str], table: str | None = None) -> ColumnProfile:
@@ -134,14 +123,12 @@ def test_personal_ids_holding_cccd_are_never_safe(scanner, name, samples):
     result = scanner.classify(_profile(name, samples))
     assert result is not None
     assert result.inferred_pii_type == PIIType.CCCD.value
-    assert result.recommended_action != "KEEP"
 
 
 def test_personal_id_names_are_not_treated_as_technical_keys(scanner):
     result = scanner.classify(_profile("patient_id", ["BN-0001", "BN-0002"]))
     assert result is not None
     assert result.inferred_pii_type == "PATIENT_ID"
-    assert result.recommended_action != "KEEP"
 
 
 def test_generic_technical_id_is_non_personal(scanner):
@@ -168,10 +155,6 @@ def test_name_keywords_match_whole_words_only(scanner, name, expected):
 def test_table_scoped_rules_apply_when_table_is_known(scanner):
     supplier_tax = scanner.classify(_profile("tax_code", ["0101234567"], table="suppliers"))
     assert supplier_tax.inferred_pii_type == "TAX_CODE_ORG"
-    assert supplier_tax.recommended_action == "KEEP"
-
-    kyc = scanner.classify(_profile("ocr_text", ["CONG HOA XA HOI"], table="kyc_documents"))
-    assert kyc.recommended_action == "DROP"
 
 
 def _typed(name: str, data_type: str, samples: list[str]) -> ColumnProfile:
@@ -191,7 +174,6 @@ def _typed(name: str, data_type: str, samples: list[str]) -> ColumnProfile:
 def test_event_dates_are_not_birth_dates(scanner, name, data_type, samples):
     result = scanner.classify(_typed(name, data_type, samples))
     assert result.inferred_pii_type == "NOT_PERSONAL_DATA"
-    assert result.recommended_action == "KEEP"
 
 
 def test_birth_date_is_still_dob(scanner):
@@ -199,43 +181,42 @@ def test_birth_date_is_still_dob(scanner):
     assert result.inferred_pii_type == PIIType.DOB.value
 
 
-def test_empty_column_is_proposed_for_drop(scanner):
+def test_empty_column_is_marked_empty(scanner):
     result = scanner.classify(_typed("customer_desc", "text", []))
     assert result.inferred_pii_type == "EMPTY_COLUMN"
-    assert result.recommended_action == "DROP"
 
 
 @pytest.mark.parametrize(
-    ("name", "expected_type", "expected_action"),
+    ("name", "expected_type"),
     [
-        ("ship_country", "NOT_PERSONAL_DATA", "KEEP"),
-        ("state_name", "NOT_PERSONAL_DATA", "KEEP"),
-        ("territory_description", "NOT_PERSONAL_DATA", "KEEP"),
-        ("ship_city", "CITY", "KEEP"),
+        ("ship_country", "NOT_PERSONAL_DATA"),
+        ("state_name", "NOT_PERSONAL_DATA"),
+        ("territory_description", "NOT_PERSONAL_DATA"),
+        ("ship_city", "CITY"),
     ],
 )
-def test_geography_levels(scanner, name, expected_type, expected_action):
+def test_geography_levels(scanner, name, expected_type):
     result = scanner.classify(_typed(name, "character varying", ["Hà Nội", "Lyon"]))
-    assert (result.inferred_pii_type, result.recommended_action) == (expected_type, expected_action)
+    assert result.inferred_pii_type == expected_type
 
 
 @pytest.mark.parametrize(
-    ("name", "expected_type", "expected_action"),
+    ("name", "expected_type"),
     [
-        ("first_name", "FULL_NAME", "MASK"),
-        ("last_name", "FULL_NAME", "MASK"),
-        ("contact_name", "FULL_NAME", "MASK"),
-        ("ship_name", "FULL_NAME", "MASK"),
-        ("ho_ten", "FULL_NAME", "MASK"),
-        ("product_name", "NOT_PERSONAL_DATA", "KEEP"),
-        ("category_name", "NOT_PERSONAL_DATA", "KEEP"),
-        ("shipper_name", "NOT_PERSONAL_DATA", "KEEP"),
-        ("ten_san_pham", "NOT_PERSONAL_DATA", "KEEP"),
+        ("first_name", "FULL_NAME"),
+        ("last_name", "FULL_NAME"),
+        ("contact_name", "FULL_NAME"),
+        ("ship_name", "FULL_NAME"),
+        ("ho_ten", "FULL_NAME"),
+        ("product_name", "NOT_PERSONAL_DATA"),
+        ("category_name", "NOT_PERSONAL_DATA"),
+        ("shipper_name", "NOT_PERSONAL_DATA"),
+        ("ten_san_pham", "NOT_PERSONAL_DATA"),
     ],
 )
-def test_name_columns_are_classified_by_their_entity(scanner, name, expected_type, expected_action):
+def test_name_columns_are_classified_by_their_entity(scanner, name, expected_type):
     result = scanner.classify(_typed(name, "character varying", ["Alpha Beta"]))
-    assert (result.inferred_pii_type, result.recommended_action) == (expected_type, expected_action)
+    assert result.inferred_pii_type == expected_type
 
 
 @pytest.mark.parametrize("name", ["name", "display_name", "user_name"])

@@ -24,9 +24,6 @@ class ColumnProfile(BaseModel):
         ...,
         description="Dữ liệu mẫu ngắn hạn chỉ xử lý trong bộ nhớ (In-memory ephemeral samples)",
     )
-    system_recommendation: str | None = Field(
-        default=None, description="Gợi ý cứng của hệ thống (ví dụ: HASHING cho KEY)"
-    )
 
 
 class TableRelation(BaseModel):
@@ -50,5 +47,4 @@ class FieldScanResult(BaseModel):
     field_name: str = Field(..., description="Tên cột đã phân tích")
     inferred_pii_type: str = Field(..., description="Loại PII phát hiện (Ví dụ: CCCD, PHONE, EMAIL)")
     confidence: float = Field(..., description="Độ tin cậy (0.0 đến 1.0)")
-    recommended_action: str = Field(..., description="Hành động gợi ý: MASK, DROP, HMAC, KEEP")
     reasoning: str = Field(..., description="Lý do hoặc căn cứ quyết định")

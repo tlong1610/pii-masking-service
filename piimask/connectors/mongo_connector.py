@@ -116,7 +116,6 @@ class MongoConnector:
                             is_primary_key=is_pk,
                             is_foreign_key=False,
                             samples=list(meta["samples"])[:sample_size],
-                            system_recommendation="HASHING" if is_pk else None,
                         )
                     )
 
