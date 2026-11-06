@@ -14,7 +14,8 @@ from tool.export import export_database, table_file_name
 LABELS = Path(__file__).resolve().parents[2] / "mockup/labels/fields.jsonl"
 
 # Trường có nhãn PII nhưng bộ phát hiện kết luận KEEP, sẽ sửa ở bước mã khách và số khung. Danh sách này phải khớp
-# đúng: trường mới lọt ra làm test đỏ, sửa xong detector thì xóa khỏi đây.
+# đúng: trường mới lọt ra làm test đỏ, sửa xong detector thì xóa khỏi đây. Test dò giá trị trong cả file nên
+# BatterySerial có ở đây dù cột của nó đã bị che: giá trị trùng với VehicleId, cột đó đang giữ nguyên.
 KNOWN_DETECTOR_GAPS = {
     "battery_bills.BatterySerial",
     "battery_bills.CustomerId",
