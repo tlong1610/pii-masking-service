@@ -726,6 +726,98 @@
           }
         ]
       }
+    },
+    {
+      "label": "muc-2-truoc",
+      "small": {
+        "commit": "c1d2737",
+        "sections": {
+          "mongo_fields": {
+            "recall": 0.6047,
+            "precision": 0.8387,
+            "recall_nhay_cam": 1.0,
+            "found": 26,
+            "total": 43,
+            "false_positives": 5
+          },
+          "mongo_fields_heldout": {
+            "recall": 0.4651,
+            "precision": 0.7692,
+            "recall_nhay_cam": 0.0,
+            "found": 20,
+            "total": 43,
+            "false_positives": 6
+          },
+          "mongo_fields_random": {
+            "recall": 0.4651,
+            "precision": 0.8,
+            "recall_nhay_cam": 0.0,
+            "found": 20,
+            "total": 43,
+            "false_positives": 5
+          },
+          "mongo_free_text": {
+            "recall": 0.5169,
+            "precision": 0.7531,
+            "recall_nhay_cam": 0.8966,
+            "found": 305,
+            "total": 590,
+            "false_positives": 100
+          },
+          "log_lines": {
+            "recall": 0.9178,
+            "precision": 0.8489,
+            "recall_nhay_cam": 1.0,
+            "found": 1764,
+            "total": 1922,
+            "false_positives": 314
+          },
+          "log_secrets": {
+            "recall": 1.0,
+            "precision": 1.0,
+            "recall_nhay_cam": 1.0,
+            "found": 458,
+            "total": 458,
+            "false_positives": 0
+          },
+          "log_events": {
+            "recall": 0.75,
+            "precision": 1.0,
+            "recall_nhay_cam": 0.5,
+            "found": 6,
+            "total": 8,
+            "false_positives": 0
+          }
+        },
+        "leak": {
+          "goc": {
+            "source_occurrences": 25348,
+            "raw_left_csv": 5683,
+            "raw_left_xlsx": 5683,
+            "raw_left_rate_csv": 0.2242,
+            "by_type": {
+              "ADDRESS": 42,
+              "CUSTOMER_ID": 4162,
+              "FULL_NAME": 137,
+              "VIN": 1342
+            }
+          },
+          "heldout": {
+            "source_occurrences": 16678,
+            "raw_left_csv": 0,
+            "raw_left_xlsx": 0,
+            "raw_left_rate_csv": 0.0,
+            "by_type": {}
+          },
+          "ngau_nhien": {
+            "source_occurrences": 16678,
+            "raw_left_csv": 0,
+            "raw_left_xlsx": 0,
+            "raw_left_rate_csv": 0.0,
+            "by_type": {}
+          }
+        }
+      }
     }
   ]
 }
