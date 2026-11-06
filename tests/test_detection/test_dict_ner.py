@@ -31,6 +31,6 @@ def test_dict_ner_scanner():
 
     print("All Dictionary NER tests passed!")
 
+
 if __name__ == "__main__":
     test_dict_ner_scanner()
-

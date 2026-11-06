@@ -18,6 +18,7 @@ class NERPipelines:
     Quá trình: Text gốc -> Regex -> Mask -> Dict -> Mask -> ML (GLiNER Zero-Shot) -> Mask -> Text sạch.
     use_ml=False skips the model tier (no model download, regex + dictionary only).
     """
+
     def __init__(self, dict_configs: dict | None = None, *, use_ml: bool = True, model_name: str | None = None):
         self.regex_scanner = RegexNERScanner()
         self.dict_scanner = DictionaryNERScanner()
@@ -70,7 +71,8 @@ def get_ner_pipeline() -> NERPipelines:
                 _pipeline = NERPipelines(dictionary, use_ml=settings.enable_ner, model_name=settings.ner_model_name)
             except Exception as exc:
                 if settings.enable_ner:
-                    logger.warning("ML NER unavailable (%s); free-text redaction runs regex/dictionary only",
-                                   type(exc).__name__)
+                    logger.warning(
+                        "ML NER unavailable (%s); free-text redaction runs regex/dictionary only", type(exc).__name__
+                    )
                 _pipeline = NERPipelines(dictionary, use_ml=False)
     return _pipeline

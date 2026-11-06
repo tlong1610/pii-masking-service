@@ -1,8 +1,9 @@
 """Quét MongoDB, áp chính sách, xuất CSV và XLSX đã che: python -m tool.export
 
-Mỗi collection ra một file, mỗi mảng ra một file con có khóa cha đã HMAC. Đọc hai lượt theo lô: lượt đầu lấy
-đủ bộ cột của schema không cố định, lượt sau che và ghi. Trường chưa có kết luận bị che toàn bộ. report.json ghi
-hành động của từng trường, không chứa giá trị.
+Mỗi collection ra một file, mỗi mảng ra một file con có khóa cha đã HMAC. Đọc hai lượt theo lô: lượt đầu lập profile
+đủ mọi trường của schema không cố định, lượt sau che và ghi. Trường chưa có kết luận bị che toàn bộ. Ô của trường giữ
+nguyên vẫn qua lớp chặn cuối, gặp PII thì che riêng giá trị đó. report.json ghi hành động và số lần chặn của từng trường,
+không chứa giá trị.
 """
 
 import argparse
@@ -11,6 +12,7 @@ import logging
 import re
 import sys
 import time
+from collections import Counter
 from collections.abc import Iterable
 from pathlib import Path
 from typing import Any
@@ -22,9 +24,9 @@ from piimask.connectors.mongo_connector import MongoConnector
 from piimask.detection.rule_engine import RuleBasedScanner
 from piimask.policy import FieldDecision, decide, undecided
 from piimask.schemas import PolicyAction
-from piimask.transform.flatten import Row, field_path, split_document
+from piimask.transform.flatten import Row, field_path, split_document, split_path
 from piimask.transform.hmac_hasher import hash_value, normalize_for_hmac
-from piimask.transform.mask_engine import apply_action
+from piimask.transform.mask_engine import apply_action, guard_value
 from tool.writers import WRITERS
 
 logger = logging.getLogger(__name__)
@@ -34,26 +36,35 @@ _LINK_COLUMNS = ["_parent_key", "_row_key", "_index"]
 _UNSAFE_NAME = re.compile(r"[^\w.-]+")
 
 
-def build_plans(connector: MongoConnector, join_keys: frozenset[str]) -> dict[str, dict[str, FieldDecision]]:
+def build_plans(
+    connector: MongoConnector,
+    join_keys: frozenset[str],
+    collections: list[str] | None = None,
+    batch_size: int = 1000,
+) -> dict[str, dict[str, FieldDecision]]:
     """Quyết định theo trường cho từng collection. _id luôn HMAC vì file con nối về nó."""
     scanner = RuleBasedScanner()
     plans: dict[str, dict[str, FieldDecision]] = {}
-    for task in connector.to_scanner_contract():
+    for task in connector.to_scanner_contract(collections=collections, batch_size=batch_size):
         path = task["field_path"]
         result = scanner.classify(task["column_profile"])
-        plans.setdefault(task["collection_name"], {})[path] = decide(path, result, join_keys)
+        samples = task["column_profile"].samples
+        plans.setdefault(task["collection_name"], {})[path] = decide(path, result, join_keys, samples)
     for plan in plans.values():
         plan[_ID_FIELD] = FieldDecision(_ID_FIELD, None, None, PolicyAction.HMAC.value, "khoa_chinh")
     return plans
 
 
-def discover_columns(documents: Iterable[dict]) -> dict[str, list[str]]:
-    """Bộ cột của từng bảng theo thứ tự gặp. Chỉ giữ tên cột, không giữ giá trị."""
-    tables: dict[str, dict[str, None]] = {}
-    for document in documents:
-        for row in split_document(document, ""):
-            tables.setdefault(row.table, {}).update(dict.fromkeys(row.fields))
-    return {table: list(columns) for table, columns in tables.items()}
+def tables_of(plan: dict[str, FieldDecision]) -> dict[str, list[str]]:
+    """Bộ cột của từng bảng theo thứ tự trong profile. Mảng chỉ chứa mảng con vẫn có bảng để giữ chuỗi khóa cha."""
+    tables: dict[str, list[str]] = {}
+    for path in plan:
+        table, column = split_path(path)
+        tables.setdefault(table, []).append(column)
+        while "[]." in table:
+            table = table.rpartition("[].")[0]
+            tables.setdefault(table, [])
+    return tables
 
 
 def table_file_name(collection: str, table: str) -> str:
@@ -77,6 +88,7 @@ class _Table:
             writer_class = WRITERS[name]
             self.writers.append(writer_class(base_path.with_name(base_path.name + writer_class.suffix), self.header))
         self.rows = 0
+        self.guard_hits: Counter = Counter()
 
     def write(self, row: Row, secret: str, key_version: str) -> None:
         values: list[Any] = []
@@ -87,8 +99,13 @@ class _Table:
                 row.index,
             ]
         for column in self.columns:
-            action = self.decisions[column].action
-            values.append(apply_action(row.fields.get(column), action, secret=secret, key_version=key_version)[1])
+            decision = self.decisions[column]
+            value = row.fields.get(column)
+            masked = apply_action(value, decision.action, secret=secret, key_version=key_version)[1]
+            if decision.action == PolicyAction.KEEP.value:
+                masked = guard_value(masked, decision.guard_exempt)
+                self.guard_hits[column] += masked != value
+            values.append(masked)
         for writer in self.writers:
             writer.write(values)
         self.rows += 1
@@ -106,10 +123,9 @@ def export_collection(
     batch_size: int,
 ) -> dict:
     started = time.perf_counter()
-    columns = discover_columns(connector.iter_documents(collection, batch_size))
     tables = {
         table: _Table(table, names, plan, out_dir / table_file_name(collection, table), formats)
-        for table, names in columns.items()
+        for table, names in tables_of(plan).items()
     }
     writers = [writer for table in tables.values() for writer in table.writers]
 
@@ -118,7 +134,7 @@ def export_collection(
         for document in connector.iter_documents(collection, batch_size):
             documents += 1
             for row in split_document(document, normalize_for_hmac(document[_ID_FIELD])):
-                # Bảng xuất hiện sau lượt đọc đầu thì bỏ qua: không ghi còn hơn ghi vào cột chưa được quyết định.
+                # Bảng xuất hiện sau lượt lập profile thì bỏ qua: không ghi còn hơn ghi vào cột chưa được quyết định.
                 if row.table in tables:
                     tables[row.table].write(row, secret, key_version)
         for writer in writers:
@@ -132,7 +148,11 @@ def export_collection(
         "documents": documents,
         "rows": {table.table or collection: table.rows for table in tables.values()},
         "files": sorted(writer.path.name for writer in writers),
-        "fields": [decision.to_dict() for table in tables.values() for decision in table.decisions.values()],
+        "fields": [
+            {**decision.to_dict(), "guard_hits": table.guard_hits[column]}
+            for table in tables.values()
+            for column, decision in table.decisions.items()
+        ],
         "seconds": round(time.perf_counter() - started, 3),
     }
 
@@ -151,7 +171,7 @@ def export_database(
     """Xuất các collection vào out_dir, ghi report.json và trả nội dung của nó."""
     out_dir.mkdir(parents=True, exist_ok=True)
     started = time.perf_counter()
-    plans = build_plans(connector, frozenset(name.lower() for name in join_keys))
+    plans = build_plans(connector, frozenset(name.lower() for name in join_keys), collections, batch_size)
     scan_seconds = time.perf_counter() - started
 
     report: dict[str, Any] = {
@@ -162,8 +182,6 @@ def export_database(
         "collections": {},
     }
     for name, plan in sorted(plans.items()):
-        if collections is not None and name not in collections:
-            continue
         report["collections"][name] = export_collection(
             connector,
             name,

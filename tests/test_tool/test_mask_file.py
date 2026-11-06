@@ -114,3 +114,18 @@ def test_refuses_same_file_and_unknown_format(tmp_path):
         mask_file(source, source, **KEYS)
     with pytest.raises(ValueError, match="parquet"):
         mask_file(tmp_path / "a.parquet", tmp_path / "b.parquet", **KEYS)
+
+
+def test_csv_kept_column_goes_through_last_guard(tmp_path):
+    source = tmp_path / "in.csv"
+    source.write_text("amount\n100\n200\n300\ngọi 0912345678\n", encoding="utf-8")
+    mask_csv(source, tmp_path / "out.csv", **KEYS)
+    assert (tmp_path / "out.csv").read_text(encoding="utf-8") == "amount\n100\n200\n300\ngọi [PHONE]\n"
+
+
+def test_csv_samples_cover_rows_after_the_first_hundred(tmp_path):
+    source = tmp_path / "in.csv"
+    rows = "".join(f"{'' if index < 500 else '0912345678'}\n" for index in range(600))
+    source.write_text(f"cot_la\n{rows}", encoding="utf-8")
+    decisions = mask_csv(source, tmp_path / "out.csv", **KEYS)
+    assert decisions[0].pii_type == "PHONE"

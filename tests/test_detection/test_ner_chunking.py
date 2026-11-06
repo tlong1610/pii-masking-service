@@ -34,14 +34,14 @@ def test_long_text_is_chunked_and_offsets_point_into_full_text(monkeypatch):
     text = " ".join(f"Câu số {i} giao hàng cho anh Bình ở kho." for i in range(30))
     matches = _scanner().scan_text(text)
     assert len(matches) == 30
-    assert all(text[m.start:m.end] == "Bình" for m in matches)
+    assert all(text[m.start : m.end] == "Bình" for m in matches)
 
 
 def test_single_overlong_sentence_is_cut_between_words(monkeypatch):
     monkeypatch.setattr(ml_ner, "MAX_CHUNK_TOKENS", 10)
     text = " ".join(["chữ"] * 50) + " Bình"
     matches = _scanner().scan_text(text)
-    assert [text[m.start:m.end] for m in matches] == ["Bình"]
+    assert [text[m.start : m.end] for m in matches] == ["Bình"]
 
 
 def test_redact_value_fails_closed_when_ner_errors(monkeypatch):

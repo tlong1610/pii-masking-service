@@ -26,12 +26,14 @@ class EntityMatch(BaseModel):
     pii_type: str
     text: str
 
+
 class RegexNERScanner:
     """
     Tầng 1 của phễu che văn bản tự do.
     Nhiệm vụ: Trích xuất các thực thể nhạy cảm (PII) dựa trên Regex và Rule từ bên trong khối văn bản dài (Free-text).
     Thay vì trả về kết quả cho cả cột, module này trả về chính xác vị trí (start, end) của thực thể để tiến hành mask/redact.
     """
+
     def __init__(self):
         # Biểu thức chính quy tìm kiếm bên trong text (không dùng ^ và $ như RuleBasedScanner)
         # Bí mật đứng trước để không bị số điện thoại hay CCCD cắt ngang. Mẫu có nhóm bắt thì chỉ che phần trong nhóm,
@@ -61,7 +63,7 @@ class RegexNERScanner:
             "CCCD": re.compile(r"(?<!\d)\d{12}(?!\d)"),
             # Bắt số thẻ tín dụng cơ bản 16 số, có thể có dấu - hoặc khoảng trắng
             "CREDIT_CARD": re.compile(r"(?<!\d)(?:\d{4}[-\s]?){3}\d{4}(?!\d)"),
-            "TAX_CODE": re.compile(r"(?<!\d)\d{10}(?:-\d{3})?(?!\d)")
+            "TAX_CODE": re.compile(r"(?<!\d)\d{10}(?:-\d{3})?(?!\d)"),
         }
 
     def scan_text(self, text: str) -> list[EntityMatch]:
@@ -79,12 +81,7 @@ class RegexNERScanner:
                         overlap = True
                         break
                 if not overlap:
-                    matches.append(EntityMatch(
-                        start=start,
-                        end=end,
-                        pii_type=pii_type,
-                        text=match.group(group)
-                    ))
+                    matches.append(EntityMatch(start=start, end=end, pii_type=pii_type, text=match.group(group)))
 
         # Sort matches by start position
         matches.sort(key=lambda x: x.start)

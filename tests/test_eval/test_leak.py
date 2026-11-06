@@ -84,18 +84,14 @@ def raw_left(tmp_path):
     return run
 
 
-def test_field_first_seen_after_scanned_documents_is_not_detected_but_stays_masked(raw_left):
+def test_field_first_seen_in_late_documents_is_detected(raw_left):
     decision, left = raw_left(_late("SoDienThoaiPhu"))
-    assert decision["pii_type"] is None and decision["reason"] == "ngoai_pham_vi_quet"
+    assert decision["pii_type"] == "PHONE" and decision["reason"] == "phat_hien"
     assert left == 0
 
 
-@pytest.mark.xfail(
-    raises=AssertionError,
-    strict=True,
-    reason="Sprint 1 mục 2: bộ quét chỉ lấy mẫu 100 document đầu, kết luận KEEP bị áp cho cả cột",
-)
-def test_pii_appearing_late_in_a_kept_field_does_not_leak(raw_left):
+def test_phone_typed_into_a_kept_field_is_caught_by_last_guard(raw_left):
     decision, left = raw_left(_late("PaidAt.StoreName"))
     assert decision["action"] == "KEEP"
+    assert decision["guard_hits"] == 3
     assert left == 0

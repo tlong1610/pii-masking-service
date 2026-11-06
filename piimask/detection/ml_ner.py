@@ -27,6 +27,7 @@ class MLNERScanner:
     - Offset chính xác: Trả về start/end offset chính xác, không bị lệch sub-word.
     - Mở rộng dễ dàng: Thêm nhãn mới chỉ cần thêm vào danh sách labels.
     """
+
     # Bảng ánh xạ nhãn GLiNER -> nhãn PII nội bộ của hệ thống
     LABEL_MAPPING = {
         "person": "PERSON_NAME",
@@ -50,9 +51,7 @@ class MLNERScanner:
         try:
             from gliner import GLiNER
         except ImportError:
-            raise ImportError(
-                "Vui lòng cài đặt gliner: pip install gliner"
-            )
+            raise ImportError("Vui lòng cài đặt gliner: pip install gliner")
 
         # Khởi tạo model GLiNER. Lần chạy đầu sẽ tải weights (~300MB) từ HuggingFace Hub.
         self.model = GLiNER.from_pretrained(model_name)
@@ -96,8 +95,12 @@ class MLNERScanner:
             if any(
                 tag in word
                 for tag in [
-                    "PERSON", "LOCATION", "ORGANIZATION",
-                    "PHONE", "EMAIL", "CCCD",
+                    "PERSON",
+                    "LOCATION",
+                    "ORGANIZATION",
+                    "PHONE",
+                    "EMAIL",
+                    "CCCD",
                 ]
             ):
                 continue
@@ -136,8 +139,9 @@ class MLNERScanner:
             if self._token_count(sentence.group()) <= MAX_CHUNK_TOKENS:
                 units.append(sentence.span())
             else:
-                units.extend((sentence.start() + w.start(), sentence.start() + w.end())
-                             for w in _WORD.finditer(sentence.group()))
+                units.extend(
+                    (sentence.start() + w.start(), sentence.start() + w.end()) for w in _WORD.finditer(sentence.group())
+                )
         chunks: list[tuple[int, str]] = []
         start = end = units[0][0]
         for unit_start, unit_end in units:

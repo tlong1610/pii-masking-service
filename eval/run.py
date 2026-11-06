@@ -85,9 +85,11 @@ def rename_set(collections: dict, labels: list[dict], make_names) -> tuple[dict,
         own = [label for label in labels if label["collection"] == name]
         names = make_names(name, segments_of(label["path"] for label in own))
         renamed[name] = [rename_document(doc, names) for doc in docs]
-        renamed_labels += [
-            {**label, "path": rename_path(label["path"], names), "original": label["path"]} for label in own
-        ]
+        for label in own:
+            renamed_label = {**label, "path": rename_path(label["path"], names), "original": label["path"]}
+            if "when" in label:
+                renamed_label["when"] = {**label["when"], "field": names.get(label["when"]["field"])}
+            renamed_labels.append(renamed_label)
     return renamed, renamed_labels
 
 

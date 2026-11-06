@@ -31,5 +31,6 @@ def test_regex_ner_scanner():
 
     print("All Regex NER tests passed!")
 
+
 if __name__ == "__main__":
     test_regex_ner_scanner()
