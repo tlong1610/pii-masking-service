@@ -47,6 +47,7 @@ def measure_export(connector: MongoConnector, formats: list[str], out_dir: Path)
         formats=formats,
         join_keys=["IdNumber"],
         collections=[PERF_COLLECTION],
+        enterprise_flag=get_settings().enterprise_flag_field,
     )
     seconds = time.perf_counter() - started
     result = report["collections"][PERF_COLLECTION]
@@ -69,7 +70,9 @@ def _count_documents(connector: MongoConnector) -> int:
 def measure_leak(connector: MongoConnector, out_dir: Path, fields: list[dict]) -> dict:
     """Dò giá trị gốc của trường có nhãn và trường hiếm đã gài trong mọi file ở out_dir."""
     documents = connector.iter_documents(PERF_COLLECTION)
-    values, totals = collect_values(documents, load_labels(_LABELS, PERF_COLLECTION))
+    values, totals, allowed = collect_values(documents, load_labels(_LABELS, PERF_COLLECTION))
+    for value in allowed:
+        values.pop(value, None)
     labelled_values = len(values)
 
     planted = rare_values(RARE_FIELDS, _count_documents(connector))

@@ -221,3 +221,58 @@ def test_waybill_format_is_routine_in_its_field_but_phone_there_is_still_caught(
     assert rows[-1]["TrackingCode"] == "gọi [PHONE]"
     fields = {item["path"]: item for item in report["collections"]["contracts"]["fields"]}
     assert list(fields["TrackingCode"]["guard_exempt"]) == ["CCCD"]
+
+
+def _customer(index, enterprise):
+    document = {
+        "_id": ObjectId(f"{index:024x}"),
+        "Phone": PHONE,
+        "CustomerId": f"20080000{index:04d}",
+        "TaxRegistrationNumber": f"010{index:07d}",
+        "Vehicle": {"VehicleId": "1HGCM82633A004352"},
+        "Items": [{"Serial": f"SN{index}"}],
+    }
+    if enterprise is not None:
+        document["EnterpriseCustomer"] = enterprise
+    return document
+
+
+def _export_customers(tmp_path, documents):
+    client = mongomock.MongoClient()
+    client["src"]["kh"].insert_many(documents)
+    connector = MongoConnector("mongodb://mockup", database_name="src", client=client)
+    return export_database(
+        connector, tmp_path, secret=SECRET, key_version=VERSION, formats=["csv"], enterprise_flag="EnterpriseCustomer"
+    )
+
+
+def test_enterprise_row_keeps_conditional_fields_and_individual_row_hides_them(tmp_path):
+    _export_customers(tmp_path, [_customer(1, True), _customer(2, False)])
+    enterprise, individual = _rows(tmp_path / "kh.csv")
+    assert enterprise["CustomerId"] == "200800000001"
+    assert enterprise["TaxRegistrationNumber"] == "0100000001"
+    assert enterprise["Vehicle.VehicleId"] == "1HGCM82633A004352"
+    assert enterprise["Phone"] == "091***678"
+    assert individual["CustomerId"] == hash_value("200800000002", secret=SECRET, key_version=VERSION)
+    assert individual["TaxRegistrationNumber"] == "***"
+    assert individual["Vehicle.VehicleId"] == hash_value("1HGCM82633A004352", secret=SECRET, key_version=VERSION)
+
+
+def test_enterprise_flag_reaches_rows_of_child_tables(tmp_path):
+    _export_customers(tmp_path, [_customer(1, True), _customer(2, False)])
+    enterprise, individual = _rows(tmp_path / "kh__Items.csv")
+    assert enterprise["Serial"] == "SN1"
+    assert individual["Serial"] == hash_value("SN2", secret=SECRET, key_version=VERSION)
+
+
+@pytest.mark.parametrize("flag", [None, "True", 1])
+def test_row_without_a_real_true_flag_counts_as_individual(tmp_path, flag):
+    documents = [_customer(1, True), _customer(2, False), {**_customer(3, False), "EnterpriseCustomer": flag}]
+    _export_customers(tmp_path, documents)
+    assert _rows(tmp_path / "kh.csv")[2]["CustomerId"] == hash_value("200800000003", secret=SECRET, key_version=VERSION)
+
+
+def test_collection_without_flag_always_masks(tmp_path):
+    _export_customers(tmp_path, [_customer(1, None)])
+    (row,) = _rows(tmp_path / "kh.csv")
+    assert row["CustomerId"] == hash_value("200800000001", secret=SECRET, key_version=VERSION)

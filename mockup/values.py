@@ -84,7 +84,8 @@ class FakeValues:
         return body + str((10 - total % 10) % 10)
 
     def vin(self) -> str:
-        return "DEMO" + "".join(self.rng.choice("ABCDEFGHJKLMNPRSTUVWXYZ0123456789") for _ in range(13))
+        """Đúng định dạng ISO 3779: 17 ký tự, không có I, O, Q."""
+        return "DEMX" + "".join(self.rng.choice("ABCDEFGHJKLMNPRSTUVWXYZ0123456789") for _ in range(13))
 
     def ip(self) -> str:
         return f"10.{self.rng.randint(0, 255)}.{self.rng.randint(0, 255)}.{self.rng.randint(1, 254)}"

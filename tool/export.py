@@ -22,7 +22,7 @@ from pymongo import MongoClient
 from piimask.config import DEV_HMAC_SECRET, Settings, get_settings
 from piimask.connectors.mongo_connector import MongoConnector
 from piimask.detection.rule_engine import RuleBasedScanner
-from piimask.policy import FieldDecision, decide, undecided
+from piimask.policy import FieldDecision, apply_context, decide, undecided
 from piimask.schemas import PolicyAction
 from piimask.transform.flatten import Row, field_path, split_document, split_path
 from piimask.transform.hmac_hasher import hash_value, normalize_for_hmac
@@ -41,6 +41,7 @@ def build_plans(
     join_keys: frozenset[str],
     collections: list[str] | None = None,
     batch_size: int = 1000,
+    enterprise_flag: str | None = None,
 ) -> dict[str, dict[str, FieldDecision]]:
     """Quyết định theo trường cho từng collection. _id luôn HMAC vì file con nối về nó."""
     scanner = RuleBasedScanner()
@@ -50,8 +51,9 @@ def build_plans(
         result = scanner.classify(task["column_profile"])
         samples = task["column_profile"].samples
         plans.setdefault(task["collection_name"], {})[path] = decide(path, result, join_keys, samples)
-    for plan in plans.values():
-        plan[_ID_FIELD] = FieldDecision(_ID_FIELD, None, None, PolicyAction.HMAC.value, "khoa_chinh")
+    for name, plan in plans.items():
+        plans[name] = apply_context(plan, enterprise_flag)
+        plans[name][_ID_FIELD] = FieldDecision(_ID_FIELD, None, None, PolicyAction.HMAC.value, "khoa_chinh")
     return plans
 
 
@@ -90,7 +92,7 @@ class _Table:
         self.rows = 0
         self.guard_hits: Counter = Counter()
 
-    def write(self, row: Row, secret: str, key_version: str) -> None:
+    def write(self, row: Row, document: dict, secret: str, key_version: str) -> None:
         values: list[Any] = []
         if self.table:
             values += [
@@ -101,10 +103,13 @@ class _Table:
         for column in self.columns:
             decision = self.decisions[column]
             value = row.fields.get(column)
-            masked = apply_action(value, decision.action, secret=secret, key_version=key_version)[1]
-            if decision.action == PolicyAction.KEEP.value:
-                masked = guard_value(masked, decision.guard_exempt)
+            # Chỉ đúng True mới là doanh nghiệp: thiếu cờ thì coi là khách cá nhân và che.
+            enterprise = decision.enterprise_flag is not None and document.get(decision.enterprise_flag) is True
+            if decision.action == PolicyAction.KEEP.value or enterprise:
+                masked = guard_value(value, decision.guard_exempt)
                 self.guard_hits[column] += masked != value
+            else:
+                masked = apply_action(value, decision.action, secret=secret, key_version=key_version)[1]
             values.append(masked)
         for writer in self.writers:
             writer.write(values)
@@ -136,7 +141,7 @@ def export_collection(
             for row in split_document(document, normalize_for_hmac(document[_ID_FIELD])):
                 # Bảng xuất hiện sau lượt lập profile thì bỏ qua: không ghi còn hơn ghi vào cột chưa được quyết định.
                 if row.table in tables:
-                    tables[row.table].write(row, secret, key_version)
+                    tables[row.table].write(row, document, secret, key_version)
         for writer in writers:
             writer.commit()
     except BaseException:
@@ -167,11 +172,13 @@ def export_database(
     join_keys: Iterable[str] = (),
     collections: list[str] | None = None,
     batch_size: int = 1000,
+    enterprise_flag: str | None = None,
 ) -> dict:
     """Xuất các collection vào out_dir, ghi report.json và trả nội dung của nó."""
     out_dir.mkdir(parents=True, exist_ok=True)
     started = time.perf_counter()
-    plans = build_plans(connector, frozenset(name.lower() for name in join_keys), collections, batch_size)
+    keys = frozenset(name.lower() for name in join_keys)
+    plans = build_plans(connector, keys, collections, batch_size, enterprise_flag)
     scan_seconds = time.perf_counter() - started
 
     report: dict[str, Any] = {
@@ -230,6 +237,7 @@ def main() -> None:
             join_keys=args.join_key,
             collections=args.collection,
             batch_size=args.batch_size,
+            enterprise_flag=settings.enterprise_flag_field,
         )
     except Exception as exc:
         # Thông báo lỗi của driver có thể chứa URI hoặc giá trị nên chỉ in loại lỗi.

@@ -287,3 +287,27 @@ def test_json_string_with_pii_is_free_text(scanner_default):
 
 def test_all_null_column_is_empty_even_with_a_pii_name(scanner_default):
     assert scanner_default.classify(_typed("session_id", "string", [])).inferred_pii_type == "EMPTY_COLUMN"
+
+
+@pytest.mark.parametrize(
+    ("name", "samples", "expected_type"),
+    [
+        ("CustomerId", ["200800000001"], "CUSTOMER_ID"),
+        ("SapCustomerId", ["2795220001"], "CUSTOMER_ID"),
+        ("VehicleId", ["1HGCM82633A004352"], "VIN"),
+        ("BatterySerial", ["ABC-123"], "DEVICE_SERIAL"),
+        ("Imei", ["356938035643809"], "DEVICE_SERIAL"),
+        ("f17", ["1HGCM82633A004352", "JH4KA7650MC000000"], "VIN"),
+    ],
+)
+def test_customer_and_asset_identifiers(scanner_default, name, samples, expected_type):
+    assert scanner_default.classify(_typed(name, "string", samples)).inferred_pii_type == expected_type
+
+
+def test_seventeen_characters_with_forbidden_letter_is_not_a_vin(scanner_default):
+    assert scanner_default.classify(_typed("f17", "string", ["1HGCM82633A00435O"])) is None
+
+
+def test_boolean_is_not_personal_data(scanner_default):
+    result = scanner_default.classify(_typed("EnterpriseCustomer", "boolean", ["True", "False"]))
+    assert result.inferred_pii_type == "NOT_PERSONAL_DATA"

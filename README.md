@@ -44,7 +44,9 @@ Nạp lại mockup: `docker compose run --rm seed`. Xóa cả dữ liệu MongoD
 
 Tool đọc bằng user chỉ đọc `mockup_ro`. Bộ quét đọc hết collection nên thấy đủ trường, kể cả trong mảng và lồng sâu, và
 lấy mẫu rải khắp collection. Trường chưa có kết luận bị che toàn bộ. Ô của trường giữ nguyên vẫn qua lớp chặn cuối bằng
-regex, gặp PII thì che riêng giá trị đó. Xem hành động và số lần chặn của từng trường ở `data/export/report.json`.
+regex, gặp PII thì che riêng giá trị đó. Mã khách, mã số thuế, số khung, serial của khách doanh nghiệp giữ nguyên theo
+cờ `ENTERPRISE_FLAG_FIELD`; thiếu cờ thì coi là khách cá nhân và che. Số khung, serial trong collection không có dữ liệu
+định danh người thì giữ nguyên. Xem hành động và số lần chặn của từng trường ở `data/export/report.json`.
 
 Chạy tool trên máy thay vì trong Docker: đặt `MONGO_URI` là URI của user chỉ đọc (xem `.env.example`) rồi
 `python -m tool.export --join-key IdNumber`. Che một file: `python -m tool.mask_file <vào> <ra>`.

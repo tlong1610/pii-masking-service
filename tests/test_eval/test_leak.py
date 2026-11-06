@@ -23,9 +23,10 @@ def test_collect_values_applies_conditions_and_reads_arrays():
         {"Phone": "", "Tax": "0100000001", "Enterprise": True},
         {"Phone": None},
     ]
-    values, totals = collect_values(documents, LABELS)
+    values, totals, allowed = collect_values(documents, LABELS)
     assert values == {"0912345678": "PHONE", "8000000001": "TAX_CODE", "S1": "VIN"}
     assert totals == {"PHONE": 1, "TAX_CODE": 1, "VIN": 1}
+    assert allowed == {"0100000001"}
 
 
 def test_load_labels_skips_other_collections_and_free_text(tmp_path):
