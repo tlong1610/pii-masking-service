@@ -87,6 +87,15 @@ class RuleBasedScanner:
                 reasoning="Mã số thuế doanh nghiệp/tổ chức (công khai, không phải PII cá nhân).",
             )
 
+        # Bước 0.3: Cột rỗng (mọi giá trị NULL) - không có gì để che, kể cả khi tên cột giống PII.
+        if not any(str(sample).strip() for sample in col_profile.samples):
+            return FieldScanResult(
+                field_name=col_profile.column_name,
+                inferred_pii_type="EMPTY_COLUMN",
+                confidence=1.0,
+                reasoning="Cột không có dữ liệu (toàn NULL): không cần chia sẻ.",
+            )
+
         # Bước 0.4: Kiểm tra Free-text chứa PII nhúng (SĐT, Email, CCCD)
         if set(name_tokens(col_name)) & {"notes", "note", "body", "description", "comment", "message", "chu"}:
             phone_sub = re.compile(r"(0|84|\+84)[35789]\d{8}")
@@ -131,15 +140,6 @@ class RuleBasedScanner:
         negative_type = self._check_column_name(col_profile.column_name, NEGATIVE_COLUMNS)
         if negative_type:
             return self._negative_result(col_profile, negative_type)
-
-        # Bước 2.5: Cột rỗng (mọi giá trị NULL) - không có gì để chia sẻ, đề xuất loại bỏ.
-        if not any(str(sample).strip() for sample in col_profile.samples):
-            return FieldScanResult(
-                field_name=col_profile.column_name,
-                inferred_pii_type="EMPTY_COLUMN",
-                confidence=1.0,
-                reasoning="Cột không có dữ liệu (toàn NULL): không cần chia sẻ.",
-            )
 
         # Bước 2.6: Ngày/giờ sự kiện (đặt hàng, tuyển dụng, tạo...) - ngày sinh đã bị bắt ở Bước 1 theo tên.
         if _is_event_datetime(col_profile):

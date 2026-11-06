@@ -16,6 +16,13 @@ HIGH_CONFIDENCE_COLUMNS = {
     PIIType.PHONE.value: ["phone", "telephone", "tel", "sdt", "so_dien_thoai", "dien_thoai", "mobile", "fax"],
     PIIType.TAX_CODE.value: ["tax_code", "mst", "ma_so_thue"],
     PIIType.DOB.value: ["date_of_birth", "birth_date", "birthday", "dob", "ngay_sinh", "sinh_nhat"],
+    "PASSWORD": ["password", "passwd", "pwd", "passphrase", "mat_khau", "matkhau"],
+    "TOKEN": [
+        "token", "access_token", "refresh_token", "api_key", "apikey", "authorization", "secret", "client_secret",
+        "private_key",
+    ],
+    "SESSION_ID": ["session", "session_id", "sessionid"],
+    "GPS": ["gps", "latitude", "longitude", "lat", "lng", "toa_do"],
     # IP/MAC là định danh gián tiếp, không phải địa chỉ nhà: phải đứng trước ADDRESS.
     "IP_ADDRESS": ["ip_address", "ip", "mac_address"],
     PIIType.ADDRESS.value: ["address", "dia_chi", "street", "street_address"],

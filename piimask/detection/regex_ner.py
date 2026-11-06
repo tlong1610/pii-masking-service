@@ -2,7 +2,6 @@ import re
 
 from pydantic import BaseModel
 
-
 # Giá trị sau khóa: trong dấu nháy lấy tới dấu nháy đóng; không nháy thì lấy tới khoảng trắng, dấu & hoặc dấu nháy,
 # bỏ dấu câu ở cuối.
 _VALUE = r"""(?:"([^"]+)"|'([^']+)'|([^\s&"']*[^\s&"',;.]))"""
