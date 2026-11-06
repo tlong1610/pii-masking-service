@@ -9,7 +9,6 @@ from piimask.detection.regex_patterns import (
     match_column_keyword,
     name_tokens,
 )
-from piimask.detection.taxonomy import PIIType
 from piimask.schemas import ColumnProfile, FieldScanResult
 
 _DATETIME_TYPE_PREFIXES = ("date", "timestamp", "time")
