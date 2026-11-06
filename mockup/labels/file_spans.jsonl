@@ -2398,3 +2398,603 @@
 {"file": "log/app.log.gz", "line": 598, "labels": [{"type": "EMAIL", "start": 44, "end": 64}, {"type": "TOKEN", "start": 81, "end": 117}]}
 {"file": "log/app.log.gz", "line": 599, "labels": [{"type": "GPS", "start": 44, "end": 62}]}
 {"file": "log/app.log.gz", "line": 600, "labels": [{"type": "FULL_NAME", "start": 62, "end": 75}, {"type": "PHONE", "start": 91, "end": 101}]}
+{"file": "log/secrets.log", "line": 1, "labels": [{"type": "PASSWORD", "start": 34, "end": 45}]}
+{"file": "log/secrets.log", "line": 2, "labels": []}
+{"file": "log/secrets.log", "line": 3, "labels": [{"type": "TOKEN", "start": 55, "end": 91}]}
+{"file": "log/secrets.log", "line": 4, "labels": []}
+{"file": "log/secrets.log", "line": 5, "labels": [{"type": "TOKEN", "start": 56, "end": 137}]}
+{"file": "log/secrets.log", "line": 6, "labels": []}
+{"file": "log/secrets.log", "line": 7, "labels": [{"type": "TOKEN", "start": 56, "end": 137}]}
+{"file": "log/secrets.log", "line": 8, "labels": [{"type": "GPS", "start": 38, "end": 45}, {"type": "GPS", "start": 50, "end": 59}]}
+{"file": "log/secrets.log", "line": 9, "labels": [{"type": "IP_ADDRESS", "start": 36, "end": 49}, {"type": "IP_ADDRESS", "start": 54, "end": 67}]}
+{"file": "log/secrets.log", "line": 10, "labels": [{"type": "TOKEN", "start": 50, "end": 86}]}
+{"file": "log/secrets.log", "line": 11, "labels": [{"type": "TOKEN", "start": 45, "end": 85}]}
+{"file": "log/secrets.log", "line": 12, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 13, "labels": []}
+{"file": "log/secrets.log", "line": 14, "labels": [{"type": "PASSWORD", "start": 60, "end": 71}]}
+{"file": "log/secrets.log", "line": 15, "labels": [{"type": "SESSION_ID", "start": 49, "end": 81}]}
+{"file": "log/secrets.log", "line": 16, "labels": []}
+{"file": "log/secrets.log", "line": 17, "labels": [{"type": "TOKEN", "start": 55, "end": 91}]}
+{"file": "log/secrets.log", "line": 18, "labels": []}
+{"file": "log/secrets.log", "line": 19, "labels": [{"type": "SESSION_ID", "start": 41, "end": 73}]}
+{"file": "log/secrets.log", "line": 20, "labels": []}
+{"file": "log/secrets.log", "line": 21, "labels": [{"type": "TOKEN", "start": 55, "end": 91}]}
+{"file": "log/secrets.log", "line": 22, "labels": []}
+{"file": "log/secrets.log", "line": 23, "labels": []}
+{"file": "log/secrets.log", "line": 24, "labels": [{"type": "GPS", "start": 38, "end": 46}, {"type": "GPS", "start": 51, "end": 60}]}
+{"file": "log/secrets.log", "line": 25, "labels": [{"type": "TOKEN", "start": 50, "end": 86}]}
+{"file": "log/secrets.log", "line": 26, "labels": []}
+{"file": "log/secrets.log", "line": 27, "labels": [{"type": "TOKEN", "start": 55, "end": 91}]}
+{"file": "log/secrets.log", "line": 28, "labels": []}
+{"file": "log/secrets.log", "line": 29, "labels": [{"type": "SESSION_ID", "start": 49, "end": 81}]}
+{"file": "log/secrets.log", "line": 30, "labels": []}
+{"file": "log/secrets.log", "line": 31, "labels": [{"type": "PASSWORD", "start": 34, "end": 45}]}
+{"file": "log/secrets.log", "line": 32, "labels": [{"type": "TOKEN", "start": 45, "end": 85}]}
+{"file": "log/secrets.log", "line": 33, "labels": [{"type": "SESSION_ID", "start": 49, "end": 81}]}
+{"file": "log/secrets.log", "line": 34, "labels": []}
+{"file": "log/secrets.log", "line": 35, "labels": [{"type": "PASSWORD", "start": 34, "end": 45}]}
+{"file": "log/secrets.log", "line": 36, "labels": []}
+{"file": "log/secrets.log", "line": 37, "labels": [{"type": "TOKEN", "start": 50, "end": 86}]}
+{"file": "log/secrets.log", "line": 38, "labels": [{"type": "IP_ADDRESS", "start": 36, "end": 49}, {"type": "IP_ADDRESS", "start": 54, "end": 67}]}
+{"file": "log/secrets.log", "line": 39, "labels": [{"type": "IP_ADDRESS", "start": 36, "end": 49}, {"type": "IP_ADDRESS", "start": 54, "end": 66}]}
+{"file": "log/secrets.log", "line": 40, "labels": []}
+{"file": "log/secrets.log", "line": 41, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 42, "labels": []}
+{"file": "log/secrets.log", "line": 43, "labels": [{"type": "GPS", "start": 38, "end": 45}, {"type": "GPS", "start": 50, "end": 59}]}
+{"file": "log/secrets.log", "line": 44, "labels": []}
+{"file": "log/secrets.log", "line": 45, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 46, "labels": []}
+{"file": "log/secrets.log", "line": 47, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 48, "labels": []}
+{"file": "log/secrets.log", "line": 49, "labels": []}
+{"file": "log/secrets.log", "line": 50, "labels": [{"type": "GPS", "start": 38, "end": 46}, {"type": "GPS", "start": 51, "end": 60}]}
+{"file": "log/secrets.log", "line": 51, "labels": [{"type": "IP_ADDRESS", "start": 36, "end": 49}, {"type": "IP_ADDRESS", "start": 54, "end": 66}]}
+{"file": "log/secrets.log", "line": 52, "labels": []}
+{"file": "log/secrets.log", "line": 53, "labels": [{"type": "TOKEN", "start": 55, "end": 91}]}
+{"file": "log/secrets.log", "line": 54, "labels": []}
+{"file": "log/secrets.log", "line": 55, "labels": []}
+{"file": "log/secrets.log", "line": 56, "labels": []}
+{"file": "log/secrets.log", "line": 57, "labels": []}
+{"file": "log/secrets.log", "line": 58, "labels": [{"type": "TOKEN", "start": 56, "end": 137}]}
+{"file": "log/secrets.log", "line": 59, "labels": []}
+{"file": "log/secrets.log", "line": 60, "labels": []}
+{"file": "log/secrets.log", "line": 61, "labels": [{"type": "SESSION_ID", "start": 41, "end": 73}]}
+{"file": "log/secrets.log", "line": 62, "labels": []}
+{"file": "log/secrets.log", "line": 63, "labels": [{"type": "GPS", "start": 38, "end": 46}, {"type": "GPS", "start": 51, "end": 60}]}
+{"file": "log/secrets.log", "line": 64, "labels": [{"type": "GPS", "start": 38, "end": 46}, {"type": "GPS", "start": 51, "end": 60}]}
+{"file": "log/secrets.log", "line": 65, "labels": [{"type": "TOKEN", "start": 50, "end": 86}]}
+{"file": "log/secrets.log", "line": 66, "labels": []}
+{"file": "log/secrets.log", "line": 67, "labels": []}
+{"file": "log/secrets.log", "line": 68, "labels": [{"type": "SESSION_ID", "start": 49, "end": 81}]}
+{"file": "log/secrets.log", "line": 69, "labels": [{"type": "SESSION_ID", "start": 49, "end": 81}]}
+{"file": "log/secrets.log", "line": 70, "labels": []}
+{"file": "log/secrets.log", "line": 71, "labels": []}
+{"file": "log/secrets.log", "line": 72, "labels": []}
+{"file": "log/secrets.log", "line": 73, "labels": [{"type": "PASSWORD", "start": 34, "end": 45}]}
+{"file": "log/secrets.log", "line": 74, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 75, "labels": [{"type": "TOKEN", "start": 45, "end": 85}]}
+{"file": "log/secrets.log", "line": 76, "labels": []}
+{"file": "log/secrets.log", "line": 77, "labels": [{"type": "PASSWORD", "start": 60, "end": 71}]}
+{"file": "log/secrets.log", "line": 78, "labels": [{"type": "IP_ADDRESS", "start": 36, "end": 50}, {"type": "IP_ADDRESS", "start": 55, "end": 67}]}
+{"file": "log/secrets.log", "line": 79, "labels": []}
+{"file": "log/secrets.log", "line": 80, "labels": [{"type": "TOKEN", "start": 55, "end": 91}]}
+{"file": "log/secrets.log", "line": 81, "labels": [{"type": "GPS", "start": 38, "end": 46}, {"type": "GPS", "start": 51, "end": 60}]}
+{"file": "log/secrets.log", "line": 82, "labels": [{"type": "TOKEN", "start": 50, "end": 86}]}
+{"file": "log/secrets.log", "line": 83, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 84, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 85, "labels": []}
+{"file": "log/secrets.log", "line": 86, "labels": []}
+{"file": "log/secrets.log", "line": 87, "labels": [{"type": "IP_ADDRESS", "start": 36, "end": 49}, {"type": "IP_ADDRESS", "start": 54, "end": 66}]}
+{"file": "log/secrets.log", "line": 88, "labels": []}
+{"file": "log/secrets.log", "line": 89, "labels": [{"type": "PASSWORD", "start": 60, "end": 71}]}
+{"file": "log/secrets.log", "line": 90, "labels": []}
+{"file": "log/secrets.log", "line": 91, "labels": [{"type": "GPS", "start": 38, "end": 46}, {"type": "GPS", "start": 51, "end": 60}]}
+{"file": "log/secrets.log", "line": 92, "labels": [{"type": "IP_ADDRESS", "start": 36, "end": 49}, {"type": "IP_ADDRESS", "start": 54, "end": 66}]}
+{"file": "log/secrets.log", "line": 93, "labels": []}
+{"file": "log/secrets.log", "line": 94, "labels": []}
+{"file": "log/secrets.log", "line": 95, "labels": [{"type": "TOKEN", "start": 45, "end": 85}]}
+{"file": "log/secrets.log", "line": 96, "labels": []}
+{"file": "log/secrets.log", "line": 97, "labels": [{"type": "PASSWORD", "start": 60, "end": 71}]}
+{"file": "log/secrets.log", "line": 98, "labels": []}
+{"file": "log/secrets.log", "line": 99, "labels": []}
+{"file": "log/secrets.log", "line": 100, "labels": [{"type": "IP_ADDRESS", "start": 36, "end": 48}, {"type": "IP_ADDRESS", "start": 53, "end": 65}]}
+{"file": "log/secrets.log", "line": 101, "labels": []}
+{"file": "log/secrets.log", "line": 102, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 103, "labels": []}
+{"file": "log/secrets.log", "line": 104, "labels": [{"type": "GPS", "start": 38, "end": 45}, {"type": "GPS", "start": 50, "end": 59}]}
+{"file": "log/secrets.log", "line": 105, "labels": []}
+{"file": "log/secrets.log", "line": 106, "labels": [{"type": "PASSWORD", "start": 34, "end": 45}]}
+{"file": "log/secrets.log", "line": 107, "labels": []}
+{"file": "log/secrets.log", "line": 108, "labels": [{"type": "PASSWORD", "start": 34, "end": 45}]}
+{"file": "log/secrets.log", "line": 109, "labels": []}
+{"file": "log/secrets.log", "line": 110, "labels": [{"type": "TOKEN", "start": 50, "end": 86}]}
+{"file": "log/secrets.log", "line": 111, "labels": [{"type": "TOKEN", "start": 56, "end": 137}]}
+{"file": "log/secrets.log", "line": 112, "labels": [{"type": "PASSWORD", "start": 34, "end": 45}]}
+{"file": "log/secrets.log", "line": 113, "labels": []}
+{"file": "log/secrets.log", "line": 114, "labels": [{"type": "TOKEN", "start": 50, "end": 86}]}
+{"file": "log/secrets.log", "line": 115, "labels": []}
+{"file": "log/secrets.log", "line": 116, "labels": []}
+{"file": "log/secrets.log", "line": 117, "labels": [{"type": "GPS", "start": 38, "end": 46}, {"type": "GPS", "start": 51, "end": 60}]}
+{"file": "log/secrets.log", "line": 118, "labels": [{"type": "PASSWORD", "start": 60, "end": 71}]}
+{"file": "log/secrets.log", "line": 119, "labels": [{"type": "PASSWORD", "start": 60, "end": 71}]}
+{"file": "log/secrets.log", "line": 120, "labels": []}
+{"file": "log/secrets.log", "line": 121, "labels": [{"type": "TOKEN", "start": 56, "end": 137}]}
+{"file": "log/secrets.log", "line": 122, "labels": []}
+{"file": "log/secrets.log", "line": 123, "labels": [{"type": "TOKEN", "start": 50, "end": 86}]}
+{"file": "log/secrets.log", "line": 124, "labels": []}
+{"file": "log/secrets.log", "line": 125, "labels": [{"type": "SESSION_ID", "start": 49, "end": 81}]}
+{"file": "log/secrets.log", "line": 126, "labels": []}
+{"file": "log/secrets.log", "line": 127, "labels": [{"type": "SESSION_ID", "start": 49, "end": 81}]}
+{"file": "log/secrets.log", "line": 128, "labels": []}
+{"file": "log/secrets.log", "line": 129, "labels": [{"type": "TOKEN", "start": 50, "end": 86}]}
+{"file": "log/secrets.log", "line": 130, "labels": [{"type": "TOKEN", "start": 45, "end": 85}]}
+{"file": "log/secrets.log", "line": 131, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 132, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 133, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 134, "labels": [{"type": "PASSWORD", "start": 60, "end": 71}]}
+{"file": "log/secrets.log", "line": 135, "labels": [{"type": "TOKEN", "start": 50, "end": 86}]}
+{"file": "log/secrets.log", "line": 136, "labels": []}
+{"file": "log/secrets.log", "line": 137, "labels": [{"type": "GPS", "start": 38, "end": 45}, {"type": "GPS", "start": 50, "end": 59}]}
+{"file": "log/secrets.log", "line": 138, "labels": [{"type": "TOKEN", "start": 45, "end": 85}]}
+{"file": "log/secrets.log", "line": 139, "labels": []}
+{"file": "log/secrets.log", "line": 140, "labels": []}
+{"file": "log/secrets.log", "line": 141, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 142, "labels": [{"type": "PASSWORD", "start": 60, "end": 71}]}
+{"file": "log/secrets.log", "line": 143, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 144, "labels": [{"type": "TOKEN", "start": 45, "end": 85}]}
+{"file": "log/secrets.log", "line": 145, "labels": [{"type": "TOKEN", "start": 55, "end": 91}]}
+{"file": "log/secrets.log", "line": 146, "labels": [{"type": "PASSWORD", "start": 34, "end": 45}]}
+{"file": "log/secrets.log", "line": 147, "labels": [{"type": "TOKEN", "start": 50, "end": 86}]}
+{"file": "log/secrets.log", "line": 148, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 149, "labels": []}
+{"file": "log/secrets.log", "line": 150, "labels": []}
+{"file": "log/secrets.log", "line": 151, "labels": []}
+{"file": "log/secrets.log", "line": 152, "labels": []}
+{"file": "log/secrets.log", "line": 153, "labels": []}
+{"file": "log/secrets.log", "line": 154, "labels": [{"type": "TOKEN", "start": 55, "end": 91}]}
+{"file": "log/secrets.log", "line": 155, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 156, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 157, "labels": []}
+{"file": "log/secrets.log", "line": 158, "labels": []}
+{"file": "log/secrets.log", "line": 159, "labels": [{"type": "TOKEN", "start": 50, "end": 86}]}
+{"file": "log/secrets.log", "line": 160, "labels": []}
+{"file": "log/secrets.log", "line": 161, "labels": []}
+{"file": "log/secrets.log", "line": 162, "labels": []}
+{"file": "log/secrets.log", "line": 163, "labels": []}
+{"file": "log/secrets.log", "line": 164, "labels": [{"type": "TOKEN", "start": 45, "end": 85}]}
+{"file": "log/secrets.log", "line": 165, "labels": [{"type": "IP_ADDRESS", "start": 36, "end": 49}, {"type": "IP_ADDRESS", "start": 54, "end": 68}]}
+{"file": "log/secrets.log", "line": 166, "labels": [{"type": "SESSION_ID", "start": 41, "end": 73}]}
+{"file": "log/secrets.log", "line": 167, "labels": []}
+{"file": "log/secrets.log", "line": 168, "labels": [{"type": "IP_ADDRESS", "start": 36, "end": 49}, {"type": "IP_ADDRESS", "start": 54, "end": 68}]}
+{"file": "log/secrets.log", "line": 169, "labels": [{"type": "TOKEN", "start": 56, "end": 137}]}
+{"file": "log/secrets.log", "line": 170, "labels": []}
+{"file": "log/secrets.log", "line": 171, "labels": [{"type": "PASSWORD", "start": 60, "end": 71}]}
+{"file": "log/secrets.log", "line": 172, "labels": [{"type": "TOKEN", "start": 45, "end": 85}]}
+{"file": "log/secrets.log", "line": 173, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 174, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 175, "labels": [{"type": "IP_ADDRESS", "start": 36, "end": 49}, {"type": "IP_ADDRESS", "start": 54, "end": 67}]}
+{"file": "log/secrets.log", "line": 176, "labels": [{"type": "TOKEN", "start": 55, "end": 91}]}
+{"file": "log/secrets.log", "line": 177, "labels": [{"type": "TOKEN", "start": 50, "end": 86}]}
+{"file": "log/secrets.log", "line": 178, "labels": [{"type": "TOKEN", "start": 45, "end": 85}]}
+{"file": "log/secrets.log", "line": 179, "labels": []}
+{"file": "log/secrets.log", "line": 180, "labels": [{"type": "IP_ADDRESS", "start": 36, "end": 49}, {"type": "IP_ADDRESS", "start": 54, "end": 65}]}
+{"file": "log/secrets.log", "line": 181, "labels": [{"type": "SESSION_ID", "start": 49, "end": 81}]}
+{"file": "log/secrets.log", "line": 182, "labels": [{"type": "TOKEN", "start": 45, "end": 85}]}
+{"file": "log/secrets.log", "line": 183, "labels": [{"type": "TOKEN", "start": 50, "end": 86}]}
+{"file": "log/secrets.log", "line": 184, "labels": []}
+{"file": "log/secrets.log", "line": 185, "labels": [{"type": "IP_ADDRESS", "start": 36, "end": 46}, {"type": "IP_ADDRESS", "start": 51, "end": 64}]}
+{"file": "log/secrets.log", "line": 186, "labels": [{"type": "TOKEN", "start": 56, "end": 137}]}
+{"file": "log/secrets.log", "line": 187, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 188, "labels": [{"type": "SESSION_ID", "start": 41, "end": 73}]}
+{"file": "log/secrets.log", "line": 189, "labels": [{"type": "TOKEN", "start": 55, "end": 91}]}
+{"file": "log/secrets.log", "line": 190, "labels": [{"type": "TOKEN", "start": 50, "end": 86}]}
+{"file": "log/secrets.log", "line": 191, "labels": [{"type": "PASSWORD", "start": 60, "end": 71}]}
+{"file": "log/secrets.log", "line": 192, "labels": []}
+{"file": "log/secrets.log", "line": 193, "labels": [{"type": "TOKEN", "start": 45, "end": 85}]}
+{"file": "log/secrets.log", "line": 194, "labels": [{"type": "GPS", "start": 38, "end": 46}, {"type": "GPS", "start": 51, "end": 60}]}
+{"file": "log/secrets.log", "line": 195, "labels": [{"type": "GPS", "start": 38, "end": 46}, {"type": "GPS", "start": 51, "end": 60}]}
+{"file": "log/secrets.log", "line": 196, "labels": []}
+{"file": "log/secrets.log", "line": 197, "labels": []}
+{"file": "log/secrets.log", "line": 198, "labels": [{"type": "GPS", "start": 38, "end": 46}, {"type": "GPS", "start": 51, "end": 60}]}
+{"file": "log/secrets.log", "line": 199, "labels": [{"type": "IP_ADDRESS", "start": 36, "end": 49}, {"type": "IP_ADDRESS", "start": 54, "end": 66}]}
+{"file": "log/secrets.log", "line": 200, "labels": []}
+{"file": "log/secrets.log", "line": 201, "labels": [{"type": "GPS", "start": 38, "end": 46}, {"type": "GPS", "start": 51, "end": 60}]}
+{"file": "log/secrets.log", "line": 202, "labels": [{"type": "SESSION_ID", "start": 49, "end": 81}]}
+{"file": "log/secrets.log", "line": 203, "labels": [{"type": "TOKEN", "start": 55, "end": 91}]}
+{"file": "log/secrets.log", "line": 204, "labels": []}
+{"file": "log/secrets.log", "line": 205, "labels": []}
+{"file": "log/secrets.log", "line": 206, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 207, "labels": []}
+{"file": "log/secrets.log", "line": 208, "labels": [{"type": "GPS", "start": 38, "end": 46}, {"type": "GPS", "start": 51, "end": 60}]}
+{"file": "log/secrets.log", "line": 209, "labels": []}
+{"file": "log/secrets.log", "line": 210, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 211, "labels": []}
+{"file": "log/secrets.log", "line": 212, "labels": [{"type": "SESSION_ID", "start": 41, "end": 73}]}
+{"file": "log/secrets.log", "line": 213, "labels": []}
+{"file": "log/secrets.log", "line": 214, "labels": []}
+{"file": "log/secrets.log", "line": 215, "labels": [{"type": "TOKEN", "start": 45, "end": 85}]}
+{"file": "log/secrets.log", "line": 216, "labels": [{"type": "TOKEN", "start": 50, "end": 86}]}
+{"file": "log/secrets.log", "line": 217, "labels": []}
+{"file": "log/secrets.log", "line": 218, "labels": [{"type": "PASSWORD", "start": 60, "end": 71}]}
+{"file": "log/secrets.log", "line": 219, "labels": []}
+{"file": "log/secrets.log", "line": 220, "labels": []}
+{"file": "log/secrets.log", "line": 221, "labels": []}
+{"file": "log/secrets.log", "line": 222, "labels": []}
+{"file": "log/secrets.log", "line": 223, "labels": [{"type": "TOKEN", "start": 56, "end": 137}]}
+{"file": "log/secrets.log", "line": 224, "labels": [{"type": "IP_ADDRESS", "start": 36, "end": 47}, {"type": "IP_ADDRESS", "start": 52, "end": 65}]}
+{"file": "log/secrets.log", "line": 225, "labels": [{"type": "TOKEN", "start": 56, "end": 137}]}
+{"file": "log/secrets.log", "line": 226, "labels": []}
+{"file": "log/secrets.log", "line": 227, "labels": [{"type": "TOKEN", "start": 50, "end": 86}]}
+{"file": "log/secrets.log", "line": 228, "labels": []}
+{"file": "log/secrets.log", "line": 229, "labels": []}
+{"file": "log/secrets.log", "line": 230, "labels": [{"type": "TOKEN", "start": 56, "end": 137}]}
+{"file": "log/secrets.log", "line": 231, "labels": []}
+{"file": "log/secrets.log", "line": 232, "labels": [{"type": "GPS", "start": 38, "end": 46}, {"type": "GPS", "start": 51, "end": 60}]}
+{"file": "log/secrets.log", "line": 233, "labels": []}
+{"file": "log/secrets.log", "line": 234, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 235, "labels": []}
+{"file": "log/secrets.log", "line": 236, "labels": [{"type": "IP_ADDRESS", "start": 36, "end": 47}, {"type": "IP_ADDRESS", "start": 52, "end": 64}]}
+{"file": "log/secrets.log", "line": 237, "labels": [{"type": "TOKEN", "start": 55, "end": 91}]}
+{"file": "log/secrets.log", "line": 238, "labels": []}
+{"file": "log/secrets.log", "line": 239, "labels": [{"type": "TOKEN", "start": 55, "end": 91}]}
+{"file": "log/secrets.log", "line": 240, "labels": [{"type": "SESSION_ID", "start": 41, "end": 73}]}
+{"file": "log/secrets.log", "line": 241, "labels": []}
+{"file": "log/secrets.log", "line": 242, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 243, "labels": []}
+{"file": "log/secrets.log", "line": 244, "labels": [{"type": "TOKEN", "start": 55, "end": 91}]}
+{"file": "log/secrets.log", "line": 245, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 246, "labels": [{"type": "SESSION_ID", "start": 41, "end": 73}]}
+{"file": "log/secrets.log", "line": 247, "labels": [{"type": "GPS", "start": 38, "end": 46}, {"type": "GPS", "start": 51, "end": 60}]}
+{"file": "log/secrets.log", "line": 248, "labels": [{"type": "TOKEN", "start": 56, "end": 137}]}
+{"file": "log/secrets.log", "line": 249, "labels": [{"type": "TOKEN", "start": 50, "end": 86}]}
+{"file": "log/secrets.log", "line": 250, "labels": [{"type": "PASSWORD", "start": 60, "end": 71}]}
+{"file": "log/secrets.log", "line": 251, "labels": [{"type": "TOKEN", "start": 50, "end": 86}]}
+{"file": "log/secrets.log", "line": 252, "labels": []}
+{"file": "log/secrets.log", "line": 253, "labels": []}
+{"file": "log/secrets.log", "line": 254, "labels": [{"type": "SESSION_ID", "start": 41, "end": 73}]}
+{"file": "log/secrets.log", "line": 255, "labels": [{"type": "TOKEN", "start": 50, "end": 86}]}
+{"file": "log/secrets.log", "line": 256, "labels": [{"type": "SESSION_ID", "start": 41, "end": 73}]}
+{"file": "log/secrets.log", "line": 257, "labels": [{"type": "SESSION_ID", "start": 41, "end": 73}]}
+{"file": "log/secrets.log", "line": 258, "labels": [{"type": "PASSWORD", "start": 60, "end": 71}]}
+{"file": "log/secrets.log", "line": 259, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 260, "labels": []}
+{"file": "log/secrets.log", "line": 261, "labels": [{"type": "TOKEN", "start": 45, "end": 85}]}
+{"file": "log/secrets.log", "line": 262, "labels": [{"type": "TOKEN", "start": 56, "end": 137}]}
+{"file": "log/secrets.log", "line": 263, "labels": [{"type": "TOKEN", "start": 56, "end": 137}]}
+{"file": "log/secrets.log", "line": 264, "labels": []}
+{"file": "log/secrets.log", "line": 265, "labels": []}
+{"file": "log/secrets.log", "line": 266, "labels": []}
+{"file": "log/secrets.log", "line": 267, "labels": []}
+{"file": "log/secrets.log", "line": 268, "labels": [{"type": "PASSWORD", "start": 60, "end": 71}]}
+{"file": "log/secrets.log", "line": 269, "labels": []}
+{"file": "log/secrets.log", "line": 270, "labels": [{"type": "GPS", "start": 38, "end": 46}, {"type": "GPS", "start": 51, "end": 60}]}
+{"file": "log/secrets.log", "line": 271, "labels": []}
+{"file": "log/secrets.log", "line": 272, "labels": [{"type": "PASSWORD", "start": 60, "end": 71}]}
+{"file": "log/secrets.log", "line": 273, "labels": [{"type": "PASSWORD", "start": 60, "end": 71}]}
+{"file": "log/secrets.log", "line": 274, "labels": [{"type": "TOKEN", "start": 55, "end": 91}]}
+{"file": "log/secrets.log", "line": 275, "labels": [{"type": "TOKEN", "start": 45, "end": 85}]}
+{"file": "log/secrets.log", "line": 276, "labels": [{"type": "SESSION_ID", "start": 41, "end": 73}]}
+{"file": "log/secrets.log", "line": 277, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 278, "labels": [{"type": "GPS", "start": 38, "end": 46}, {"type": "GPS", "start": 51, "end": 60}]}
+{"file": "log/secrets.log", "line": 279, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 280, "labels": [{"type": "TOKEN", "start": 45, "end": 85}]}
+{"file": "log/secrets.log", "line": 281, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 282, "labels": []}
+{"file": "log/secrets.log", "line": 283, "labels": [{"type": "PASSWORD", "start": 60, "end": 71}]}
+{"file": "log/secrets.log", "line": 284, "labels": []}
+{"file": "log/secrets.log", "line": 285, "labels": [{"type": "TOKEN", "start": 55, "end": 91}]}
+{"file": "log/secrets.log", "line": 286, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 287, "labels": [{"type": "TOKEN", "start": 55, "end": 91}]}
+{"file": "log/secrets.log", "line": 288, "labels": []}
+{"file": "log/secrets.log", "line": 289, "labels": [{"type": "TOKEN", "start": 56, "end": 137}]}
+{"file": "log/secrets.log", "line": 290, "labels": [{"type": "SESSION_ID", "start": 49, "end": 81}]}
+{"file": "log/secrets.log", "line": 291, "labels": [{"type": "TOKEN", "start": 56, "end": 137}]}
+{"file": "log/secrets.log", "line": 292, "labels": [{"type": "GPS", "start": 38, "end": 46}, {"type": "GPS", "start": 51, "end": 60}]}
+{"file": "log/secrets.log", "line": 293, "labels": [{"type": "TOKEN", "start": 45, "end": 85}]}
+{"file": "log/secrets.log", "line": 294, "labels": []}
+{"file": "log/secrets.log", "line": 295, "labels": [{"type": "TOKEN", "start": 56, "end": 137}]}
+{"file": "log/secrets.log", "line": 296, "labels": [{"type": "PASSWORD", "start": 34, "end": 45}]}
+{"file": "log/secrets.log", "line": 297, "labels": [{"type": "IP_ADDRESS", "start": 36, "end": 49}, {"type": "IP_ADDRESS", "start": 54, "end": 66}]}
+{"file": "log/secrets.log", "line": 298, "labels": [{"type": "PASSWORD", "start": 34, "end": 45}]}
+{"file": "log/secrets.log", "line": 299, "labels": [{"type": "TOKEN", "start": 45, "end": 85}]}
+{"file": "log/secrets.log", "line": 300, "labels": []}
+{"file": "log/secrets.log", "line": 301, "labels": [{"type": "PASSWORD", "start": 60, "end": 71}]}
+{"file": "log/secrets.log", "line": 302, "labels": []}
+{"file": "log/secrets.log", "line": 303, "labels": [{"type": "GPS", "start": 38, "end": 46}, {"type": "GPS", "start": 51, "end": 60}]}
+{"file": "log/secrets.log", "line": 304, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 305, "labels": []}
+{"file": "log/secrets.log", "line": 306, "labels": []}
+{"file": "log/secrets.log", "line": 307, "labels": [{"type": "IP_ADDRESS", "start": 36, "end": 47}, {"type": "IP_ADDRESS", "start": 52, "end": 65}]}
+{"file": "log/secrets.log", "line": 308, "labels": [{"type": "TOKEN", "start": 45, "end": 85}]}
+{"file": "log/secrets.log", "line": 309, "labels": [{"type": "PASSWORD", "start": 60, "end": 71}]}
+{"file": "log/secrets.log", "line": 310, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 311, "labels": [{"type": "PASSWORD", "start": 60, "end": 71}]}
+{"file": "log/secrets.log", "line": 312, "labels": []}
+{"file": "log/secrets.log", "line": 313, "labels": [{"type": "IP_ADDRESS", "start": 36, "end": 49}, {"type": "IP_ADDRESS", "start": 54, "end": 66}]}
+{"file": "log/secrets.log", "line": 314, "labels": []}
+{"file": "log/secrets.log", "line": 315, "labels": []}
+{"file": "log/secrets.log", "line": 316, "labels": [{"type": "SESSION_ID", "start": 49, "end": 81}]}
+{"file": "log/secrets.log", "line": 317, "labels": [{"type": "TOKEN", "start": 50, "end": 86}]}
+{"file": "log/secrets.log", "line": 318, "labels": []}
+{"file": "log/secrets.log", "line": 319, "labels": []}
+{"file": "log/secrets.log", "line": 320, "labels": [{"type": "TOKEN", "start": 55, "end": 91}]}
+{"file": "log/secrets.log", "line": 321, "labels": [{"type": "TOKEN", "start": 50, "end": 86}]}
+{"file": "log/secrets.log", "line": 322, "labels": [{"type": "TOKEN", "start": 55, "end": 91}]}
+{"file": "log/secrets.log", "line": 323, "labels": [{"type": "TOKEN", "start": 56, "end": 137}]}
+{"file": "log/secrets.log", "line": 324, "labels": []}
+{"file": "log/secrets.log", "line": 325, "labels": [{"type": "TOKEN", "start": 55, "end": 91}]}
+{"file": "log/secrets.log", "line": 326, "labels": []}
+{"file": "log/secrets.log", "line": 327, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 328, "labels": [{"type": "PASSWORD", "start": 60, "end": 71}]}
+{"file": "log/secrets.log", "line": 329, "labels": [{"type": "SESSION_ID", "start": 49, "end": 81}]}
+{"file": "log/secrets.log", "line": 330, "labels": [{"type": "SESSION_ID", "start": 41, "end": 73}]}
+{"file": "log/secrets.log", "line": 331, "labels": []}
+{"file": "log/secrets.log", "line": 332, "labels": [{"type": "TOKEN", "start": 50, "end": 86}]}
+{"file": "log/secrets.log", "line": 333, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 334, "labels": [{"type": "TOKEN", "start": 45, "end": 85}]}
+{"file": "log/secrets.log", "line": 335, "labels": []}
+{"file": "log/secrets.log", "line": 336, "labels": [{"type": "IP_ADDRESS", "start": 36, "end": 50}, {"type": "IP_ADDRESS", "start": 55, "end": 69}]}
+{"file": "log/secrets.log", "line": 337, "labels": []}
+{"file": "log/secrets.log", "line": 338, "labels": []}
+{"file": "log/secrets.log", "line": 339, "labels": []}
+{"file": "log/secrets.log", "line": 340, "labels": [{"type": "PASSWORD", "start": 60, "end": 71}]}
+{"file": "log/secrets.log", "line": 341, "labels": [{"type": "IP_ADDRESS", "start": 36, "end": 48}, {"type": "IP_ADDRESS", "start": 53, "end": 65}]}
+{"file": "log/secrets.log", "line": 342, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 343, "labels": []}
+{"file": "log/secrets.log", "line": 344, "labels": [{"type": "TOKEN", "start": 50, "end": 86}]}
+{"file": "log/secrets.log", "line": 345, "labels": []}
+{"file": "log/secrets.log", "line": 346, "labels": [{"type": "TOKEN", "start": 50, "end": 86}]}
+{"file": "log/secrets.log", "line": 347, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 348, "labels": [{"type": "SESSION_ID", "start": 49, "end": 81}]}
+{"file": "log/secrets.log", "line": 349, "labels": []}
+{"file": "log/secrets.log", "line": 350, "labels": []}
+{"file": "log/secrets.log", "line": 351, "labels": []}
+{"file": "log/secrets.log", "line": 352, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 353, "labels": [{"type": "GPS", "start": 38, "end": 46}, {"type": "GPS", "start": 51, "end": 60}]}
+{"file": "log/secrets.log", "line": 354, "labels": []}
+{"file": "log/secrets.log", "line": 355, "labels": []}
+{"file": "log/secrets.log", "line": 356, "labels": [{"type": "TOKEN", "start": 56, "end": 137}]}
+{"file": "log/secrets.log", "line": 357, "labels": []}
+{"file": "log/secrets.log", "line": 358, "labels": [{"type": "TOKEN", "start": 56, "end": 137}]}
+{"file": "log/secrets.log", "line": 359, "labels": [{"type": "TOKEN", "start": 55, "end": 91}]}
+{"file": "log/secrets.log", "line": 360, "labels": []}
+{"file": "log/secrets.log", "line": 361, "labels": [{"type": "PASSWORD", "start": 60, "end": 71}]}
+{"file": "log/secrets.log", "line": 362, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 363, "labels": []}
+{"file": "log/secrets.log", "line": 364, "labels": [{"type": "SESSION_ID", "start": 41, "end": 73}]}
+{"file": "log/secrets.log", "line": 365, "labels": [{"type": "SESSION_ID", "start": 49, "end": 81}]}
+{"file": "log/secrets.log", "line": 366, "labels": [{"type": "TOKEN", "start": 55, "end": 91}]}
+{"file": "log/secrets.log", "line": 367, "labels": [{"type": "TOKEN", "start": 45, "end": 85}]}
+{"file": "log/secrets.log", "line": 368, "labels": []}
+{"file": "log/secrets.log", "line": 369, "labels": [{"type": "TOKEN", "start": 55, "end": 91}]}
+{"file": "log/secrets.log", "line": 370, "labels": []}
+{"file": "log/secrets.log", "line": 371, "labels": [{"type": "TOKEN", "start": 45, "end": 85}]}
+{"file": "log/secrets.log", "line": 372, "labels": []}
+{"file": "log/secrets.log", "line": 373, "labels": []}
+{"file": "log/secrets.log", "line": 374, "labels": [{"type": "TOKEN", "start": 56, "end": 137}]}
+{"file": "log/secrets.log", "line": 375, "labels": [{"type": "TOKEN", "start": 56, "end": 137}]}
+{"file": "log/secrets.log", "line": 376, "labels": [{"type": "GPS", "start": 38, "end": 46}, {"type": "GPS", "start": 51, "end": 60}]}
+{"file": "log/secrets.log", "line": 377, "labels": []}
+{"file": "log/secrets.log", "line": 378, "labels": [{"type": "PASSWORD", "start": 60, "end": 71}]}
+{"file": "log/secrets.log", "line": 379, "labels": [{"type": "TOKEN", "start": 56, "end": 137}]}
+{"file": "log/secrets.log", "line": 380, "labels": [{"type": "TOKEN", "start": 45, "end": 85}]}
+{"file": "log/secrets.log", "line": 381, "labels": []}
+{"file": "log/secrets.log", "line": 382, "labels": [{"type": "TOKEN", "start": 50, "end": 86}]}
+{"file": "log/secrets.log", "line": 383, "labels": [{"type": "SESSION_ID", "start": 41, "end": 73}]}
+{"file": "log/secrets.log", "line": 384, "labels": []}
+{"file": "log/secrets.log", "line": 385, "labels": [{"type": "PASSWORD", "start": 60, "end": 71}]}
+{"file": "log/secrets.log", "line": 386, "labels": [{"type": "TOKEN", "start": 56, "end": 137}]}
+{"file": "log/secrets.log", "line": 387, "labels": [{"type": "SESSION_ID", "start": 49, "end": 81}]}
+{"file": "log/secrets.log", "line": 388, "labels": [{"type": "SESSION_ID", "start": 41, "end": 73}]}
+{"file": "log/secrets.log", "line": 389, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 390, "labels": [{"type": "PASSWORD", "start": 60, "end": 71}]}
+{"file": "log/secrets.log", "line": 391, "labels": []}
+{"file": "log/secrets.log", "line": 392, "labels": []}
+{"file": "log/secrets.log", "line": 393, "labels": [{"type": "SESSION_ID", "start": 49, "end": 81}]}
+{"file": "log/secrets.log", "line": 394, "labels": [{"type": "SESSION_ID", "start": 41, "end": 73}]}
+{"file": "log/secrets.log", "line": 395, "labels": [{"type": "TOKEN", "start": 55, "end": 91}]}
+{"file": "log/secrets.log", "line": 396, "labels": []}
+{"file": "log/secrets.log", "line": 397, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 398, "labels": [{"type": "TOKEN", "start": 45, "end": 85}]}
+{"file": "log/secrets.log", "line": 399, "labels": []}
+{"file": "log/secrets.log", "line": 400, "labels": [{"type": "SESSION_ID", "start": 41, "end": 73}]}
+{"file": "log/secrets.log", "line": 401, "labels": [{"type": "PASSWORD", "start": 60, "end": 71}]}
+{"file": "log/secrets.log", "line": 402, "labels": []}
+{"file": "log/secrets.log", "line": 403, "labels": [{"type": "SESSION_ID", "start": 49, "end": 81}]}
+{"file": "log/secrets.log", "line": 404, "labels": [{"type": "IP_ADDRESS", "start": 36, "end": 49}, {"type": "IP_ADDRESS", "start": 54, "end": 67}]}
+{"file": "log/secrets.log", "line": 405, "labels": [{"type": "PASSWORD", "start": 34, "end": 45}]}
+{"file": "log/secrets.log", "line": 406, "labels": []}
+{"file": "log/secrets.log", "line": 407, "labels": [{"type": "GPS", "start": 38, "end": 45}, {"type": "GPS", "start": 50, "end": 59}]}
+{"file": "log/secrets.log", "line": 408, "labels": [{"type": "PASSWORD", "start": 60, "end": 71}]}
+{"file": "log/secrets.log", "line": 409, "labels": [{"type": "TOKEN", "start": 55, "end": 91}]}
+{"file": "log/secrets.log", "line": 410, "labels": []}
+{"file": "log/secrets.log", "line": 411, "labels": [{"type": "TOKEN", "start": 56, "end": 137}]}
+{"file": "log/secrets.log", "line": 412, "labels": [{"type": "PASSWORD", "start": 60, "end": 71}]}
+{"file": "log/secrets.log", "line": 413, "labels": []}
+{"file": "log/secrets.log", "line": 414, "labels": []}
+{"file": "log/secrets.log", "line": 415, "labels": [{"type": "PASSWORD", "start": 34, "end": 45}]}
+{"file": "log/secrets.log", "line": 416, "labels": []}
+{"file": "log/secrets.log", "line": 417, "labels": [{"type": "TOKEN", "start": 45, "end": 85}]}
+{"file": "log/secrets.log", "line": 418, "labels": []}
+{"file": "log/secrets.log", "line": 419, "labels": []}
+{"file": "log/secrets.log", "line": 420, "labels": [{"type": "TOKEN", "start": 56, "end": 137}]}
+{"file": "log/secrets.log", "line": 421, "labels": [{"type": "TOKEN", "start": 50, "end": 86}]}
+{"file": "log/secrets.log", "line": 422, "labels": []}
+{"file": "log/secrets.log", "line": 423, "labels": [{"type": "TOKEN", "start": 45, "end": 85}]}
+{"file": "log/secrets.log", "line": 424, "labels": [{"type": "GPS", "start": 38, "end": 46}, {"type": "GPS", "start": 51, "end": 60}]}
+{"file": "log/secrets.log", "line": 425, "labels": [{"type": "SESSION_ID", "start": 49, "end": 81}]}
+{"file": "log/secrets.log", "line": 426, "labels": []}
+{"file": "log/secrets.log", "line": 427, "labels": [{"type": "GPS", "start": 38, "end": 46}, {"type": "GPS", "start": 51, "end": 60}]}
+{"file": "log/secrets.log", "line": 428, "labels": [{"type": "IP_ADDRESS", "start": 36, "end": 50}, {"type": "IP_ADDRESS", "start": 55, "end": 67}]}
+{"file": "log/secrets.log", "line": 429, "labels": []}
+{"file": "log/secrets.log", "line": 430, "labels": []}
+{"file": "log/secrets.log", "line": 431, "labels": [{"type": "TOKEN", "start": 45, "end": 85}]}
+{"file": "log/secrets.log", "line": 432, "labels": [{"type": "GPS", "start": 38, "end": 46}, {"type": "GPS", "start": 51, "end": 60}]}
+{"file": "log/secrets.log", "line": 433, "labels": [{"type": "IP_ADDRESS", "start": 36, "end": 48}, {"type": "IP_ADDRESS", "start": 53, "end": 65}]}
+{"file": "log/secrets.log", "line": 434, "labels": [{"type": "TOKEN", "start": 56, "end": 137}]}
+{"file": "log/secrets.log", "line": 435, "labels": [{"type": "TOKEN", "start": 45, "end": 85}]}
+{"file": "log/secrets.log", "line": 436, "labels": [{"type": "TOKEN", "start": 45, "end": 85}]}
+{"file": "log/secrets.log", "line": 437, "labels": []}
+{"file": "log/secrets.log", "line": 438, "labels": []}
+{"file": "log/secrets.log", "line": 439, "labels": [{"type": "TOKEN", "start": 45, "end": 85}]}
+{"file": "log/secrets.log", "line": 440, "labels": []}
+{"file": "log/secrets.log", "line": 441, "labels": [{"type": "IP_ADDRESS", "start": 36, "end": 49}, {"type": "IP_ADDRESS", "start": 54, "end": 66}]}
+{"file": "log/secrets.log", "line": 442, "labels": []}
+{"file": "log/secrets.log", "line": 443, "labels": []}
+{"file": "log/secrets.log", "line": 444, "labels": [{"type": "GPS", "start": 38, "end": 46}, {"type": "GPS", "start": 51, "end": 60}]}
+{"file": "log/secrets.log", "line": 445, "labels": []}
+{"file": "log/secrets.log", "line": 446, "labels": []}
+{"file": "log/secrets.log", "line": 447, "labels": [{"type": "SESSION_ID", "start": 49, "end": 81}]}
+{"file": "log/secrets.log", "line": 448, "labels": [{"type": "PASSWORD", "start": 60, "end": 71}]}
+{"file": "log/secrets.log", "line": 449, "labels": []}
+{"file": "log/secrets.log", "line": 450, "labels": [{"type": "PASSWORD", "start": 34, "end": 45}]}
+{"file": "log/secrets.log", "line": 451, "labels": []}
+{"file": "log/secrets.log", "line": 452, "labels": [{"type": "SESSION_ID", "start": 41, "end": 73}]}
+{"file": "log/secrets.log", "line": 453, "labels": [{"type": "SESSION_ID", "start": 41, "end": 73}]}
+{"file": "log/secrets.log", "line": 454, "labels": []}
+{"file": "log/secrets.log", "line": 455, "labels": []}
+{"file": "log/secrets.log", "line": 456, "labels": [{"type": "SESSION_ID", "start": 49, "end": 81}]}
+{"file": "log/secrets.log", "line": 457, "labels": [{"type": "IP_ADDRESS", "start": 36, "end": 48}, {"type": "IP_ADDRESS", "start": 53, "end": 67}]}
+{"file": "log/secrets.log", "line": 458, "labels": []}
+{"file": "log/secrets.log", "line": 459, "labels": [{"type": "TOKEN", "start": 56, "end": 137}]}
+{"file": "log/secrets.log", "line": 460, "labels": []}
+{"file": "log/secrets.log", "line": 461, "labels": []}
+{"file": "log/secrets.log", "line": 462, "labels": []}
+{"file": "log/secrets.log", "line": 463, "labels": [{"type": "SESSION_ID", "start": 41, "end": 73}]}
+{"file": "log/secrets.log", "line": 464, "labels": []}
+{"file": "log/secrets.log", "line": 465, "labels": [{"type": "TOKEN", "start": 45, "end": 85}]}
+{"file": "log/secrets.log", "line": 466, "labels": [{"type": "SESSION_ID", "start": 49, "end": 81}]}
+{"file": "log/secrets.log", "line": 467, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 468, "labels": [{"type": "TOKEN", "start": 56, "end": 137}]}
+{"file": "log/secrets.log", "line": 469, "labels": [{"type": "SESSION_ID", "start": 49, "end": 81}]}
+{"file": "log/secrets.log", "line": 470, "labels": [{"type": "IP_ADDRESS", "start": 36, "end": 49}, {"type": "IP_ADDRESS", "start": 54, "end": 68}]}
+{"file": "log/secrets.log", "line": 471, "labels": [{"type": "SESSION_ID", "start": 41, "end": 73}]}
+{"file": "log/secrets.log", "line": 472, "labels": [{"type": "IP_ADDRESS", "start": 36, "end": 48}, {"type": "IP_ADDRESS", "start": 53, "end": 66}]}
+{"file": "log/secrets.log", "line": 473, "labels": []}
+{"file": "log/secrets.log", "line": 474, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 475, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 476, "labels": [{"type": "TOKEN", "start": 45, "end": 85}]}
+{"file": "log/secrets.log", "line": 477, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 478, "labels": [{"type": "SESSION_ID", "start": 41, "end": 73}]}
+{"file": "log/secrets.log", "line": 479, "labels": [{"type": "TOKEN", "start": 50, "end": 86}]}
+{"file": "log/secrets.log", "line": 480, "labels": [{"type": "GPS", "start": 38, "end": 46}, {"type": "GPS", "start": 51, "end": 60}]}
+{"file": "log/secrets.log", "line": 481, "labels": [{"type": "IP_ADDRESS", "start": 36, "end": 49}, {"type": "IP_ADDRESS", "start": 54, "end": 67}]}
+{"file": "log/secrets.log", "line": 482, "labels": [{"type": "PASSWORD", "start": 60, "end": 71}]}
+{"file": "log/secrets.log", "line": 483, "labels": []}
+{"file": "log/secrets.log", "line": 484, "labels": [{"type": "TOKEN", "start": 45, "end": 85}]}
+{"file": "log/secrets.log", "line": 485, "labels": []}
+{"file": "log/secrets.log", "line": 486, "labels": []}
+{"file": "log/secrets.log", "line": 487, "labels": [{"type": "PASSWORD", "start": 60, "end": 71}]}
+{"file": "log/secrets.log", "line": 488, "labels": []}
+{"file": "log/secrets.log", "line": 489, "labels": []}
+{"file": "log/secrets.log", "line": 490, "labels": []}
+{"file": "log/secrets.log", "line": 491, "labels": [{"type": "TOKEN", "start": 56, "end": 137}]}
+{"file": "log/secrets.log", "line": 492, "labels": []}
+{"file": "log/secrets.log", "line": 493, "labels": [{"type": "GPS", "start": 38, "end": 46}, {"type": "GPS", "start": 51, "end": 60}]}
+{"file": "log/secrets.log", "line": 494, "labels": [{"type": "GPS", "start": 38, "end": 46}, {"type": "GPS", "start": 51, "end": 60}]}
+{"file": "log/secrets.log", "line": 495, "labels": [{"type": "TOKEN", "start": 56, "end": 137}]}
+{"file": "log/secrets.log", "line": 496, "labels": []}
+{"file": "log/secrets.log", "line": 497, "labels": []}
+{"file": "log/secrets.log", "line": 498, "labels": [{"type": "SESSION_ID", "start": 41, "end": 73}]}
+{"file": "log/secrets.log", "line": 499, "labels": [{"type": "TOKEN", "start": 55, "end": 91}]}
+{"file": "log/secrets.log", "line": 500, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 501, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 502, "labels": []}
+{"file": "log/secrets.log", "line": 503, "labels": [{"type": "TOKEN", "start": 50, "end": 86}]}
+{"file": "log/secrets.log", "line": 504, "labels": []}
+{"file": "log/secrets.log", "line": 505, "labels": []}
+{"file": "log/secrets.log", "line": 506, "labels": []}
+{"file": "log/secrets.log", "line": 507, "labels": []}
+{"file": "log/secrets.log", "line": 508, "labels": [{"type": "GPS", "start": 38, "end": 46}, {"type": "GPS", "start": 51, "end": 60}]}
+{"file": "log/secrets.log", "line": 509, "labels": []}
+{"file": "log/secrets.log", "line": 510, "labels": [{"type": "PASSWORD", "start": 60, "end": 71}]}
+{"file": "log/secrets.log", "line": 511, "labels": [{"type": "SESSION_ID", "start": 41, "end": 73}]}
+{"file": "log/secrets.log", "line": 512, "labels": [{"type": "SESSION_ID", "start": 49, "end": 81}]}
+{"file": "log/secrets.log", "line": 513, "labels": [{"type": "PASSWORD", "start": 60, "end": 71}]}
+{"file": "log/secrets.log", "line": 514, "labels": []}
+{"file": "log/secrets.log", "line": 515, "labels": [{"type": "SESSION_ID", "start": 41, "end": 73}]}
+{"file": "log/secrets.log", "line": 516, "labels": [{"type": "TOKEN", "start": 55, "end": 91}]}
+{"file": "log/secrets.log", "line": 517, "labels": [{"type": "TOKEN", "start": 55, "end": 91}]}
+{"file": "log/secrets.log", "line": 518, "labels": [{"type": "TOKEN", "start": 55, "end": 91}]}
+{"file": "log/secrets.log", "line": 519, "labels": []}
+{"file": "log/secrets.log", "line": 520, "labels": [{"type": "PASSWORD", "start": 60, "end": 71}]}
+{"file": "log/secrets.log", "line": 521, "labels": [{"type": "GPS", "start": 38, "end": 46}, {"type": "GPS", "start": 51, "end": 60}]}
+{"file": "log/secrets.log", "line": 522, "labels": []}
+{"file": "log/secrets.log", "line": 523, "labels": [{"type": "SESSION_ID", "start": 41, "end": 73}]}
+{"file": "log/secrets.log", "line": 524, "labels": [{"type": "SESSION_ID", "start": 41, "end": 73}]}
+{"file": "log/secrets.log", "line": 525, "labels": [{"type": "GPS", "start": 38, "end": 46}, {"type": "GPS", "start": 51, "end": 60}]}
+{"file": "log/secrets.log", "line": 526, "labels": [{"type": "TOKEN", "start": 45, "end": 85}]}
+{"file": "log/secrets.log", "line": 527, "labels": [{"type": "PASSWORD", "start": 34, "end": 45}]}
+{"file": "log/secrets.log", "line": 528, "labels": []}
+{"file": "log/secrets.log", "line": 529, "labels": []}
+{"file": "log/secrets.log", "line": 530, "labels": []}
+{"file": "log/secrets.log", "line": 531, "labels": [{"type": "GPS", "start": 38, "end": 46}, {"type": "GPS", "start": 51, "end": 60}]}
+{"file": "log/secrets.log", "line": 532, "labels": [{"type": "TOKEN", "start": 55, "end": 91}]}
+{"file": "log/secrets.log", "line": 533, "labels": [{"type": "SESSION_ID", "start": 41, "end": 73}]}
+{"file": "log/secrets.log", "line": 534, "labels": [{"type": "GPS", "start": 38, "end": 46}, {"type": "GPS", "start": 51, "end": 60}]}
+{"file": "log/secrets.log", "line": 535, "labels": [{"type": "SESSION_ID", "start": 49, "end": 81}]}
+{"file": "log/secrets.log", "line": 536, "labels": []}
+{"file": "log/secrets.log", "line": 537, "labels": []}
+{"file": "log/secrets.log", "line": 538, "labels": [{"type": "IP_ADDRESS", "start": 36, "end": 49}, {"type": "IP_ADDRESS", "start": 54, "end": 65}]}
+{"file": "log/secrets.log", "line": 539, "labels": [{"type": "TOKEN", "start": 50, "end": 86}]}
+{"file": "log/secrets.log", "line": 540, "labels": []}
+{"file": "log/secrets.log", "line": 541, "labels": [{"type": "PASSWORD", "start": 60, "end": 71}]}
+{"file": "log/secrets.log", "line": 542, "labels": [{"type": "TOKEN", "start": 55, "end": 91}]}
+{"file": "log/secrets.log", "line": 543, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 544, "labels": [{"type": "PASSWORD", "start": 60, "end": 71}]}
+{"file": "log/secrets.log", "line": 545, "labels": [{"type": "TOKEN", "start": 56, "end": 137}]}
+{"file": "log/secrets.log", "line": 546, "labels": [{"type": "TOKEN", "start": 45, "end": 85}]}
+{"file": "log/secrets.log", "line": 547, "labels": [{"type": "SESSION_ID", "start": 41, "end": 73}]}
+{"file": "log/secrets.log", "line": 548, "labels": []}
+{"file": "log/secrets.log", "line": 549, "labels": []}
+{"file": "log/secrets.log", "line": 550, "labels": [{"type": "PASSWORD", "start": 60, "end": 71}]}
+{"file": "log/secrets.log", "line": 551, "labels": [{"type": "GPS", "start": 38, "end": 46}, {"type": "GPS", "start": 51, "end": 60}]}
+{"file": "log/secrets.log", "line": 552, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 553, "labels": [{"type": "PASSWORD", "start": 60, "end": 71}]}
+{"file": "log/secrets.log", "line": 554, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 555, "labels": []}
+{"file": "log/secrets.log", "line": 556, "labels": [{"type": "TOKEN", "start": 45, "end": 85}]}
+{"file": "log/secrets.log", "line": 557, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 558, "labels": [{"type": "TOKEN", "start": 45, "end": 85}]}
+{"file": "log/secrets.log", "line": 559, "labels": []}
+{"file": "log/secrets.log", "line": 560, "labels": [{"type": "TOKEN", "start": 56, "end": 137}]}
+{"file": "log/secrets.log", "line": 561, "labels": [{"type": "PASSWORD", "start": 60, "end": 71}]}
+{"file": "log/secrets.log", "line": 562, "labels": [{"type": "SESSION_ID", "start": 41, "end": 73}]}
+{"file": "log/secrets.log", "line": 563, "labels": [{"type": "TOKEN", "start": 45, "end": 85}]}
+{"file": "log/secrets.log", "line": 564, "labels": [{"type": "PASSWORD", "start": 60, "end": 71}]}
+{"file": "log/secrets.log", "line": 565, "labels": [{"type": "IP_ADDRESS", "start": 36, "end": 48}, {"type": "IP_ADDRESS", "start": 53, "end": 65}]}
+{"file": "log/secrets.log", "line": 566, "labels": [{"type": "IP_ADDRESS", "start": 36, "end": 48}, {"type": "IP_ADDRESS", "start": 53, "end": 66}]}
+{"file": "log/secrets.log", "line": 567, "labels": [{"type": "PASSWORD", "start": 34, "end": 45}]}
+{"file": "log/secrets.log", "line": 568, "labels": []}
+{"file": "log/secrets.log", "line": 569, "labels": [{"type": "TOKEN", "start": 50, "end": 86}]}
+{"file": "log/secrets.log", "line": 570, "labels": [{"type": "TOKEN", "start": 50, "end": 86}]}
+{"file": "log/secrets.log", "line": 571, "labels": []}
+{"file": "log/secrets.log", "line": 572, "labels": []}
+{"file": "log/secrets.log", "line": 573, "labels": [{"type": "TOKEN", "start": 55, "end": 91}]}
+{"file": "log/secrets.log", "line": 574, "labels": [{"type": "TOKEN", "start": 55, "end": 91}]}
+{"file": "log/secrets.log", "line": 575, "labels": [{"type": "GPS", "start": 38, "end": 46}, {"type": "GPS", "start": 51, "end": 60}]}
+{"file": "log/secrets.log", "line": 576, "labels": [{"type": "TOKEN", "start": 56, "end": 137}]}
+{"file": "log/secrets.log", "line": 577, "labels": [{"type": "PASSWORD", "start": 34, "end": 45}]}
+{"file": "log/secrets.log", "line": 578, "labels": [{"type": "TOKEN", "start": 56, "end": 137}]}
+{"file": "log/secrets.log", "line": 579, "labels": []}
+{"file": "log/secrets.log", "line": 580, "labels": [{"type": "GPS", "start": 38, "end": 46}, {"type": "GPS", "start": 51, "end": 60}]}
+{"file": "log/secrets.log", "line": 581, "labels": []}
+{"file": "log/secrets.log", "line": 582, "labels": [{"type": "SESSION_ID", "start": 41, "end": 73}]}
+{"file": "log/secrets.log", "line": 583, "labels": [{"type": "TOKEN", "start": 45, "end": 85}]}
+{"file": "log/secrets.log", "line": 584, "labels": [{"type": "SESSION_ID", "start": 49, "end": 81}]}
+{"file": "log/secrets.log", "line": 585, "labels": [{"type": "IP_ADDRESS", "start": 36, "end": 50}, {"type": "IP_ADDRESS", "start": 55, "end": 69}]}
+{"file": "log/secrets.log", "line": 586, "labels": []}
+{"file": "log/secrets.log", "line": 587, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 588, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 589, "labels": []}
+{"file": "log/secrets.log", "line": 590, "labels": [{"type": "PASSWORD", "start": 34, "end": 45}]}
+{"file": "log/secrets.log", "line": 591, "labels": [{"type": "TOKEN", "start": 56, "end": 137}]}
+{"file": "log/secrets.log", "line": 592, "labels": [{"type": "TOKEN", "start": 45, "end": 85}]}
+{"file": "log/secrets.log", "line": 593, "labels": [{"type": "TOKEN", "start": 45, "end": 85}]}
+{"file": "log/secrets.log", "line": 594, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 595, "labels": [{"type": "PASSWORD", "start": 34, "end": 45}]}
+{"file": "log/secrets.log", "line": 596, "labels": [{"type": "PASSWORD", "start": 47, "end": 58}]}
+{"file": "log/secrets.log", "line": 597, "labels": [{"type": "TOKEN", "start": 55, "end": 91}]}
+{"file": "log/secrets.log", "line": 598, "labels": []}
+{"file": "log/secrets.log", "line": 599, "labels": [{"type": "TOKEN", "start": 50, "end": 86}]}
+{"file": "log/secrets.log", "line": 600, "labels": [{"type": "TOKEN", "start": 56, "end": 137}]}

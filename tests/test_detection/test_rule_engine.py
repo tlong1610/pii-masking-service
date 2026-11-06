@@ -222,3 +222,34 @@ def test_name_columns_are_classified_by_their_entity(scanner, name, expected_typ
 @pytest.mark.parametrize("name", ["name", "display_name", "user_name"])
 def test_unclear_name_columns_stay_undecided(scanner, name):
     assert scanner.classify(_typed(name, "character varying", ["Alpha Beta"])) is None
+
+
+@pytest.mark.parametrize(
+    ("name", "expected_type"),
+    [
+        ("password", "PASSWORD"),
+        ("user_pwd", "PASSWORD"),
+        ("mat_khau", "PASSWORD"),
+        ("headers_authorization", "TOKEN"),
+        ("api_key", "TOKEN"),
+        ("access_token", "TOKEN"),
+        ("meta_session", "SESSION_ID"),
+        ("session_id", "SESSION_ID"),
+        ("location_gps", "GPS"),
+        ("latitude", "GPS"),
+    ],
+)
+def test_secret_columns_by_name(scanner, name, expected_type):
+    assert scanner.classify(_typed(name, "string", ["abc"])).inferred_pii_type == expected_type
+
+
+@pytest.mark.parametrize(
+    ("samples", "expected_type"),
+    [
+        (["10.1.2.3", "192.168.0.9"], "IP_ADDRESS"),
+        (["21.02851,105.85421", "10.76260,106.66017"], "GPS"),
+        (["Bearer abcdefgh12345"], "TOKEN"),
+    ],
+)
+def test_secret_columns_by_content_under_meaningless_name(scanner, samples, expected_type):
+    assert scanner.classify(_typed("f17", "string", samples)).inferred_pii_type == expected_type

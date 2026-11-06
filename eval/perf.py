@@ -19,6 +19,7 @@ from pathlib import Path
 import httpx
 from pymongo import MongoClient
 
+from eval.history import record
 from eval.leak import collect_values, load_labels, scan_output
 from eval.run import _commit
 from mockup.load_perf import PERF_COLLECTION, RARE_FIELDS, perf_database, rare_values
@@ -149,6 +150,7 @@ def main() -> None:
     parser.add_argument("--api-url")
     parser.add_argument("--baseline", type=Path, default=_REPO / "eval/results/baseline.json")
     parser.add_argument("--update-baseline", action="store_true")
+    parser.add_argument("--record", metavar="MỐC", help="ghi kết quả vào history của baseline.json")
     args = parser.parse_args()
 
     client = MongoClient(settings.mongo_uri, serverSelectionTimeoutMS=5000)
@@ -176,6 +178,8 @@ def main() -> None:
         report["api"] = measure_api(args.api_url)
 
     print(json.dumps({**report, **leak}, ensure_ascii=False, indent=2))
+    if args.record:
+        record(args.baseline, args.record, "large", {**report, **leak})
     if args.update_baseline:
         baseline = json.loads(args.baseline.read_text(encoding="utf-8"))
         baseline["performance_large"] = report

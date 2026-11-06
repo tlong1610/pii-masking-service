@@ -106,7 +106,7 @@ def test_every_file_has_column_labels_with_group(output):
     labels = _jsonl(labels_dir / "file_fields.jsonl")
     labelled = {label["file"] for label in labels}
     on_disk = {str(path.relative_to(files)) for path in files.rglob("*") if path.is_file()}
-    assert on_disk - labelled == {"log/app.log", "log/app.log.gz"}
+    assert on_disk - labelled == {"log/app.log", "log/app.log.gz", "log/secrets.log"}
     groups = {label["pii_type"]: label["group"] for label in labels}
     assert groups["BANK_ACCOUNT"] == "nhay_cam" and groups["CCCD"] == "co_ban"
     assert groups[None] is None
@@ -118,3 +118,22 @@ def test_gz_spans_match_log_spans(output):
     plain = [(item["line"], item["labels"]) for item in items if item["file"] == "log/app.log"]
     packed = [(item["line"], item["labels"]) for item in items if item["file"] == "log/app.log.gz"]
     assert plain == packed
+
+
+def test_secret_log_spans_point_at_values_and_has_lines_without_secrets(output):
+    files, labels_dir = output
+    lines = (files / "log/secrets.log").read_text(encoding="utf-8").splitlines()
+    items = [item for item in _jsonl(labels_dir / "file_spans.jsonl") if item["file"] == "log/secrets.log"]
+    assert len(items) == len(lines) == SIZES["log_lines"]
+    assert any(not item["labels"] for item in items)
+    assert {span["type"] for item in items for span in item["labels"]} == {
+        "TOKEN",
+        "PASSWORD",
+        "SESSION_ID",
+        "IP_ADDRESS",
+        "GPS",
+    }
+    for item in items:
+        for span in item["labels"]:
+            value = lines[item["line"] - 1][span["start"] : span["end"]]
+            assert value and " " not in value

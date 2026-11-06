@@ -72,6 +72,9 @@ _LOG_GZ = "log/app.log.gz"
 _EVENTS = "log/events.jsonl"
 
 
+_SECRET_LOG = "log/secrets.log"
+
+
 def _customer_rows(v: FakeValues, customers: list[dict]) -> tuple[list[dict], list[list[dict]]]:
     rows, spans = [], []
     for index, customer in enumerate(customers):
@@ -273,6 +276,53 @@ def _cell_spans(file: str, sheet: str | None, column: str, spans: list[list[dict
         {"file": file, "sheet": sheet, "column": column, "row": row, "labels": labels}
         for row, labels in enumerate(spans)
     ]
+
+
+def _jwt(v: FakeValues) -> str:
+    """Hình dạng JWT, ba phần base64url, không phải token thật."""
+    return f"eyJhbGciOiJIUzI1NiJ9.eyJ{v.hex_upper(24).lower()}.{v.hex_upper(32).lower()}"
+
+
+def _secret_line(v: FakeValues, index: int) -> tuple[str, list[dict]]:
+    """Dòng log có bí mật ở nhiều định dạng, xen dòng trông giống nhưng không chứa bí mật."""
+    stamp = (v.date() + timedelta(seconds=index)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    api_key = ("TOKEN", f"key_{v.hex_upper(32).lower()}")
+    password = ("PASSWORD", v.password())
+    session = ("SESSION_ID", v.hex_upper(32))
+    ip = ("IP_ADDRESS", v.ip())
+    latitude = ("GPS", f"{v.rng.uniform(8.5, 23.0):.5f}")
+    longitude = ("GPS", f"{v.rng.uniform(102.0, 109.5):.5f}")
+    templates = [
+        [f"{stamp} INFO gateway Authorization: Bearer ", ("TOKEN", _jwt(v))],
+        [f"{stamp} DEBUG http header x-api-key: ", api_key],
+        [f"{stamp} INFO http GET /v1/devices?api_key=", api_key, "&page=2"],
+        [f"{stamp} WARN auth client_secret=", ("TOKEN", v.hex_upper(40).lower()), " bị từ chối"],
+        [f'{stamp} DEBUG config {{"user":"svc","password":"', password, '","retries":3}'],
+        [f"{stamp} INFO portal đổi mật khẩu: ", password],
+        [f"{stamp} DEBUG db pwd=", password, " host=db-demo"],
+        [f"{stamp} INFO web Cookie: JSESSIONID=", session, "; lang=vi"],
+        [f"{stamp} INFO web session_id=", session, " user=svc"],
+        [f"{stamp} INFO nginx src=", ip, " dst=", ("IP_ADDRESS", v.ip()), " status=200"],
+        [f"{stamp} INFO tracker lat=", latitude, " lng=", longitude, " speed=42"],
+        [f"{stamp} INFO app token hết hạn, yêu cầu đăng nhập lại"],
+        [f"{stamp} INFO app session expired after 1800 seconds"],
+        [f"{stamp} INFO app password changed successfully"],
+        [f"{stamp} INFO app đổi mật khẩu thành công"],
+        [f"{stamp} INFO deploy phiên bản v2.14.3.7 khởi động, timeout=30 retries=3"],
+        [f"{stamp} INFO billing tổng 1.250.000 đồng, tỷ lệ 0.0825"],
+    ]
+    return build_text(v.rng.choice(templates))
+
+
+def write_secret_log(data_dir: Path, v: FakeValues, log_lines: int) -> list[dict]:
+    """File log riêng để không làm đổi các log đã có baseline. Trả nhãn vị trí."""
+    lines, position_labels = [], []
+    for index in range(log_lines):
+        line, labels = _secret_line(v, index)
+        lines.append(line)
+        position_labels.append({"file": _SECRET_LOG, "line": index + 1, "labels": labels})
+    (data_dir / _SECRET_LOG).write_text("".join(f"{line}\n" for line in lines), encoding="utf-8")
+    return position_labels
 
 
 def write_files(data_dir: Path, v: FakeValues, customers: list[dict], rows: int, log_lines: int) -> tuple[list, list]:
