@@ -52,7 +52,6 @@ def test_org_email_detected_as_email(scanner):
     )
     result = scanner.classify(profile)
     # Rule engine bắt bằng regex email nên sẽ ra EMAIL.
-    # Không kết luận được: chính sách sẽ che toàn bộ cho tới khi người duyệt quyết định.
     assert result.inferred_pii_type == PIIType.EMAIL.value
 
 
