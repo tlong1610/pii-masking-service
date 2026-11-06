@@ -18,9 +18,10 @@ import mongomock
 from bson import json_util
 
 from eval.history import record, regressions, summarize_sections
-from eval.leak import collect_values, load_labels, scan_output
+from eval.leak import collect_values, pii_labels, scan_output
 from eval.metrics import score_fields, score_spans
 from mockup.generate import DEFAULT_SEED
+from mockup.heldout import STYLES, heldout_names, random_names, rename_document, rename_path, segments_of, style_of
 from piimask.connectors.mongo_connector import MongoConnector
 from piimask.detection.ner_orchestrator import NERPipelines
 from piimask.detection.rule_engine import RuleBasedScanner
@@ -68,13 +69,34 @@ def scan_fields(collections: dict[str, list[dict]]) -> dict[str, str | None]:
     return predicted
 
 
-def evaluate_fields(collections: dict, labels_dir: Path) -> tuple[dict, float]:
-    gold = [
-        {**label, "key": f"{label['collection']}.{label['path']}"} for label in _read_jsonl(labels_dir / "fields.jsonl")
-    ]
+def evaluate_fields(collections: dict, labels: list[dict]) -> tuple[dict, float]:
+    gold = [{**label, "key": f"{label['collection']}.{label['path']}"} for label in labels]
     started = time.perf_counter()
     predicted = scan_fields(collections)
     return score_fields(gold, predicted), time.perf_counter() - started
+
+
+def rename_set(collections: dict, labels: list[dict], make_names) -> tuple[dict, list[dict]]:
+    """Đổi tên trường trong dữ liệu và nhãn. Trả thêm 'original' ở nhãn để báo theo kiểu đặt tên."""
+    renamed, renamed_labels = {}, []
+    for name, docs in collections.items():
+        own = [label for label in labels if label["collection"] == name]
+        names = make_names(name, segments_of(label["path"] for label in own))
+        renamed[name] = [rename_document(doc, names) for doc in docs]
+        renamed_labels += [
+            {**label, "path": rename_path(label["path"], names), "original": label["path"]} for label in own
+        ]
+    return renamed, renamed_labels
+
+
+def recall_by_style(section: dict, labels: list[dict]) -> dict:
+    missed = set(section["missed"])
+    rows: dict[str, list[bool]] = {style: [] for style in STYLES}
+    for label in labels:
+        if label["pii_type"] is not None:
+            leaf = label["original"].split(".")[-1].removesuffix("[]")
+            rows[style_of(label["collection"], leaf)].append(f"{label['collection']}.{label['path']}" not in missed)
+    return {style: {"found": sum(hits), "total": len(hits)} for style, hits in rows.items()}
 
 
 def scan_texts(pipeline: NERPipelines, texts: list[str]) -> list[list[tuple[int, int]]]:
@@ -120,12 +142,12 @@ def evaluate_events(data_dir: Path, labels_dir: Path) -> dict:
     return score_fields(gold, scan_fields({"app_events": events}))
 
 
-def evaluate_leak(collections: dict, labels_dir: Path) -> dict:
+def evaluate_leak(collections: dict, labels: list[dict]) -> dict:
     """Xuất qua luồng thật rồi dò giá trị gốc của mọi trường có nhãn trong file đã che. Không tính văn bản tự do."""
     values: dict[str, str] = {}
     totals: Counter = Counter()
     for name, docs in collections.items():
-        found, counts = collect_values(docs, load_labels(labels_dir / "fields.jsonl", name))
+        found, counts = collect_values(docs, pii_labels(labels, name))
         values.update(found)
         totals.update(counts)
 
@@ -177,16 +199,29 @@ def print_changes(report: dict, baseline: dict) -> None:
                 print(f"  {name}.{metric}: {_percent(before)} -> {_percent(after)}")
 
 
-def build_report(data_dir: Path, labels_dir: Path) -> dict:
+def build_report(data_dir: Path, labels_dir: Path, rename_seed: int = 1) -> dict:
     collections = load_collections(data_dir)
+    labels = _read_jsonl(labels_dir / "fields.jsonl")
+    labels = [label for label in labels if label["collection"] in collections]
     pipeline = NERPipelines(use_ml=False)
 
-    fields, field_seconds = evaluate_fields(collections, labels_dir)
+    fields, field_seconds = evaluate_fields(collections, labels)
+    heldout_data, heldout_labels = rename_set(collections, labels, heldout_names)
+    heldout, _ = evaluate_fields(heldout_data, heldout_labels)
+    heldout["by_style"] = recall_by_style(heldout, heldout_labels)
+    random_data, random_labels = rename_set(
+        collections, labels, lambda name, segments: random_names(name, segments, rename_seed)
+    )
+    randomized, _ = evaluate_fields(random_data, random_labels)
     tickets, ticket_seconds = evaluate_tickets(collections, labels_dir, pipeline)
     logs, log_seconds, log_count = evaluate_logs(data_dir, labels_dir, pipeline)
     secrets, _, _ = evaluate_logs(data_dir, labels_dir, pipeline, _SECRET_LOGS)
     events = evaluate_events(data_dir, labels_dir)
-    leak = evaluate_leak(collections, labels_dir)
+    leak = {
+        "goc": evaluate_leak(collections, labels),
+        "heldout": evaluate_leak(heldout_data, heldout_labels),
+        "ngau_nhien": evaluate_leak(random_data, random_labels),
+    }
     documents = sum(len(docs) for docs in collections.values())
     return {
         "data_source": "mockup",
@@ -195,6 +230,8 @@ def build_report(data_dir: Path, labels_dir: Path) -> dict:
         "detector": "regex + quy tắc, GLiNER tắt",
         "sections": {
             "mongo_fields": fields,
+            "mongo_fields_heldout": heldout,
+            "mongo_fields_random": randomized,
             "mongo_free_text": tickets,
             "log_lines": logs,
             "log_secrets": secrets,
@@ -218,11 +255,15 @@ def main() -> None:
     parser.add_argument("--out", type=Path, default=_REPO / "eval/results/latest.json")
     parser.add_argument("--baseline", type=Path, default=_REPO / "eval/results/baseline.json")
     parser.add_argument("--record", metavar="MỐC", help="ghi kết quả vào history của baseline.json")
+    parser.add_argument("--rename-seed", type=int, default=1, help="seed của chế độ đổi tên ngẫu nhiên")
     args = parser.parse_args()
 
-    report = build_report(args.data_dir, args.labels_dir)
+    report = build_report(args.data_dir, args.labels_dir, args.rename_seed)
     print(f"Nguồn: {report['data_source']}, bộ phát hiện: {report['detector']}, commit {report['commit']}")
     print_section("Theo trường (MongoDB)", report["sections"]["mongo_fields"])
+    print_section("Theo trường, bộ held-out", report["sections"]["mongo_fields_heldout"])
+    print(f"  theo kiểu tên: {report['sections']['mongo_fields_heldout']['by_style']}")
+    print_section("Theo trường, đổi tên ngẫu nhiên", report["sections"]["mongo_fields_random"])
     print_section("Văn bản tự do (tickets)", report["sections"]["mongo_free_text"])
     print_section("Dòng log (.log, .gz)", report["sections"]["log_lines"])
     print_section("Log bí mật (secrets.log)", report["sections"]["log_secrets"])

@@ -15,15 +15,18 @@ from openpyxl import load_workbook
 from piimask.transform.flatten import field_path, split_document
 
 
-def load_labels(path: Path, collection: str) -> dict[str, dict]:
+def pii_labels(labels: list[dict], collection: str) -> dict[str, dict]:
     """Trường có nhãn PII của một collection. Văn bản tự do đo riêng theo thực thể nên không tính ở đây."""
-    with path.open(encoding="utf-8") as file:
-        labels = [json.loads(line) for line in file]
     return {
         label["path"]: label
         for label in labels
         if label["collection"] == collection and label["pii_type"] not in (None, "FREE_TEXT")
     }
+
+
+def load_labels(path: Path, collection: str) -> dict[str, dict]:
+    with path.open(encoding="utf-8") as file:
+        return pii_labels([json.loads(line) for line in file], collection)
 
 
 def collect_values(documents: Iterable[dict], labels: dict[str, dict]) -> tuple[dict[str, str], Counter]:
