@@ -817,7 +817,8 @@
             "by_type": {}
           }
         }
-      }
+      },
+      "note": "leak.heldout và leak.ngau_nhien của mốc này thiếu 500 ngày sinh còn lộ do bộ đếm sai định dạng ngày; xem mốc muc-3."
     },
     {
       "label": "muc-2",
@@ -1119,7 +1120,8 @@
             "raw_left_xlsx": 0
           }
         ]
-      }
+      },
+      "note": "leak.heldout và leak.ngau_nhien của mốc này thiếu 500 ngày sinh còn lộ do bộ đếm sai định dạng ngày; xem mốc muc-3."
     },
     {
       "label": "muc-5",
@@ -1419,7 +1421,8 @@
             "raw_left_xlsx": 0
           }
         ]
-      }
+      },
+      "note": "leak.heldout và leak.ngau_nhien của mốc này thiếu 500 ngày sinh còn lộ do bộ đếm sai định dạng ngày; xem mốc muc-3."
     }
   ]
 }

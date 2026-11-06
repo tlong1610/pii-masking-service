@@ -7,12 +7,15 @@ Lấy giá trị gốc của mọi trường có nhãn từ nguồn, rồi dò t
 import json
 from collections import Counter
 from collections.abc import Iterable, Iterator
+from datetime import datetime
 from pathlib import Path
+from typing import Any
 
 from flashtext import KeywordProcessor
 from openpyxl import load_workbook
 
 from piimask.transform.flatten import field_path, split_document
+from tool.writers import to_cell
 
 
 def pii_labels(labels: list[dict], collection: str) -> dict[str, dict]:
@@ -27,6 +30,12 @@ def pii_labels(labels: list[dict], collection: str) -> dict[str, dict]:
 def load_labels(path: Path, collection: str) -> dict[str, dict]:
     with path.open(encoding="utf-8") as file:
         return pii_labels([json.loads(line) for line in file], collection)
+
+
+def _text_forms(value: Any) -> list[str]:
+    """Mọi dạng chữ của giá trị trong file đã xuất. Ngày giờ ghi khác nhau ở CSV và khi đọc lại XLSX."""
+    cell = to_cell(value)
+    return [cell.isoformat(), str(cell)] if isinstance(cell, datetime) else [str(value)]
 
 
 def collect_values(documents: Iterable[dict], labels: dict[str, dict]) -> tuple[dict[str, str], Counter, set[str]]:
@@ -45,9 +54,10 @@ def collect_values(documents: Iterable[dict], labels: dict[str, dict]) -> tuple[
                     continue
                 condition = label.get("when")
                 if condition and document.get(condition["field"]) != condition["equals"]:
-                    allowed.add(str(value))
+                    allowed.update(_text_forms(value))
                     continue
-                values[str(value)] = label["pii_type"]
+                for text in _text_forms(value):
+                    values[text] = label["pii_type"]
                 totals[label["pii_type"]] += 1
     return values, totals, allowed
 

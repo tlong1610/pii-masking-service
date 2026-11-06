@@ -84,3 +84,31 @@ def score_spans(items: list[tuple[list[dict], list[tuple[int, int]]]]) -> dict:
             else:
                 false_flags += 1
     return _summarize(rows, true_flags, false_flags)
+
+
+def score_catalog(gold: list[dict], fields: dict[str, dict]) -> dict:
+    """gold: nhãn có 'key', 'pii_type', 'action'. fields: key -> mục trong danh mục. So đủ trường, kể cả trường không phải PII.
+
+    Trường có nhãn PII mà danh mục ghi KEEP là lỗi nặng: bên lọc theo danh mục sẽ để lộ trường đó. Trường thiếu trong
+    danh mục tính là sai.
+    """
+    rows = [(label, fields.get(label["key"])) for label in gold if label["pii_type"] != "FREE_TEXT"]
+    present = [(label, field) for label, field in rows if field is not None]
+    action_match = sum(field["action"] == label["action"] for label, field in present)
+    condition_match = sum(("when" in field) == ("when" in label) for label, field in present if label["pii_type"])
+    positives = sum(1 for label, _ in rows if label["pii_type"] is not None)
+    unsafe = sorted(
+        label["key"]
+        for label, field in rows
+        if label["pii_type"] is not None and (field is None or field["action"] == "KEEP")
+    )
+    return {
+        "fields": len(rows),
+        "missing": len(rows) - len(present),
+        "action_accuracy": _ratio(action_match, len(rows)),
+        "condition_accuracy": _ratio(condition_match, positives),
+        "non_pii_masked": sum(1 for label, field in present if label["pii_type"] is None and field["action"] != "KEEP"),
+        "pii_marked_keep": len(unsafe),
+        "pii_marked_keep_fields": unsafe,
+        "extra_fields": sorted(set(fields) - {label["key"] for label in gold}),
+    }

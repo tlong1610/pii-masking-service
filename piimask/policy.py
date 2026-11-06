@@ -54,6 +54,7 @@ class FieldDecision:
     reason: str
     guard_exempt: tuple[str, ...] = ()
     enterprise_flag: str | None = None
+    confidence: float | None = None
 
     def to_dict(self) -> dict:
         return asdict(self)
@@ -110,10 +111,20 @@ def decide(
     pii_type = result.inferred_pii_type
     if pii_type in _NOT_PERSONAL:
         exempt = routine_formats(samples or [])
-        return FieldDecision(path, None, None, PolicyAction.KEEP.value, "khong_phai_du_lieu_ca_nhan", exempt)
+        return FieldDecision(
+            path,
+            None,
+            None,
+            PolicyAction.KEEP.value,
+            "khong_phai_du_lieu_ca_nhan",
+            exempt,
+            confidence=result.confidence,
+        )
 
     action = _ACTIONS.get(pii_type, PolicyAction.MASK)
     if path.lower() in join_keys:
         action = PolicyAction.HMAC
     exempt = routine_formats(samples or []) if _is_enterprise_exempt(path, pii_type) else ()
-    return FieldDecision(path, pii_type, legal_group(pii_type), action.value, "phat_hien", exempt)
+    return FieldDecision(
+        path, pii_type, legal_group(pii_type), action.value, "phat_hien", exempt, confidence=result.confidence
+    )

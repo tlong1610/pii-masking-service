@@ -311,3 +311,8 @@ def test_seventeen_characters_with_forbidden_letter_is_not_a_vin(scanner_default
 def test_boolean_is_not_personal_data(scanner_default):
     result = scanner_default.classify(_typed("EnterpriseCustomer", "boolean", ["True", "False"]))
     assert result.inferred_pii_type == "NOT_PERSONAL_DATA"
+
+
+@pytest.mark.parametrize("name", ["ns", "f6", "born_on"])
+def test_date_column_with_unclear_name_stays_undecided(scanner_default, name):
+    assert scanner_default.classify(_typed(name, "date", ["1980-01-01 00:00:00"])) is None

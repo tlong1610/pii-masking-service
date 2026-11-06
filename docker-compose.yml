@@ -2,6 +2,8 @@
 #   docker compose up -d                       dựng MongoDB, nạp mockup, chạy API
 #   docker compose run --rm seed               nạp lại mockup
 #   docker compose run --rm --user "$(id -u):$(id -g)" export    xuất file đã che vào data/export
+#   docker compose run --rm --user "$(id -u):$(id -g)" catalog   sinh danh mục trường PII vào data/catalog
+x-readonly-uri: &readonly-uri mongodb://${MOCKUP_MONGO_READONLY_USER:-mockup_ro}:${MOCKUP_MONGO_READONLY_PASSWORD:-mockup_ro}@mongo:27017/${MOCKUP_MONGO_DB:-mockup}?authSource=admin
 x-root-uri: &root-uri mongodb://${MOCKUP_MONGO_ROOT_USER:-admin}:${MOCKUP_MONGO_ROOT_PASSWORD:-admin}@mongo:27017/?authSource=admin
 
 services:
@@ -60,13 +62,28 @@ services:
         condition: service_completed_successfully
     environment:
       # Luôn dùng user chỉ đọc, kể cả khi MONGO_URI trong .env trỏ tới tài khoản khác.
-      MONGO_URI: mongodb://${MOCKUP_MONGO_READONLY_USER:-mockup_ro}:${MOCKUP_MONGO_READONLY_PASSWORD:-mockup_ro}@mongo:27017/${MOCKUP_MONGO_DB:-mockup}?authSource=admin
+      MONGO_URI: *readonly-uri
       MONGO_DB: ${MOCKUP_MONGO_DB:-mockup}
       HMAC_SECRET: ${HMAC_SECRET:-}
       HMAC_KEY_VERSION: ${HMAC_KEY_VERSION:-v1}
     volumes:
       - ./data/export:/export
     command: ["python", "-m", "tool.export", "--out", "/export", "--join-key", "IdNumber"]
+
+  catalog:
+    profiles: ["tools"]
+    build:
+      context: .
+      target: service
+    depends_on:
+      seed:
+        condition: service_completed_successfully
+    environment:
+      MONGO_URI: *readonly-uri
+      MONGO_DB: ${MOCKUP_MONGO_DB:-mockup}
+    volumes:
+      - ./data/catalog:/catalog
+    command: ["python", "-m", "tool.catalog", "--out", "/catalog", "--join-key", "IdNumber"]
 
 volumes:
   mongo-data:
