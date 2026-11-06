@@ -110,9 +110,6 @@ class PostgresConnector:
                         is_pk = (table, col_name) in pk_set
                         is_fk = col_name in fk_columns
 
-                        # Hard-code recommend: Các trường khóa bắt buộc dùng HASHING
-                        system_rec = "HASHING" if is_pk or is_fk else None
-
                         if sample_size > 0:
                             # Lấy mẫu (Sample data) khác NULL
                             query = sql.SQL("SELECT DISTINCT {} FROM {} WHERE {} IS NOT NULL LIMIT {}").format(
@@ -140,7 +137,6 @@ class PostgresConnector:
                             is_primary_key=is_pk,
                             is_foreign_key=is_fk,
                             samples=samples,
-                            system_recommendation=system_rec,
                         )
                         column_profiles.append(col_prof)
 
