@@ -1,0 +1,6 @@
+{
+  "schemaVersion": 1,
+  "engine": "mongodb",
+  "collection": "devices",
+  "fields": []
+}

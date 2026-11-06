@@ -31,10 +31,10 @@ def _is_event_datetime(col_profile: ColumnProfile) -> bool:
 
 class RuleBasedScanner:
     """
-    Lớp Lọc 1: Rule-Based & Regex Scanner.
+    Phân loại trường bằng quy tắc và regex.
     Nhiệm vụ: Chặn ngay lập tức các PII rõ ràng (như CCCD, Email, Phone)
     hoặc bỏ qua các loại chắc chắn không phải PII (Mã vận đơn, số tiền).
-    Những thứ không chắc chắn (UNKNOWN) sẽ được đẩy qua các lớp sau (LLM, DPO).
+    Không chắc chắn thì trả None: chính sách che toàn bộ trường đó cho tới khi người duyệt quyết định.
     """
 
     def __init__(self, match_threshold: float = 0.5):
@@ -79,10 +79,6 @@ class RuleBasedScanner:
         ]:
             return "KEEP"
 
-        # Nếu là UNKNOWN -> KEEP (để pass qua LLM quyết định)
-        if inferred_type == PIIType.UNKNOWN.value:
-            return "KEEP"
-
         return "MASK"
 
     def _negative_result(
@@ -94,15 +90,10 @@ class RuleBasedScanner:
             confidence=1.0,
             recommended_action=self._get_recommended_action(negative_type, enforced_action),
             reasoning=f"Matched negative keyword for {negative_type}; no PII pattern in name or samples.",
-            tier="TIER_1",
         )
 
-    def tier1_static_filter(self, col_profile: ColumnProfile) -> FieldScanResult | None:
-        """
-        Tầng 1 (Cascade Funnel): Lọc tĩnh (Rule-based & Regex).
-        Chỉ trả về kết quả nếu khớp 100% (chắc chắn PII hoặc chắc chắn KHÔNG phải).
-        Nếu mập mờ (không khớp 100%), trả về None để đẩy xuống Tầng 2.
-        """
+    def classify(self, col_profile: ColumnProfile) -> FieldScanResult | None:
+        """Chỉ trả về kết quả nếu khớp 100% (chắc chắn PII hoặc chắc chắn KHÔNG phải); mập mờ thì trả None."""
         enforced_action = col_profile.system_recommendation
         tbl_name = (col_profile.table_name or "").lower()
         col_name = col_profile.column_name.lower().replace(".", "_")
@@ -117,7 +108,6 @@ class RuleBasedScanner:
                 confidence=1.0,
                 recommended_action="KEEP",
                 reasoning="Mã số thuế doanh nghiệp/tổ chức (công khai, không phải PII cá nhân).",
-                tier="TIER_1"
             )
 
         # Bước 0.2: KYC Documents: ocr_text và file_path là tài liệu lưu trữ nhạy cảm -> DROP
@@ -128,7 +118,6 @@ class RuleBasedScanner:
                 confidence=1.0,
                 recommended_action="DROP",
                 reasoning="Tài liệu/OCR giấy tờ tùy thân nhạy cảm trong bảng kyc_documents, loại bỏ khỏi view phân tích (DROP).",
-                tier="TIER_1"
             )
 
         # Bước 0.4: Kiểm tra Free-text chứa PII nhúng (SĐT, Email, CCCD)
@@ -145,7 +134,6 @@ class RuleBasedScanner:
                         confidence=1.0,
                         recommended_action="MASK",
                         reasoning="Trường văn bản tự do chứa thông tin PII nhúng (SĐT/CCCD/Email).",
-                        tier="TIER_1"
                     )
 
         # Bước 1: Tên cột chắc chắn là PII (address, phone, fax, dob, email, tax_code, national_id...)
@@ -157,11 +145,10 @@ class RuleBasedScanner:
                 confidence=1.0,
                 recommended_action=self._get_recommended_action(high_conf, enforced_action),
                 reasoning=f"Matched high-confidence keyword for {high_conf}.",
-                tier="TIER_1"
             )
 
         # Bước 1.2: Cột tên "<thực thể>_name": first/contact/ship_name là họ tên người,
-        # product/category_name là tên vật. Tên trống/mơ hồ (name, display_name) để LLM xét.
+        # product/category_name là tên vật. Tên trống/mơ hồ (name, display_name) trả None.
         name_type = classify_name_column(col_profile.column_name)
         if name_type:
             is_person = name_type == "FULL_NAME"
@@ -173,7 +160,6 @@ class RuleBasedScanner:
                 reasoning=(
                     "Tên gắn với một người (họ tên)." if is_person else "Tên của vật/tổ chức/địa danh, không phải người."
                 ),
-                tier="TIER_1",
             )
 
         # Bước 2: Tên nghiệp vụ CỤ THỂ chắc chắn không phải PII (tracking_code, order_id, amount...).
@@ -190,7 +176,6 @@ class RuleBasedScanner:
                 confidence=1.0,
                 recommended_action=enforced_action or "DROP",
                 reasoning="Cột không có dữ liệu (toàn NULL): không cần chia sẻ.",
-                tier="TIER_1",
             )
 
         # Bước 2.6: Ngày/giờ sự kiện (đặt hàng, tuyển dụng, tạo...) - ngày sinh đã bị bắt ở Bước 1 theo tên.
@@ -201,7 +186,6 @@ class RuleBasedScanner:
                 confidence=0.9,
                 recommended_action=self._get_recommended_action("NOT_PERSONAL_DATA", enforced_action),
                 reasoning="Ngày/giờ sự kiện, không phải ngày sinh: không tự định danh được cá nhân.",
-                tier="TIER_1",
             )
 
         # Bước 3: Regex trên NỘI DUNG (khớp 100% mẫu) - trước luật khóa *_id chung chung,
@@ -215,33 +199,10 @@ class RuleBasedScanner:
                     confidence=1.0,
                     recommended_action=self._get_recommended_action(pii_type, enforced_action),
                     reasoning=f"100% samples matched strict Regex for {pii_type}.",
-                    tier="TIER_1"
                 )
 
         # Bước 4: Khóa kỹ thuật *_id chung chung (product_id...). national_id, patient_id... bị loại trừ.
         if is_generic_id_column(col_profile.column_name):
             return self._negative_result(col_profile, "NOT_PERSONAL_DATA", enforced_action)
 
-        # Mập mờ -> Trả về None để đẩy xuống Tầng 2 (BM25)
         return None
-
-    @staticmethod
-    def transform_to_data_shape(samples: list[str]) -> list[str]:
-        """
-        Helper cho Tầng 3: Biến đổi dữ liệu thô thành Data Shape ẩn danh.
-        VD: '0901234567' -> 'XXXXXXXXXX', 'nguyen@gmail.com' -> 'XXXXXX@XXXXX.XXX'
-        """
-        shapes = []
-        for sample in samples:
-            if not sample:
-                continue
-            shape_str = ""
-            for char in str(sample):
-                if char.isdigit():
-                    shape_str += "X"
-                elif char.isalpha():
-                    shape_str += "C"  # C for Character
-                else:
-                    shape_str += char # Giữ lại các ký tự đặc biệt như @, -, .
-            shapes.append(shape_str)
-        return shapes

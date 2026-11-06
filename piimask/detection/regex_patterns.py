@@ -3,7 +3,7 @@ import re
 from piimask.detection.taxonomy import PIIType
 
 # ==========================================
-# LỚP LỌC 1: CÁC TỪ KHÓA TÊN CỘT RÕ RÀNG (HIGH CONFIDENCE)
+# CÁC TỪ KHÓA TÊN CỘT RÕ RÀNG (HIGH CONFIDENCE)
 # Khớp theo NGUYÊN TỪ (xem match_column_keyword): "phone" khớp home_phone, KHÔNG khớp headphone_model.
 # Thứ tự có ý nghĩa: loại cụ thể hơn đứng trước (ip_address trước address).
 # ==========================================
@@ -28,9 +28,6 @@ HIGH_CONFIDENCE_COLUMNS = {
     "BIOMETRIC_FILE": ["face_image", "fingerprint", "id_card_front", "id_card_back"],
     "PATIENT_ID": ["patient_id", "ma_benh_nhan", "bhyt", "health_insurance"],
 }
-
-# Các từ khóa tên cột dễ gây nhầm lẫn (Ambiguous), TUYỆT ĐỐI BỎ QUA, đẩy qua Lớp 2 LLM
-AMBIGUOUS_COLUMNS = ["id", "code", "name", "note", "contact_info", "description"]
 
 # Các từ khóa tên cột chắc chắn KHÔNG PHẢI PII CÁ NHÂN (Negative Cases).
 # Chỉ áp dụng SAU khi đã loại trừ PII (regex nội dung + HIGH_CONFIDENCE). Cột "*_id" chung chung
@@ -84,7 +81,7 @@ def is_generic_id_column(column_name: str) -> bool:
 
 
 # ==========================================
-# LỚP LỌC 2: REGEX KIỂM TRA DỮ LIỆU MẪU (SAMPLES)
+# REGEX KIỂM TRA DỮ LIỆU MẪU (SAMPLES)
 # Phải đảm bảo Strict (Chặt chẽ) để tránh False Positive.
 # ==========================================
 REGEX_PATTERNS = {
@@ -123,7 +120,7 @@ _NON_PERSON_NAME_ENTITIES = [
 
 
 def classify_name_column(column_name: str) -> str | None:
-    """'first_name' -> FULL_NAME, 'product_name' -> NOT_PERSONAL_DATA; bare/unclear names -> None (LLM decides)."""
+    """'first_name' -> FULL_NAME, 'product_name' -> NOT_PERSONAL_DATA; bare/unclear names -> None."""
     tokens = name_tokens(column_name)
     if not set(tokens) & _NAME_WORDS:
         return None

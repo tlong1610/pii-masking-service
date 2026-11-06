@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "engine": "mongodb",
+  "collection": "tickets",
+  "fields": [
+    {
+      "path": "AssignedTo",
+      "group": "co_ban",
+      "pii_type": "EMAIL",
+      "action": "HMAC"
+    },
+    {
+      "path": "CustomerId",
+      "group": "co_ban",
+      "pii_type": "CUSTOMER_ID",
+      "action": "HMAC"
+    },
+    {
+      "path": "Note",
+      "group": "co_ban",
+      "pii_type": "FREE_TEXT",
+      "action": "REDACT"
+    }
+  ]
+}

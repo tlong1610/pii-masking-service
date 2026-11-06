@@ -5,6 +5,7 @@ __pycache__/
 venv/
 .env
 .env.*
+!.env.example
 .pytest_cache/
 .ruff_cache/
 .vscode/
@@ -14,6 +15,7 @@ CLAUDE.md
 
 # Không bao giờ commit dữ liệu thật hay dữ liệu masked; mockup sinh lại bằng script.
 data/
+eval/results/latest.json
 *.parquet
 *.xlsx
 *.gz

@@ -4,6 +4,8 @@ from functools import lru_cache
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+DEV_HMAC_SECRET = "dev-hmac-secret-change-me"
+
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
@@ -15,8 +17,12 @@ class Settings(BaseSettings):
     ner_dictionary_path: str = ""
 
     # Khoá HMAC giữ khả năng nối giữa các bảng. Bắt buộc đổi khi chạy thật.
-    hmac_secret: str = "dev-hmac-secret-change-me"
+    hmac_secret: str = DEV_HMAC_SECRET
     hmac_key_version: str = "v1"
+
+    # Nguồn MongoDB của tool. Luôn dùng tài khoản chỉ đọc.
+    mongo_uri: str = "mongodb://localhost:27017"
+    mongo_db: str = "mockup"
 
 
 @lru_cache

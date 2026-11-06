@@ -1,4 +1,4 @@
-"""Áp dụng MASK / PARTIAL / HMAC / REDACT / DROP / NULLIFY / KEEP lên giá trị; không bao giờ log giá trị PII thô."""
+"""Áp dụng MASK / PARTIAL / HMAC / REDACT / DROP / KEEP lên giá trị; không bao giờ log giá trị PII thô."""
 
 from __future__ import annotations
 
@@ -53,8 +53,8 @@ def redact_value(value: Any) -> Any:
     try:
         return redact_free_text(value)
     except Exception as exc:
-        # Fail closed: a cell NER cannot process is withheld whole, never written raw, and one bad
-        # cell does not abort the snapshot. Only the error type is logged, never the value.
+        # Fail closed: ô không che được bị thay toàn bộ, không ghi giá trị gốc, và một ô lỗi không dừng cả lượt xuất.
+        # Chỉ ghi loại lỗi, không ghi giá trị.
         logger.warning("NER redaction failed (%s); cell replaced whole", type(exc).__name__)
         return "[REDACTED]"
 
@@ -70,8 +70,6 @@ def apply_action(
     action_u = (action or "").upper()
     if action_u == "DROP":
         return False, None
-    if action_u == "NULLIFY":
-        return True, None
     if action_u == "REDACT":
         return True, redact_value(value)
     if action_u == "MASK":
@@ -82,40 +80,7 @@ def apply_action(
         return True, partial_mask(value)
     if action_u == "HMAC":
         return True, hash_value(value, secret=secret, key_version=key_version)
-    # KEEP and unknown treated as KEEP
-    return True, value
-
-
-def transform_row(
-    row: dict[str, Any],
-    column_actions: dict[str, str],
-    *,
-    secret: str,
-    key_version: str,
-) -> dict[str, Any]:
-    """Transform one row. Columns not listed in column_actions are kept."""
-    out: dict[str, Any] = {}
-    for col, value in row.items():
-        action = column_actions.get(col, "KEEP")
-        keep, new_val = apply_action(value, action, secret=secret, key_version=key_version)
-        if keep:
-            out[col] = new_val
-    return out
-
-
-def transform_rows(
-    rows: list[dict[str, Any]],
-    column_actions: dict[str, str],
-    *,
-    secret: str,
-    key_version: str,
-) -> list[dict[str, Any]]:
-    return [
-        transform_row(r, column_actions, secret=secret, key_version=key_version) for r in rows
-    ]
-
-
-def filter_columns(columns: list[str], column_actions: dict[str, str]) -> list[str]:
-    """Columns present after DROP."""
-    return [c for c in columns if column_actions.get(c, "KEEP").upper() != "DROP"]
-
+    if action_u == "KEEP":
+        return True, value
+    # Hành động lạ không được rơi về giữ nguyên giá trị gốc. Không đưa value vào thông báo lỗi.
+    raise ValueError(f"Hành động che không hợp lệ: {action_u}")

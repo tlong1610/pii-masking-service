@@ -20,7 +20,7 @@ def test_tracking_code_not_cccd(scanner):
         samples=["400691172582", "123456789012"],
         system_recommendation=None
     )
-    result = scanner.tier1_static_filter(profile)
+    result = scanner.classify(profile)
     assert result.inferred_pii_type == PIIType.TRACKING_CODE.value
     assert result.recommended_action == "KEEP"
 
@@ -35,7 +35,7 @@ def test_order_id_not_pii(scanner):
         samples=["ORD123", "ORD456"],
         system_recommendation=None
     )
-    result = scanner.tier1_static_filter(profile)
+    result = scanner.classify(profile)
     assert result.inferred_pii_type == PIIType.TRACKING_CODE.value
     assert result.recommended_action == "KEEP"
 
@@ -50,9 +50,8 @@ def test_org_email_detected_as_email(scanner):
         samples=["support@company.vn", "contact@exoticliquids.co.uk"],
         system_recommendation=None
     )
-    result = scanner.tier1_static_filter(profile)
+    result = scanner.classify(profile)
     # Rule engine bắt bằng regex email nên sẽ ra EMAIL.
-    # LLM sẽ đánh giá là personal hay non_personal sau.
     assert result.inferred_pii_type == PIIType.EMAIL.value
 
 
@@ -66,7 +65,7 @@ def test_money_alone_non_personal(scanner):
         samples=["1000.50", "200.0"],
         system_recommendation=None
     )
-    result = scanner.tier1_static_filter(profile)
+    result = scanner.classify(profile)
     assert result.inferred_pii_type == PIIType.MONEY_ALONE.value
     assert result.recommended_action == "KEEP"
 
@@ -81,7 +80,7 @@ def test_cccd_regex_strict_12_digits(scanner):
         samples=["123456789"],  # CMND cũ 9 số
         system_recommendation=None
     )
-    result = scanner.tier1_static_filter(profile_9_digits)
+    result = scanner.classify(profile_9_digits)
     # Không còn khớp CCCD vì regex đã siết chặt lại thành 12 số
     assert result is None
 
@@ -93,7 +92,7 @@ def test_cccd_regex_strict_12_digits(scanner):
         samples=["033254456184"],
         system_recommendation=None
     )
-    result_12 = scanner.tier1_static_filter(profile_12_digits)
+    result_12 = scanner.classify(profile_12_digits)
     assert result_12.inferred_pii_type == PIIType.CCCD.value
 
 
@@ -106,7 +105,7 @@ def test_tax_code(scanner):
         samples=["8023456789"],
         system_recommendation=None
     )
-    result = scanner.tier1_static_filter(profile)
+    result = scanner.classify(profile)
     assert result.inferred_pii_type == PIIType.TAX_CODE.value
 
 
@@ -132,21 +131,21 @@ def _profile(name: str, samples: list[str], table: str | None = None) -> ColumnP
 )
 def test_personal_ids_holding_cccd_are_never_safe(scanner, name, samples):
     """Regression: '_id' substring used to mark these NOT_PERSONAL_DATA / KEEP (raw CCCD leak)."""
-    result = scanner.tier1_static_filter(_profile(name, samples))
+    result = scanner.classify(_profile(name, samples))
     assert result is not None
     assert result.inferred_pii_type == PIIType.CCCD.value
     assert result.recommended_action != "KEEP"
 
 
 def test_personal_id_names_are_not_treated_as_technical_keys(scanner):
-    result = scanner.tier1_static_filter(_profile("patient_id", ["BN-0001", "BN-0002"]))
+    result = scanner.classify(_profile("patient_id", ["BN-0001", "BN-0002"]))
     assert result is not None
     assert result.inferred_pii_type == "PATIENT_ID"
     assert result.recommended_action != "KEEP"
 
 
 def test_generic_technical_id_is_non_personal(scanner):
-    result = scanner.tier1_static_filter(_profile("product_id", ["17", "42"]))
+    result = scanner.classify(_profile("product_id", ["17", "42"]))
     assert result is not None
     assert result.inferred_pii_type == "NOT_PERSONAL_DATA"
 
@@ -162,16 +161,16 @@ def test_generic_technical_id_is_non_personal(scanner):
     ],
 )
 def test_name_keywords_match_whole_words_only(scanner, name, expected):
-    result = scanner.tier1_static_filter(_profile(name, ["sample text"]))
+    result = scanner.classify(_profile(name, ["sample text"]))
     assert (result.inferred_pii_type if result else None) == expected
 
 
 def test_table_scoped_rules_apply_when_table_is_known(scanner):
-    supplier_tax = scanner.tier1_static_filter(_profile("tax_code", ["0101234567"], table="suppliers"))
+    supplier_tax = scanner.classify(_profile("tax_code", ["0101234567"], table="suppliers"))
     assert supplier_tax.inferred_pii_type == "TAX_CODE_ORG"
     assert supplier_tax.recommended_action == "KEEP"
 
-    kyc = scanner.tier1_static_filter(_profile("ocr_text", ["CONG HOA XA HOI"], table="kyc_documents"))
+    kyc = scanner.classify(_profile("ocr_text", ["CONG HOA XA HOI"], table="kyc_documents"))
     assert kyc.recommended_action == "DROP"
 
 
@@ -190,18 +189,18 @@ def _typed(name: str, data_type: str, samples: list[str]) -> ColumnProfile:
     ],
 )
 def test_event_dates_are_not_birth_dates(scanner, name, data_type, samples):
-    result = scanner.tier1_static_filter(_typed(name, data_type, samples))
+    result = scanner.classify(_typed(name, data_type, samples))
     assert result.inferred_pii_type == "NOT_PERSONAL_DATA"
     assert result.recommended_action == "KEEP"
 
 
 def test_birth_date_is_still_dob(scanner):
-    result = scanner.tier1_static_filter(_typed("birth_date", "date", ["1980-01-01"]))
+    result = scanner.classify(_typed("birth_date", "date", ["1980-01-01"]))
     assert result.inferred_pii_type == PIIType.DOB.value
 
 
 def test_empty_column_is_proposed_for_drop(scanner):
-    result = scanner.tier1_static_filter(_typed("customer_desc", "text", []))
+    result = scanner.classify(_typed("customer_desc", "text", []))
     assert result.inferred_pii_type == "EMPTY_COLUMN"
     assert result.recommended_action == "DROP"
 
@@ -216,7 +215,7 @@ def test_empty_column_is_proposed_for_drop(scanner):
     ],
 )
 def test_geography_levels(scanner, name, expected_type, expected_action):
-    result = scanner.tier1_static_filter(_typed(name, "character varying", ["Hà Nội", "Lyon"]))
+    result = scanner.classify(_typed(name, "character varying", ["Hà Nội", "Lyon"]))
     assert (result.inferred_pii_type, result.recommended_action) == (expected_type, expected_action)
 
 
@@ -235,10 +234,10 @@ def test_geography_levels(scanner, name, expected_type, expected_action):
     ],
 )
 def test_name_columns_are_classified_by_their_entity(scanner, name, expected_type, expected_action):
-    result = scanner.tier1_static_filter(_typed(name, "character varying", ["Alpha Beta"]))
+    result = scanner.classify(_typed(name, "character varying", ["Alpha Beta"]))
     assert (result.inferred_pii_type, result.recommended_action) == (expected_type, expected_action)
 
 
 @pytest.mark.parametrize("name", ["name", "display_name", "user_name"])
-def test_unclear_name_columns_are_left_to_the_llm(scanner, name):
-    assert scanner.tier1_static_filter(_typed(name, "character varying", ["Alpha Beta"])) is None
+def test_unclear_name_columns_stay_undecided(scanner, name):
+    assert scanner.classify(_typed(name, "character varying", ["Alpha Beta"])) is None

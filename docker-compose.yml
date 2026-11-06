@@ -1,0 +1,72 @@
+# MongoDB mockup và service che PII. Chỉ dùng cho dữ liệu giả, cổng chỉ mở trên máy này.
+#   docker compose up -d                       dựng MongoDB, nạp mockup, chạy API
+#   docker compose run --rm seed               nạp lại mockup
+#   docker compose run --rm --user "$(id -u):$(id -g)" export    xuất file đã che vào data/export
+x-root-uri: &root-uri mongodb://${MOCKUP_MONGO_ROOT_USER:-admin}:${MOCKUP_MONGO_ROOT_PASSWORD:-admin}@mongo:27017/?authSource=admin
+
+services:
+  mongo:
+    image: mongo:7.0
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MOCKUP_MONGO_ROOT_USER:-admin}
+      MONGO_INITDB_ROOT_PASSWORD: ${MOCKUP_MONGO_ROOT_PASSWORD:-admin}
+      MOCKUP_MONGO_DB: ${MOCKUP_MONGO_DB:-mockup}
+      MOCKUP_MONGO_READONLY_USER: ${MOCKUP_MONGO_READONLY_USER:-mockup_ro}
+      MOCKUP_MONGO_READONLY_PASSWORD: ${MOCKUP_MONGO_READONLY_PASSWORD:-mockup_ro}
+    ports:
+      - "127.0.0.1:27017:27017"
+    volumes:
+      - mongo-data:/data/db
+      - ./docker/mongo-init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  seed:
+    build:
+      context: .
+      target: mockup
+    depends_on:
+      mongo:
+        condition: service_healthy
+    environment:
+      MOCKUP_MONGO_URI: *root-uri
+      MOCKUP_MONGO_DB: ${MOCKUP_MONGO_DB:-mockup}
+    command:
+      - sh
+      - -c
+      - >-
+        python -m mockup.generate --data-dir /tmp/mockup --labels-dir /tmp/labels &&
+        python -m mockup.load_mongo --data-dir /tmp/mockup --database "$$MOCKUP_MONGO_DB"
+
+  service:
+    build:
+      context: .
+      target: service
+    environment:
+      ENABLE_NER: ${ENABLE_NER:-false}
+    ports:
+      - "127.0.0.1:8000:8000"
+
+  export:
+    profiles: ["tools"]
+    build:
+      context: .
+      target: service
+    depends_on:
+      seed:
+        condition: service_completed_successfully
+    environment:
+      # Luôn dùng user chỉ đọc, kể cả khi MONGO_URI trong .env trỏ tới tài khoản khác.
+      MONGO_URI: mongodb://${MOCKUP_MONGO_READONLY_USER:-mockup_ro}:${MOCKUP_MONGO_READONLY_PASSWORD:-mockup_ro}@mongo:27017/${MOCKUP_MONGO_DB:-mockup}?authSource=admin
+      MONGO_DB: ${MOCKUP_MONGO_DB:-mockup}
+      HMAC_SECRET: ${HMAC_SECRET:-}
+      HMAC_KEY_VERSION: ${HMAC_KEY_VERSION:-v1}
+    volumes:
+      - ./data/export:/export
+    command: ["python", "-m", "tool.export", "--out", "/export", "--join-key", "IdNumber"]
+
+volumes:
+  mongo-data:
