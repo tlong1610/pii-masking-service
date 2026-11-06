@@ -58,3 +58,17 @@ def test_undecided_and_empty_columns_are_masked():
 def test_group_comes_from_legal_group():
     assert decide("f", _result("CREDIT_CARD")).group == "nhay_cam"
     assert decide("f", _result("CCCD")).group == "co_ban"
+
+
+@pytest.mark.parametrize(
+    ("pii_type", "action", "group"),
+    [
+        ("PASSWORD", "MASK", "nhay_cam"),
+        ("TOKEN", "MASK", "nhay_cam"),
+        ("GPS", "MASK", "nhay_cam"),
+        ("SESSION_ID", "HMAC", "co_ban"),
+    ],
+)
+def test_secret_types(pii_type, action, group):
+    decision = decide("f", _result(pii_type))
+    assert (decision.action, decision.group) == (action, group)

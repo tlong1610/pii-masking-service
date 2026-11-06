@@ -13,6 +13,7 @@ from piimask.schemas import FieldScanResult, PolicyAction
 _ACTIONS = {
     "EMAIL": PolicyAction.HMAC,
     "IP_ADDRESS": PolicyAction.HMAC,
+    "SESSION_ID": PolicyAction.HMAC,
     "PHONE": PolicyAction.PARTIAL,
     "FREE_TEXT_PII": PolicyAction.REDACT,
 }

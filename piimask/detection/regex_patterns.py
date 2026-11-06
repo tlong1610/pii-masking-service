@@ -96,6 +96,10 @@ REGEX_PATTERNS = {
 
     # Ma so thue
     PIIType.TAX_CODE.value: re.compile(r"^\d{10}(-\d{3})?$"),
+
+    "IP_ADDRESS": re.compile(r"^(?:(?:25[0-5]|2[0-4]\d|1?\d?\d)\.){3}(?:25[0-5]|2[0-4]\d|1?\d?\d)$"),
+    "GPS": re.compile(r"^-?\d{1,3}\.\d{4,}\s*,\s*-?\d{1,3}\.\d{4,}$"),
+    "TOKEN": re.compile(r"^(?:(?:[Bb]earer|[Bb]asic)\s+\S{8,}|eyJ[\w-]{8,}\.[\w-]{8,}\.[\w-]*)$"),
 }
 
 
