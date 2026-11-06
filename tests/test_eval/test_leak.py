@@ -1,5 +1,6 @@
 import csv
 import json
+from datetime import UTC, datetime
 
 import mongomock
 import pytest
@@ -96,3 +97,16 @@ def test_phone_typed_into_a_kept_field_is_caught_by_last_guard(raw_left):
     assert decision["action"] == "KEEP"
     assert decision["guard_hits"] == 3
     assert left == 0
+
+
+def test_dates_are_found_in_the_form_written_to_files(tmp_path):
+    born = datetime(1980, 5, 6, tzinfo=UTC)
+    values, _, _ = collect_values([{"Dob": born}], {"Dob": {"pii_type": "DOB"}})
+    with (tmp_path / "t.csv").open("w", encoding="utf-8-sig", newline="") as file:
+        csv.writer(file).writerows([["ns"], ["1980-05-06T00:00:00"]])
+    book = Workbook()
+    book.active.append(["ns"])
+    book.active.append([datetime(1980, 5, 6)])
+    book.save(tmp_path / "t.xlsx")
+    found = scan_output(tmp_path, values)
+    assert found["csv"] == {"DOB": 1} and found["xlsx"] == {"DOB": 1}

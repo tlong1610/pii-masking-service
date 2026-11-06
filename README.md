@@ -20,7 +20,7 @@ Skeleton Gate 1 đã chạy: MongoDB mockup, luồng MongoDB → che → CSV và
 | `piimask/transform/` | Áp dụng hành động che: MASK, PARTIAL, HMAC, REDACT, DROP, KEEP |
 | `piimask/connectors/` | Đọc profile từ MongoDB và PostgreSQL (MySQL sẽ bổ sung) |
 | `piimask/policy.py` | Chọn hành động che cho từng trường theo loại PII |
-| `tool/` | Xuất MongoDB đã che ra CSV, XLSX (`tool.export`); che file CSV, `.log`, `.gz` (`tool.mask_file`) |
+| `tool/` | Xuất MongoDB đã che ra CSV, XLSX (`tool.export`); che file CSV, `.log`, `.gz` (`tool.mask_file`); sinh danh mục trường PII (`tool.catalog`) |
 | `api/` | API che PII (FastAPI). Hợp đồng ở `docs/api/` |
 | `piimask/schemas.py`, `piimask/config.py` | Kiểu dữ liệu dùng chung, cấu hình qua biến môi trường |
 | `mockup/` | Sinh mockup MongoDB và bộ file có nhãn. Nhãn và danh mục chuẩn ở `mockup/labels/`, dữ liệu ghi vào `data/mockup/` (không commit) |
@@ -28,7 +28,7 @@ Skeleton Gate 1 đã chạy: MongoDB mockup, luồng MongoDB → che → CSV và
 | `tests/` | Test của các phần trên |
 | `docs/gate-0/` | Tài liệu Gate 0 |
 
-Sẽ bổ sung: che Excel, JSON, Parquet; connector MySQL; sinh danh mục trường PII.
+Sẽ bổ sung: che Excel, JSON, Parquet; connector MySQL.
 
 ## Chạy bằng Docker
 
@@ -53,6 +53,17 @@ Chạy tool trên máy thay vì trong Docker: đặt `MONGO_URI` là URI của u
 
 API chưa có xác thực nên cổng chỉ mở trên máy này. Khi `/health` báo `nerEnabled: false`, API chưa che được họ tên
 và địa chỉ. Image chưa cài `gliner`.
+
+## Danh mục trường PII
+
+```bash
+mkdir -p data/catalog
+docker compose run --rm --user "$(id -u):$(id -g)" catalog     # hoặc: python -m tool.catalog --join-key IdNumber
+```
+
+Mỗi collection một file JSON, liệt kê mọi trường kèm loại PII, nhóm pháp lý, hành động đề xuất và độ tin cậy, không chứa
+giá trị. Định dạng ở [docs/api/pii-catalog-v1.schema.json](docs/api/pii-catalog-v1.schema.json). Danh mục cũ không biết
+trường mới: bên lọc phải chặn trường không có trong danh mục, không được cho qua.
 
 ## Đo tốc độ và rò rỉ trên dữ liệu lớn
 

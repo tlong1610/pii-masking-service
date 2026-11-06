@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pii-catalog-v1.schema.json",
+  "title": "Danh mục trường PII",
+  "description": "Một file cho một collection hoặc bảng. Không chứa giá trị dữ liệu.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "engine", "database", "collection", "generatedAt", "maskerVersion", "fields"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "engine": { "enum": ["mongodb", "postgresql", "mysql"] },
+    "database": { "type": "string", "minLength": 1 },
+    "collection": { "type": "string", "minLength": 1 },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "maskerVersion": { "type": "string", "minLength": 1 },
+    "fields": { "type": "array", "items": { "$ref": "#/$defs/field" } }
+  },
+  "$defs": {
+    "field": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "pii_type", "group", "action", "confidence", "reason"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Đường dẫn đầy đủ. Trường trong mảng viết a[].b, phần tử mảng giá trị đơn viết a[].value."
+        },
+        "pii_type": { "type": ["string", "null"], "description": "null nếu không phải PII hoặc chưa có kết luận." },
+        "group": { "enum": ["co_ban", "nhay_cam", null], "description": "Nhóm theo Nghị định 356/2025/NĐ-CP." },
+        "action": { "enum": ["MASK", "PARTIAL", "HMAC", "REDACT", "DROP", "KEEP"] },
+        "confidence": { "type": ["number", "null"], "minimum": 0, "maximum": 1 },
+        "reason": {
+          "enum": ["phat_hien", "khong_phai_du_lieu_ca_nhan", "khong_gan_voi_nguoi", "chua_ket_luan", "khoa_chinh"],
+          "description": "chua_ket_luan: phải che toàn bộ cho tới khi người duyệt quyết định."
+        },
+        "when": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["field", "equals"],
+          "description": "Chỉ áp action khi trường này bằng equals; thiếu trường thì vẫn áp.",
+          "properties": { "field": { "type": "string", "minLength": 1 }, "equals": { "type": "boolean" } }
+        }
+      }
+    }
+  }
+}

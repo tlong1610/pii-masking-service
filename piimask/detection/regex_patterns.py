@@ -175,7 +175,8 @@ REGEX_PATTERNS = {
 _NAME_WORDS = frozenset({"name", "names", "ten"})
 # Thực thể là con người -> họ tên (L2).
 _PERSON_NAME_ENTITIES = [
-    "tax_registration", "first",
+    "tax_registration",
+    "first",
     "last",
     "full",
     "middle",

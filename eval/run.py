@@ -19,12 +19,13 @@ from bson import json_util
 
 from eval.history import record, regressions, summarize_sections
 from eval.leak import collect_values, pii_labels, scan_output
-from eval.metrics import score_fields, score_spans
+from eval.metrics import score_catalog, score_fields, score_spans
 from mockup.generate import DEFAULT_SEED
 from mockup.heldout import STYLES, heldout_names, random_names, rename_document, rename_path, segments_of, style_of
 from piimask.connectors.mongo_connector import MongoConnector
 from piimask.detection.ner_orchestrator import NERPipelines
 from piimask.transform.text_masker import mask_text
+from tool.catalog import build_catalogs
 from tool.export import build_plans, export_database
 
 _REPO = Path(__file__).resolve().parent.parent
@@ -79,6 +80,18 @@ def evaluate_fields(collections: dict, labels: list[dict], enterprise_flag: str 
     started = time.perf_counter()
     predicted = scan_fields(collections, enterprise_flag)
     return score_fields(gold, predicted), time.perf_counter() - started
+
+
+def evaluate_catalog(collections: dict, labels: list[dict], enterprise_flag: str | None) -> dict:
+    """Danh mục sinh ra so với nhãn chuẩn, theo hành động của từng trường."""
+    catalogs = build_catalogs(_connector(collections), _JOIN_KEYS, enterprise_flag=enterprise_flag)
+    fields = {
+        f"{catalog['collection']}.{field['path']}": field
+        for catalog in catalogs.values()
+        for field in catalog["fields"]
+    }
+    gold = [{**label, "key": f"{label['collection']}.{label['path']}"} for label in labels]
+    return score_catalog(gold, fields)
 
 
 def rename_set(collections: dict, labels: list[dict], make_names) -> tuple[dict, list[dict]]:
@@ -259,6 +272,11 @@ def build_report(data_dir: Path, labels_dir: Path, rename_seed: int = 1) -> dict
         "heldout": evaluate_leak(heldout_data, heldout_labels, heldout_flag),
         "ngau_nhien": evaluate_leak(random_data, random_labels, random_flag),
     }
+    catalog = {
+        "goc": evaluate_catalog(collections, labels, _ENTERPRISE_FLAG),
+        "heldout": evaluate_catalog(heldout_data, heldout_labels, heldout_flag),
+        "ngau_nhien": evaluate_catalog(random_data, random_labels, random_flag),
+    }
     documents = sum(len(docs) for docs in collections.values())
     return {
         "data_source": "mockup",
@@ -276,6 +294,7 @@ def build_report(data_dir: Path, labels_dir: Path, rename_seed: int = 1) -> dict
             "log_events": events,
         },
         "leak": leak,
+        "catalog": catalog,
         "not_measured": "CSV, Excel, JSON, Parquet: chưa có bộ đọc file",
         "performance": {
             "documents": documents,
@@ -309,6 +328,7 @@ def main() -> None:
     print(f"  {report['sections']['log_json']['json_validity']}")
     print_section("Log object (events.jsonl)", report["sections"]["log_events"])
     print(f"\nRò rỉ trên bộ nhỏ: {report['leak']}")
+    print(f"\nDanh mục: {report['catalog']}")
     print(f"\nChưa đo: {report['not_measured']}")
     print(f"\nHiệu năng: {report['performance']}")
 
@@ -325,6 +345,7 @@ def main() -> None:
             "commit": report["commit"],
             "sections": summarize_sections(report["sections"]),
             "leak": report["leak"],
+            "catalog": report["catalog"],
         }
         record(args.baseline, args.record, "small", small)
 

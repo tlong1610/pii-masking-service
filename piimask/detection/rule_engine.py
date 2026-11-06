@@ -22,18 +22,15 @@ _ISO_DATE = re.compile(r"^\d{4}-\d{2}-\d{2}([ T]\d{2}:\d{2}(:\d{2})?.*)?$")
 
 
 def _is_event_datetime(col_profile: ColumnProfile) -> bool:
-    """A date/time column (by SQL type, or *_date/*_at name with ISO samples) that is not a birth date."""
+    """Cột ngày giờ có tên kiểu *_date, *_at. Tên không gợi ý gì thì không kết luận, vì có thể là ngày sinh."""
+    tokens = name_tokens(col_profile.column_name)
+    if not tokens or tokens[-1] not in _DATETIME_NAME_SUFFIXES:
+        return False
     data_type = (col_profile.data_type or "").lower()
     if data_type.startswith(_DATETIME_TYPE_PREFIXES):
         return True
-    tokens = name_tokens(col_profile.column_name)
     samples = [str(sample).strip() for sample in col_profile.samples if str(sample).strip()]
-    return (
-        bool(tokens)
-        and tokens[-1] in _DATETIME_NAME_SUFFIXES
-        and bool(samples)
-        and all(_ISO_DATE.match(sample) for sample in samples)
-    )
+    return bool(samples) and all(_ISO_DATE.match(sample) for sample in samples)
 
 
 class RuleBasedScanner:
