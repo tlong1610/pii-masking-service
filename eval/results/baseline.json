@@ -1120,6 +1120,306 @@
           }
         ]
       }
+    },
+    {
+      "label": "muc-5",
+      "small": {
+        "commit": "c0aae3b",
+        "sections": {
+          "mongo_fields": {
+            "recall": 1.0,
+            "precision": 0.8958,
+            "recall_nhay_cam": 1.0,
+            "found": 43,
+            "total": 43,
+            "false_positives": 5
+          },
+          "mongo_fields_heldout": {
+            "recall": 0.7674,
+            "precision": 0.825,
+            "recall_nhay_cam": 0.5,
+            "found": 33,
+            "total": 43,
+            "false_positives": 7
+          },
+          "mongo_fields_random": {
+            "recall": 0.7674,
+            "precision": 0.8684,
+            "recall_nhay_cam": 0.5,
+            "found": 33,
+            "total": 43,
+            "false_positives": 5
+          },
+          "mongo_free_text": {
+            "recall": 0.5169,
+            "precision": 0.7531,
+            "recall_nhay_cam": 0.8966,
+            "found": 305,
+            "total": 590,
+            "false_positives": 100
+          },
+          "log_lines": {
+            "recall": 0.9178,
+            "precision": 0.8489,
+            "recall_nhay_cam": 1.0,
+            "found": 1764,
+            "total": 1922,
+            "false_positives": 314
+          },
+          "log_secrets": {
+            "recall": 1.0,
+            "precision": 1.0,
+            "recall_nhay_cam": 1.0,
+            "found": 458,
+            "total": 458,
+            "false_positives": 0
+          },
+          "log_json": {
+            "recall": 1.0,
+            "precision": 1.0,
+            "recall_nhay_cam": 1.0,
+            "found": 1800,
+            "total": 1800,
+            "false_positives": 0
+          },
+          "log_events": {
+            "recall": 1.0,
+            "precision": 1.0,
+            "recall_nhay_cam": 1.0,
+            "found": 8,
+            "total": 8,
+            "false_positives": 0
+          }
+        },
+        "leak": {
+          "goc": {
+            "source_occurrences": 25348,
+            "raw_left_csv": 179,
+            "raw_left_xlsx": 179,
+            "raw_left_rate_csv": 0.0071,
+            "by_type": {
+              "ADDRESS": 42,
+              "FULL_NAME": 137
+            }
+          },
+          "heldout": {
+            "source_occurrences": 25348,
+            "raw_left_csv": 179,
+            "raw_left_xlsx": 179,
+            "raw_left_rate_csv": 0.0071,
+            "by_type": {
+              "ADDRESS": 42,
+              "FULL_NAME": 137
+            }
+          },
+          "ngau_nhien": {
+            "source_occurrences": 25348,
+            "raw_left_csv": 179,
+            "raw_left_xlsx": 179,
+            "raw_left_rate_csv": 0.0071,
+            "by_type": {
+              "ADDRESS": 42,
+              "FULL_NAME": 137
+            }
+          }
+        }
+      },
+      "large": {
+        "data_source": "mockup, chỉ đo tốc độ",
+        "commit": "c0aae3b",
+        "cpu_count": 14,
+        "detector": "regex + quy tắc, GLiNER tắt",
+        "csv": {
+          "formats": [
+            "csv"
+          ],
+          "documents": 100000,
+          "rows_written": 200096,
+          "scan_seconds": 11.26,
+          "total_seconds": 35.24,
+          "documents_per_second": 2837,
+          "rows_per_second": 5677
+        },
+        "csv_xlsx": {
+          "formats": [
+            "csv",
+            "xlsx"
+          ],
+          "documents": 100000,
+          "rows_written": 200096,
+          "scan_seconds": 12.115,
+          "total_seconds": 104.23,
+          "documents_per_second": 959,
+          "rows_per_second": 1920
+        },
+        "peak_memory_mb": 149,
+        "api": {
+          "requests": 500,
+          "text_chars": 156,
+          "p50_ms": 1.36,
+          "p95_ms": 1.74
+        },
+        "leak": {
+          "unique_values_checked": 186166,
+          "source_occurrences": 1185729,
+          "raw_left_csv": 0,
+          "raw_left_xlsx": 0,
+          "raw_left_rate_csv": 0.0,
+          "raw_left_rate_xlsx": 0.0,
+          "by_type": {
+            "ADDRESS": {
+              "source": 100000,
+              "raw_left_csv": 0,
+              "raw_left_xlsx": 0
+            },
+            "BANK_ACCOUNT": {
+              "source": 100000,
+              "raw_left_csv": 0,
+              "raw_left_xlsx": 0
+            },
+            "CCCD": {
+              "source": 100000,
+              "raw_left_csv": 0,
+              "raw_left_xlsx": 0
+            },
+            "CREDIT_CARD": {
+              "source": 29913,
+              "raw_left_csv": 0,
+              "raw_left_xlsx": 0
+            },
+            "CUSTOMER_ID": {
+              "source": 169518,
+              "raw_left_csv": 0,
+              "raw_left_xlsx": 0
+            },
+            "EMAIL": {
+              "source": 300000,
+              "raw_left_csv": 0,
+              "raw_left_xlsx": 0
+            },
+            "FULL_NAME": {
+              "source": 100000,
+              "raw_left_csv": 0,
+              "raw_left_xlsx": 0
+            },
+            "PHONE": {
+              "source": 100000,
+              "raw_left_csv": 0,
+              "raw_left_xlsx": 0
+            },
+            "TAX_CODE": {
+              "source": 16780,
+              "raw_left_csv": 0,
+              "raw_left_xlsx": 0
+            },
+            "VIN": {
+              "source": 169518,
+              "raw_left_csv": 0,
+              "raw_left_xlsx": 0
+            }
+          },
+          "scan_seconds": 79.14,
+          "note": "Không tính phần thân văn bản tự do; trường hiếm đã gài báo riêng ở rare_fields."
+        },
+        "rare_fields": [
+          {
+            "path": "SpouseIdNumber",
+            "pii_type": "CCCD",
+            "case": "chỉ có sau document 50.000",
+            "documents": 80,
+            "detected_type": "CCCD",
+            "action": "MASK",
+            "reason": "phat_hien",
+            "guard_hits": 0,
+            "raw_left_csv": 0,
+            "raw_left_xlsx": 0
+          },
+          {
+            "path": "EmergencyContact.Phone",
+            "pii_type": "PHONE",
+            "case": "lồng, chỉ có sau document 50.000",
+            "documents": 25,
+            "detected_type": "PHONE",
+            "action": "PARTIAL",
+            "reason": "phat_hien",
+            "guard_hits": 0,
+            "raw_left_csv": 0,
+            "raw_left_xlsx": 0
+          },
+          {
+            "path": "Profile.Kyc.Guardian.Email",
+            "pii_type": "EMAIL",
+            "case": "lồng sâu hơn phạm vi quét, chỉ có sau document 50.000",
+            "documents": 40,
+            "detected_type": "EMAIL",
+            "action": "HMAC",
+            "reason": "phat_hien",
+            "guard_hits": 0,
+            "raw_left_csv": 0,
+            "raw_left_xlsx": 0
+          },
+          {
+            "path": "RelatedContacts[].Phone",
+            "pii_type": "PHONE",
+            "case": "trong mảng, chỉ có sau document 50.000",
+            "documents": 96,
+            "detected_type": "PHONE",
+            "action": "PARTIAL",
+            "reason": "phat_hien",
+            "guard_hits": 0,
+            "raw_left_csv": 0,
+            "raw_left_xlsx": 0
+          },
+          {
+            "path": "ExtraNote",
+            "pii_type": "PHONE",
+            "case": "văn bản tự do, chỉ có sau document 50.000",
+            "documents": 45,
+            "detected_type": "FREE_TEXT_PII",
+            "action": "REDACT",
+            "reason": "phat_hien",
+            "guard_hits": 0,
+            "raw_left_csv": 0,
+            "raw_left_xlsx": 0
+          },
+          {
+            "path": "ReferrerEmail",
+            "pii_type": "EMAIL",
+            "case": "khoảng 0,1% document, có 1 document trong 100 đầu",
+            "documents": 101,
+            "detected_type": "EMAIL",
+            "action": "HMAC",
+            "reason": "phat_hien",
+            "guard_hits": 0,
+            "raw_left_csv": 0,
+            "raw_left_xlsx": 0
+          },
+          {
+            "path": "x9",
+            "pii_type": "CCCD",
+            "case": "tên mơ hồ, khoảng 0,1% document, có 1 document trong 100 đầu",
+            "documents": 100,
+            "detected_type": "CCCD",
+            "action": "MASK",
+            "reason": "phat_hien",
+            "guard_hits": 0,
+            "raw_left_csv": 0,
+            "raw_left_xlsx": 0
+          },
+          {
+            "path": "PaidAt.StoreName",
+            "pii_type": "PHONE",
+            "case": "nhập nhầm vào trường đã kết luận không phải PII, chỉ có sau document 50.000",
+            "documents": 35,
+            "detected_type": null,
+            "action": "KEEP",
+            "reason": "khong_phai_du_lieu_ca_nhan",
+            "guard_hits": 35,
+            "raw_left_csv": 0,
+            "raw_left_xlsx": 0
+          }
+        ]
+      }
     }
   ]
 }
