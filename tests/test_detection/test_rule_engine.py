@@ -52,7 +52,7 @@ def test_org_email_detected_as_email(scanner):
     )
     result = scanner.classify(profile)
     # Rule engine bắt bằng regex email nên sẽ ra EMAIL.
-    # LLM sẽ đánh giá là personal hay non_personal sau.
+    # Không kết luận được: chính sách sẽ che toàn bộ cho tới khi người duyệt quyết định.
     assert result.inferred_pii_type == PIIType.EMAIL.value
 
 
@@ -240,5 +240,5 @@ def test_name_columns_are_classified_by_their_entity(scanner, name, expected_typ
 
 
 @pytest.mark.parametrize("name", ["name", "display_name", "user_name"])
-def test_unclear_name_columns_are_left_to_the_llm(scanner, name):
+def test_unclear_name_columns_stay_undecided(scanner, name):
     assert scanner.classify(_typed(name, "character varying", ["Alpha Beta"])) is None

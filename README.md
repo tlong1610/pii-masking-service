@@ -11,13 +11,12 @@ Sản phẩm gồm hai đầu ra dùng chung một lõi `piimask`:
 
 ## Hiện trạng
 
-Repo mới chỉ chứa lõi mang sang từ dự án cũ (`tlong1610/PII_Masking`), đã bỏ UI, web API cũ, agent
-LangGraph, vault, audit, RAG và các phụ thuộc LLM.
+Skeleton Gate 1 đã chạy: MongoDB mockup, luồng MongoDB → che → CSV và XLSX, che CSV, `.log`, `.gz`, API, Docker.
 
 | Thư mục | Nội dung |
 | --- | --- |
 | `piimask/detection/` | Phát hiện PII: regex, từ điển, GLiNER (tùy chọn), quét theo tên trường và nội dung |
-| `piimask/transform/` | Áp dụng hành động che: MASK, PARTIAL, HMAC, REDACT, DROP, NULLIFY, KEEP |
+| `piimask/transform/` | Áp dụng hành động che: MASK, PARTIAL, HMAC, REDACT, DROP, KEEP |
 | `piimask/connectors/` | Đọc profile từ MongoDB và PostgreSQL (MySQL sẽ bổ sung) |
 | `piimask/policy.py` | Chọn hành động che cho từng trường theo loại PII |
 | `tool/` | Xuất MongoDB đã che ra CSV, XLSX (`tool.export`); che file CSV, `.log`, `.gz` (`tool.mask_file`) |

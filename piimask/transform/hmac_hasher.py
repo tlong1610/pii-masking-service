@@ -46,16 +46,3 @@ def hash_value(
     key_material = f"{secret}:{key_version}".encode()
     message = normalized.encode("utf-8")
     return hmac.new(key_material, message, hashlib.sha256).hexdigest()
-
-
-def hash_value_from_settings(value: Any, settings: Any | None = None) -> str | None:
-    """Hash using app settings (hmac_secret + hmac_key_version)."""
-    if settings is None:
-        from piimask.config import get_settings
-
-        settings = get_settings()
-    return hash_value(
-        value,
-        secret=settings.hmac_secret,
-        key_version=settings.hmac_key_version,
-    )

@@ -1,12 +1,9 @@
 """Unit tests for MASK / DROP / HMAC transform engine."""
 
+import pytest
+
 from piimask.transform.hmac_hasher import hash_value
-from piimask.transform.mask_engine import (
-    MASK_PLACEHOLDER,
-    apply_action,
-    filter_columns,
-    transform_row,
-)
+from piimask.transform.mask_engine import MASK_PLACEHOLDER, apply_action
 
 SECRET = "test-secret"
 VERSION = "v1"
@@ -26,11 +23,12 @@ def test_mask_and_drop_and_hmac():
     assert keep and null_digest is None
 
 
-def test_transform_row_drops_column():
-    row = {"cccd": "001", "phone": "090", "note": "hi"}
-    actions = {"cccd": "HMAC", "phone": "MASK", "note": "DROP"}
-    out = transform_row(row, actions, secret=SECRET, key_version=VERSION)
-    assert "note" not in out
-    assert out["phone"] == MASK_PLACEHOLDER
-    assert out["cccd"] == hash_value("001", secret=SECRET, key_version=VERSION)
-    assert filter_columns(["cccd", "phone", "note"], actions) == ["cccd", "phone"]
+def test_keep_returns_value():
+    assert apply_action("x", "KEEP", secret=SECRET, key_version=VERSION) == (True, "x")
+
+
+@pytest.mark.parametrize("action", ["", "XOA", "NULLIFY", None])
+def test_unknown_action_is_rejected_without_value_in_message(action):
+    with pytest.raises(ValueError) as failure:
+        apply_action("0912345678", action, secret=SECRET, key_version=VERSION)
+    assert "0912345678" not in str(failure.value)

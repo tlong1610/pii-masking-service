@@ -34,7 +34,7 @@ Sprint 1 chạy từ 12/11 đến 25/11, Sprint 2 từ 26/11 đến 09/12. Dữ 
 ```text
 piimask/            Lõi: phát hiện, chính sách, che (không phụ thuộc DB, file, LLM)
   detection/        Regex, từ điển, GLiNER, quét theo tên trường và nội dung
-  transform/        MASK, PARTIAL, HMAC, REDACT, DROP, NULLIFY, KEEP
+  transform/        MASK, PARTIAL, HMAC, REDACT, DROP, KEEP
   connectors/       Bộ đọc DB: MongoDB, PostgreSQL, MySQL
   readers/          Bộ đọc và ghi file: CSV, Excel, JSON, Parquet, .log, .gz
   catalog/          Sinh danh mục trường PII và JSON Schema của danh mục
