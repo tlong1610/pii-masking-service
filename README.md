@@ -2,6 +2,7 @@
 
 Service phát hiện và che PII cho dữ liệu báo cáo và log của các hệ thống (Cặp A – Đoàn Tuấn Long).
 Kế hoạch và phạm vi: [docs/gate-0/gate-0.md](docs/gate-0/gate-0.md). Quy trình làm MVP: [docs/quy-trinh-mvp.md](docs/quy-trinh-mvp.md).
+Tóm tắt Gate 1: [docs/gate-1/tom-tat.md](docs/gate-1/tom-tat.md).
 
 Sản phẩm gồm hai đầu ra dùng chung một lõi `piimask`:
 
@@ -50,11 +51,14 @@ Chạy tool trên máy thay vì trong Docker: đặt `MONGO_URI` là URI của u
 API chưa có xác thực nên cổng chỉ mở trên máy này. Khi `/health` báo `nerEnabled: false`, API chưa che được họ tên
 và địa chỉ. Image chưa cài `gliner`.
 
-## Đo tốc độ
+## Đo tốc độ và rò rỉ trên dữ liệu lớn
+
+`eval.perf` đo tốc độ, rồi dò lại toàn bộ file đã che để đếm giá trị PII gốc còn sót và báo từng trường PII hiếm đã gài
+(`RARE_FIELDS` trong `mockup/load_perf.py`). Bước dò mất thêm khoảng 1,5 phút.
 
 ```bash
 docker compose run --rm seed python -m mockup.load_perf     # 100.000 document vào database mockup_perf
-MONGO_URI="<URI chỉ đọc>" MONGO_DB=mockup python -m eval.perf --api-url http://localhost:8000 --update-baseline
+python -m eval.perf --api-url http://localhost:8000 --update-baseline
 ```
 
 ## Chạy test
