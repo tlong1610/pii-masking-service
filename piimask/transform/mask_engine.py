@@ -3,8 +3,11 @@
 from __future__ import annotations
 
 import logging
+import re
+from functools import lru_cache
 from typing import Any
 
+from piimask.detection.ner_orchestrator import NERPipelines
 from piimask.transform.hmac_hasher import hash_value
 from piimask.transform.text_masker import mask_text
 
@@ -56,6 +59,31 @@ def redact_value(value: Any) -> Any:
         # Chỉ ghi loại lỗi, không ghi giá trị.
         logger.warning("NER redaction failed (%s); cell replaced whole", type(exc).__name__)
         return "[REDACTED]"
+
+
+_MAY_HOLD_PII = re.compile(r"[\d@=:]|bearer|basic", re.IGNORECASE)
+
+
+@lru_cache(maxsize=1)
+def _guard_pipeline() -> NERPipelines:
+    """Chỉ regex: lớp chặn cuối chạy trên mọi ô giữ nguyên nên phải nhanh và không phụ thuộc mô hình."""
+    return NERPipelines(use_ml=False)
+
+
+@lru_cache(maxsize=100_000)
+def _guard_text(text: str, exempt: tuple[str, ...]) -> str:
+    return mask_text(text, list(exempt), _guard_pipeline()).text
+
+
+def guard_value(value: Any, exempt: tuple[str, ...] = ()) -> Any:
+    """Lớp chặn cuối cho ô sắp giữ nguyên: chuỗi có PII thì che riêng phần đó, che lỗi thì không trả giá trị gốc."""
+    if not isinstance(value, str) or not _MAY_HOLD_PII.search(value):
+        return value
+    try:
+        return _guard_text(value, exempt)
+    except Exception as exc:
+        logger.warning("Lớp chặn cuối lỗi (%s); ô bị che toàn bộ", type(exc).__name__)
+        return MASK_PLACEHOLDER
 
 
 def apply_action(
