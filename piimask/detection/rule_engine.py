@@ -121,6 +121,10 @@ class RuleBasedScanner:
                 reasoning="Cột không có dữ liệu (toàn NULL): không cần chia sẻ.",
             )
 
+        # Bước 0.35: Giá trị đúng hoặc sai không định danh được ai.
+        if col_profile.data_type == "boolean":
+            return self._negative_result(col_profile, "NOT_PERSONAL_DATA")
+
         # Bước 0.4: Trường tên là văn bản tự do có PII nhúng.
         if set(name_tokens(col_name)) & {"notes", "note", "body", "description", "comment", "message", "chu"}:
             if self._embeds_pii(col_profile.samples):

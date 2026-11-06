@@ -13,28 +13,19 @@ from tool.export import export_database, table_file_name
 
 LABELS = Path(__file__).resolve().parents[2] / "mockup/labels/fields.jsonl"
 
-# Trường có nhãn PII nhưng bộ phát hiện kết luận KEEP, sẽ sửa ở bước mã khách và số khung. Danh sách này phải khớp
-# đúng: trường mới lọt ra làm test đỏ, sửa xong detector thì xóa khỏi đây. Test dò giá trị trong cả file nên
-# BatterySerial có ở đây dù cột của nó đã bị che: giá trị trùng với VehicleId, cột đó đang giữ nguyên.
-KNOWN_DETECTOR_GAPS = {
-    "battery_bills.BatterySerial",
-    "battery_bills.CustomerId",
-    "battery_bills.SapCustomerId",
-    "battery_bills.VehicleId",
-    "battery_contracts.CustomerId",
-    "battery_contracts.SapCustomerId",
-    "battery_contracts.VehicleId",
-    "customers.CustomerId",
-    "customers.SapCustomerId",
-    "tickets.CustomerId",
-}
-
 
 @pytest.fixture(scope="module")
 def exported(readonly_client, tmp_path_factory):
     out_dir = tmp_path_factory.mktemp("export")
     connector = MongoConnector("mongodb://mockup", database_name="mockup", client=readonly_client)
-    report = export_database(connector, out_dir, secret="it-secret", key_version="v1", join_keys=["IdNumber"])
+    report = export_database(
+        connector,
+        out_dir,
+        secret="it-secret",
+        key_version="v1",
+        join_keys=["IdNumber"],
+        enterprise_flag="EnterpriseCustomer",
+    )
     return out_dir, report
 
 
@@ -97,7 +88,7 @@ def _labelled_values(readonly_client):
     return values
 
 
-def test_only_known_detector_gaps_leak_raw_values(readonly_client, exported):
+def test_no_labelled_field_leaks_raw_values(readonly_client, exported):
     out_dir, _ = exported
     leaked = set()
     for (collection, table, path), values in _labelled_values(readonly_client).items():
@@ -105,4 +96,22 @@ def test_only_known_detector_gaps_leak_raw_values(readonly_client, exported):
         content = file.read_text(encoding="utf-8-sig")
         if any(value in content for value in values):
             leaked.add(f"{collection}.{path}")
-    assert leaked == KNOWN_DETECTOR_GAPS
+    assert leaked == set()
+
+
+def test_enterprise_customer_fields_stay_and_individual_fields_are_hashed(readonly_client, exported):
+    out_dir, _ = exported
+    source = {str(doc["IdNumber"]): doc for doc in readonly_client["mockup"]["customers"].find({})}
+    rows = _rows(out_dir / "customers.csv")
+    enterprise = [row for row in rows if row["EnterpriseCustomer"] == "True"]
+    individual = [row for row in rows if row["EnterpriseCustomer"] == "False"]
+    raw_ids = {doc["CustomerId"] for doc in source.values()}
+    assert enterprise and all(row["CustomerId"] in raw_ids for row in enterprise)
+    assert individual and not any(row["CustomerId"] in raw_ids for row in individual)
+
+
+def test_devices_keep_serial_and_imei(readonly_client, exported):
+    out_dir, _ = exported
+    first = readonly_client["mockup"]["devices"].find_one()
+    row = _rows(out_dir / "devices.csv")[0]
+    assert row["Serial"] == first["Serial"] and row["Imei"] == first["Imei"]

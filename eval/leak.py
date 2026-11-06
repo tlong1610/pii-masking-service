@@ -29,10 +29,14 @@ def load_labels(path: Path, collection: str) -> dict[str, dict]:
         return pii_labels([json.loads(line) for line in file], collection)
 
 
-def collect_values(documents: Iterable[dict], labels: dict[str, dict]) -> tuple[dict[str, str], Counter]:
-    """Trả giá trị gốc -> loại PII, và số lần xuất hiện ở nguồn theo loại. Bỏ giá trị rỗng và trường của doanh nghiệp."""
+def collect_values(documents: Iterable[dict], labels: dict[str, dict]) -> tuple[dict[str, str], Counter, set[str]]:
+    """Trả giá trị gốc -> loại PII, số lần xuất hiện ở nguồn theo loại, và giá trị của khách doanh nghiệp được phép giữ.
+
+    Bỏ giá trị rỗng. Mã của khách doanh nghiệp có thể gặp ở collection không có cờ, bên gọi loại nó khỏi phép dò.
+    """
     values: dict[str, str] = {}
     totals: Counter = Counter()
+    allowed: set[str] = set()
     for document in documents:
         for row in split_document(document, ""):
             for column, value in row.fields.items():
@@ -41,10 +45,11 @@ def collect_values(documents: Iterable[dict], labels: dict[str, dict]) -> tuple[
                     continue
                 condition = label.get("when")
                 if condition and document.get(condition["field"]) != condition["equals"]:
+                    allowed.add(str(value))
                     continue
                 values[str(value)] = label["pii_type"]
                 totals[label["pii_type"]] += 1
-    return values, totals
+    return values, totals, allowed
 
 
 def _csv_lines(path: Path) -> Iterator[str]:

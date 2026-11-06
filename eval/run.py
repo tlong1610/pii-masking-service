@@ -24,13 +24,15 @@ from mockup.generate import DEFAULT_SEED
 from mockup.heldout import STYLES, heldout_names, random_names, rename_document, rename_path, segments_of, style_of
 from piimask.connectors.mongo_connector import MongoConnector
 from piimask.detection.ner_orchestrator import NERPipelines
-from piimask.detection.rule_engine import RuleBasedScanner
 from piimask.transform.text_masker import mask_text
-from tool.export import export_database
+from tool.export import build_plans, export_database
 
 _REPO = Path(__file__).resolve().parent.parent
 _DATABASE = "mockup"
 _BSON_OPTIONS = json_util.RELAXED_JSON_OPTIONS.with_options(tz_aware=True)
+_JOIN_KEYS = frozenset({"idnumber"})
+_ENTERPRISE_FLAG = "EnterpriseCustomer"
+_UNDECIDED_REASONS = ("chua_ket_luan", "ngoai_pham_vi_quet")
 _APP_LOGS = ("log/app.log", "log/app.log.gz")
 _SECRET_LOGS = ("log/secrets.log",)
 _JSON_LOGS = ("log/json_numbers.log",)
@@ -59,22 +61,23 @@ def _connector(collections: dict[str, list[dict]]) -> MongoConnector:
     return MongoConnector("mongodb://mockup", database_name=_DATABASE, client=client)
 
 
-def scan_fields(collections: dict[str, list[dict]]) -> dict[str, str | None]:
-    """Quét theo trường qua luồng thật. Trả 'collection.path' -> loại PII; None nếu lõi chưa kết luận."""
-    scanner = RuleBasedScanner()
-    connector = _connector(collections)
+def scan_fields(collections: dict[str, list[dict]], enterprise_flag: str | None = _ENTERPRISE_FLAG) -> dict:
+    """Quyết định theo trường của luồng thật. Trả 'collection.path' -> loại PII; None nếu lõi chưa kết luận."""
+    plans = build_plans(_connector(collections), _JOIN_KEYS, enterprise_flag=enterprise_flag)
     predicted = {}
-    for task in connector.to_scanner_contract():
-        result = scanner.classify(task["column_profile"])
-        key = f"{task['collection_name']}.{task['field_path']}"
-        predicted[key] = result.inferred_pii_type if result else None
+    for collection, plan in plans.items():
+        for path, decision in plan.items():
+            pii_type = decision.pii_type
+            if pii_type is None and decision.reason not in _UNDECIDED_REASONS:
+                pii_type = "NOT_PERSONAL_DATA"
+            predicted[f"{collection}.{path}"] = pii_type
     return predicted
 
 
-def evaluate_fields(collections: dict, labels: list[dict]) -> tuple[dict, float]:
+def evaluate_fields(collections: dict, labels: list[dict], enterprise_flag: str | None) -> tuple[dict, float]:
     gold = [{**label, "key": f"{label['collection']}.{label['path']}"} for label in labels]
     started = time.perf_counter()
-    predicted = scan_fields(collections)
+    predicted = scan_fields(collections, enterprise_flag)
     return score_fields(gold, predicted), time.perf_counter() - started
 
 
@@ -91,6 +94,10 @@ def rename_set(collections: dict, labels: list[dict], make_names) -> tuple[dict,
                 renamed_label["when"] = {**label["when"], "field": names.get(label["when"]["field"])}
             renamed_labels.append(renamed_label)
     return renamed, renamed_labels
+
+
+def flag_name(labels: list[dict]) -> str | None:
+    return next((label["when"]["field"] for label in labels if "when" in label), None)
 
 
 def recall_by_style(section: dict, labels: list[dict]) -> dict:
@@ -148,7 +155,7 @@ def evaluate_json_validity(data_dir: Path, pipeline: NERPipelines) -> dict:
 
 
 def evaluate_events(data_dir: Path, labels_dir: Path) -> dict:
-    """Log object quét qua cùng luồng theo trường; chưa tách chuỗi JSON lồng."""
+    """Log object quét qua cùng luồng theo trường."""
     events = _read_jsonl(data_dir / "files/log/events.jsonl")
     gold = [
         {**label, "key": f"app_events.{label['column']}"}
@@ -158,18 +165,27 @@ def evaluate_events(data_dir: Path, labels_dir: Path) -> dict:
     return score_fields(gold, scan_fields({"app_events": events}))
 
 
-def evaluate_leak(collections: dict, labels: list[dict]) -> dict:
+def evaluate_leak(collections: dict, labels: list[dict], enterprise_flag: str | None) -> dict:
     """Xuất qua luồng thật rồi dò giá trị gốc của mọi trường có nhãn trong file đã che. Không tính văn bản tự do."""
     values: dict[str, str] = {}
     totals: Counter = Counter()
+    allowed: set[str] = set()
     for name, docs in collections.items():
-        found, counts = collect_values(docs, pii_labels(labels, name))
+        found, counts, exempt = collect_values(docs, pii_labels(labels, name))
         values.update(found)
         totals.update(counts)
+        allowed |= exempt
+    for value in allowed:
+        values.pop(value, None)
 
     with tempfile.TemporaryDirectory() as out_dir:
         export_database(
-            _connector(collections), Path(out_dir), secret="eval", key_version="eval", join_keys=["IdNumber"]
+            _connector(collections),
+            Path(out_dir),
+            secret="eval",
+            key_version="eval",
+            join_keys=["IdNumber"],
+            enterprise_flag=enterprise_flag,
         )
         left = scan_output(Path(out_dir), values)
     source = sum(totals.values())
@@ -221,14 +237,17 @@ def build_report(data_dir: Path, labels_dir: Path, rename_seed: int = 1) -> dict
     labels = [label for label in labels if label["collection"] in collections]
     pipeline = NERPipelines(use_ml=False)
 
-    fields, field_seconds = evaluate_fields(collections, labels)
+    fields, field_seconds = evaluate_fields(collections, labels, _ENTERPRISE_FLAG)
     heldout_data, heldout_labels = rename_set(collections, labels, heldout_names)
-    heldout, _ = evaluate_fields(heldout_data, heldout_labels)
+    # Tên cờ doanh nghiệp là cấu hình của từng nguồn, nên hai bộ đổi tên dùng tên mới của nó.
+    heldout_flag = flag_name(heldout_labels)
+    heldout, _ = evaluate_fields(heldout_data, heldout_labels, heldout_flag)
     heldout["by_style"] = recall_by_style(heldout, heldout_labels)
     random_data, random_labels = rename_set(
         collections, labels, lambda name, segments: random_names(name, segments, rename_seed)
     )
-    randomized, _ = evaluate_fields(random_data, random_labels)
+    random_flag = flag_name(random_labels)
+    randomized, _ = evaluate_fields(random_data, random_labels, random_flag)
     tickets, ticket_seconds = evaluate_tickets(collections, labels_dir, pipeline)
     logs, log_seconds, log_count = evaluate_logs(data_dir, labels_dir, pipeline)
     secrets, _, _ = evaluate_logs(data_dir, labels_dir, pipeline, _SECRET_LOGS)
@@ -236,9 +255,9 @@ def build_report(data_dir: Path, labels_dir: Path, rename_seed: int = 1) -> dict
     json_logs["json_validity"] = evaluate_json_validity(data_dir, pipeline)
     events = evaluate_events(data_dir, labels_dir)
     leak = {
-        "goc": evaluate_leak(collections, labels),
-        "heldout": evaluate_leak(heldout_data, heldout_labels),
-        "ngau_nhien": evaluate_leak(random_data, random_labels),
+        "goc": evaluate_leak(collections, labels, _ENTERPRISE_FLAG),
+        "heldout": evaluate_leak(heldout_data, heldout_labels, heldout_flag),
+        "ngau_nhien": evaluate_leak(random_data, random_labels, random_flag),
     }
     documents = sum(len(docs) for docs in collections.values())
     return {

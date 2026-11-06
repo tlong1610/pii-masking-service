@@ -37,6 +37,10 @@ HIGH_CONFIDENCE_COLUMNS = {
     ],
     "SESSION_ID": ["session", "session_id", "sessionid"],
     "GPS": ["gps", "latitude", "longitude", "lat", "lng", "toa_do"],
+    # Mã khách, số khung, serial: có là dữ liệu cá nhân hay không do chính sách quyết định theo ngữ cảnh.
+    "CUSTOMER_ID": ["customer_id", "ma_khach_hang"],
+    "VIN": ["vin", "vehicle_id"],
+    "DEVICE_SERIAL": ["serial", "imei"],
     # IP/MAC là định danh gián tiếp, không phải địa chỉ nhà: phải đứng trước ADDRESS.
     "IP_ADDRESS": ["ip_address", "ip", "mac_address"],
     PIIType.ADDRESS.value: ["address", "dia_chi", "street", "street_address"],
@@ -156,6 +160,8 @@ REGEX_PATTERNS = {
     PIIType.PHONE.value: re.compile(r"^(0|84|\+84)(3|5|7|8|9)\d{8}$"),
     # Ma so thue
     PIIType.TAX_CODE.value: re.compile(r"^\d{10}(-\d{3})?$"),
+    # Số khung theo ISO 3779: 17 ký tự, không có I, O, Q, có cả chữ và số.
+    "VIN": re.compile(r"^(?=.*[A-Z])(?=.*\d)[A-HJ-NPR-Z0-9]{17}$"),
     "CREDIT_CARD": re.compile(r"^\d{4}[- ]?\d{4}[- ]?\d{4}[- ]?\d{4}$"),
     "IP_ADDRESS": re.compile(r"^(?:(?:25[0-5]|2[0-4]\d|1?\d?\d)\.){3}(?:25[0-5]|2[0-4]\d|1?\d?\d)$"),
     "GPS": re.compile(r"^-?\d{1,3}\.\d{4,}\s*,\s*-?\d{1,3}\.\d{4,}$"),
@@ -169,7 +175,7 @@ REGEX_PATTERNS = {
 _NAME_WORDS = frozenset({"name", "names", "ten"})
 # Thực thể là con người -> họ tên (L2).
 _PERSON_NAME_ENTITIES = [
-    "first",
+    "tax_registration", "first",
     "last",
     "full",
     "middle",

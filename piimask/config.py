@@ -24,6 +24,9 @@ class Settings(BaseSettings):
     mongo_uri: str = "mongodb://localhost:27017"
     mongo_db: str = "mockup"
 
+    # Trường đánh dấu khách doanh nghiệp. Luật chỉ bảo vệ con người cụ thể nên dòng có cờ này giữ nguyên các loại có điều kiện.
+    enterprise_flag_field: str = "EnterpriseCustomer"
+
 
 @lru_cache
 def get_settings() -> Settings:
