@@ -91,11 +91,20 @@ def test_export_output_and_logs_have_no_canary(tmp_path, caplog, capsys):
 
 
 def test_redact_error_in_export_withholds_the_cell(tmp_path, caplog, monkeypatch):
-    monkeypatch.setattr("piimask.detection.ner_orchestrator.redact_free_text", _boom_with_value)
+    monkeypatch.setattr("piimask.transform.mask_engine.mask_text", _boom_with_value)
     export_database(_connector(), tmp_path, secret="s", key_version="v1", formats=["csv"])
     files = [path.read_text(encoding="utf-8-sig") for path in tmp_path.iterdir()]
     assert "[REDACTED]" in files[0] or "[REDACTED]" in files[1]
     _assert_clean(*files, caplog.text)
+
+
+def test_guard_error_in_export_withholds_the_cell(tmp_path, caplog, monkeypatch):
+    monkeypatch.setattr("piimask.transform.mask_engine._guard_text", _boom_with_value)
+    client = mongomock.MongoClient()
+    client["src"]["khach"].insert_many([{"amount": "100"}, {"amount": "200"}, {"amount": f"gọi {CANARIES[0]}"}])
+    connector = MongoConnector("mongodb://mockup", database_name="src", client=client)
+    export_database(connector, tmp_path, secret="s", key_version="v1", formats=["csv"])
+    _assert_clean(*[path.read_text(encoding="utf-8-sig") for path in tmp_path.iterdir()], caplog.text)
 
 
 def test_cli_failure_prints_error_type_only(monkeypatch, tmp_path):

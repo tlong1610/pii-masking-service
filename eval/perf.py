@@ -30,8 +30,6 @@ from tool.export import export_database
 _REPO = Path(__file__).resolve().parent.parent
 _LABELS = _REPO / "mockup/labels/fields.jsonl"
 _DEV_SECRET = "chi-dung-de-do-toc-do"
-# Số document đầu mà MongoConnector xem khi quét theo trường.
-_SCANNED_DOCUMENTS = 100
 _API_SAMPLE = (
     "Khách gọi 0912345678, email demo.kh@example.com, CCCD 001099012345, hẹn gặp tại trạm sạc số 12 lúc 9 giờ sáng. "
     "Mã vận đơn và số tiền giữ nguyên để đối soát."
@@ -94,10 +92,10 @@ def measure_leak(connector: MongoConnector, out_dir: Path, fields: list[dict]) -
                 "pii_type": field.pii_type,
                 "case": field.case,
                 "documents": len(planted[field.path]),
-                "in_scanned_documents": field.start < _SCANNED_DOCUMENTS,
                 "detected_type": decision["pii_type"],
                 "action": decision["action"],
                 "reason": decision["reason"],
+                "guard_hits": decision["guard_hits"],
                 "raw_left_csv": found["csv"][key],
                 "raw_left_xlsx": found["xlsx"][key],
             }

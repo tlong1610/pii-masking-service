@@ -23,6 +23,12 @@ def field_path(table: str, column: str) -> str:
     return f"{table}[].{column}" if table else column
 
 
+def split_path(path: str) -> tuple[str, str]:
+    """Ngược với field_path: 'a[].b[].c' -> ('a[].b', 'c')."""
+    table, separator, column = path.rpartition("[].")
+    return (table, column) if separator else ("", path)
+
+
 def _flatten(item: dict, prefix: str, fields: dict[str, Any], arrays: list[tuple[str, list]]) -> None:
     for name, value in item.items():
         path = f"{prefix}{name}"

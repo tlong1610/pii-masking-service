@@ -1,5 +1,6 @@
 import re
 
+from piimask.detection.regex_ner import RegexNERScanner
 from piimask.detection.regex_patterns import (
     HIGH_CONFIDENCE_COLUMNS,
     NEGATIVE_COLUMNS,
@@ -9,10 +10,14 @@ from piimask.detection.regex_patterns import (
     match_column_keyword,
     name_tokens,
 )
+from piimask.detection.taxonomy import PIIType
 from piimask.schemas import ColumnProfile, FieldScanResult
 
 _DATETIME_TYPE_PREFIXES = ("date", "timestamp", "time")
 _DATETIME_NAME_SUFFIXES = frozenset({"date", "at", "time", "timestamp", "datetime", "ngay"})
+# Định dạng không thể là mã nghiệp vụ nên chỉ cần ít mẫu, ví dụ cột người tạo lẫn email thật và mã hệ thống.
+_DISTINCT_FORMAT_THRESHOLD = 0.2
+_DISTINCT_FORMATS = frozenset({PIIType.EMAIL.value, "TOKEN"})
 _ISO_DATE = re.compile(r"^\d{4}-\d{2}-\d{2}([ T]\d{2}:\d{2}(:\d{2})?.*)?$")
 
 
@@ -23,8 +28,11 @@ def _is_event_datetime(col_profile: ColumnProfile) -> bool:
         return True
     tokens = name_tokens(col_profile.column_name)
     samples = [str(sample).strip() for sample in col_profile.samples if str(sample).strip()]
-    return bool(tokens) and tokens[-1] in _DATETIME_NAME_SUFFIXES and bool(samples) and all(
-        _ISO_DATE.match(sample) for sample in samples
+    return (
+        bool(tokens)
+        and tokens[-1] in _DATETIME_NAME_SUFFIXES
+        and bool(samples)
+        and all(_ISO_DATE.match(sample) for sample in samples)
     )
 
 
@@ -36,10 +44,11 @@ class RuleBasedScanner:
     Không chắc chắn thì trả None: chính sách che toàn bộ trường đó cho tới khi người duyệt quyết định.
     """
 
-    def __init__(self, match_threshold: float = 0.5):
-        # Tỷ lệ % số samples tối thiểu phải khớp Regex để kết luận là PII
-        # Mặc định: 50% (VD: 3/5 mẫu là số điện thoại thì cột đó chứa SĐT)
+    def __init__(self, match_threshold: float = 0.6):
+        # Tỷ lệ mẫu tối thiểu phải khớp Regex để kết luận là PII. Mẫu rải khắp collection nên hiếm khi đồng nhất tuyệt
+        # đối, ví dụ cột số điện thoại lẫn số 12 chữ số. Cột dưới ngưỡng thì không có kết luận và bị che toàn bộ.
         self.match_threshold = match_threshold
+        self._text_scanner = RegexNERScanner()
 
     def _check_column_name(self, column_name: str, keyword_dict: dict) -> str | None:
         """
@@ -63,6 +72,22 @@ class RuleBasedScanner:
         match_count = sum(1 for sample in samples if pattern.match(str(sample).strip()))
         return match_count / len(samples)
 
+    def _embeds_pii(self, samples: list[str]) -> bool:
+        """Có mẫu dạng câu hoặc JSON chứa thực thể; giá trị trọn vẹn là PII thì để bước regex nội dung xét."""
+        for sample in samples:
+            text = str(sample)
+            if (" " in text or text.startswith(("{", "["))) and self._text_scanner.scan_text(text):
+                return True
+        return False
+
+    def _free_text_result(self, col_profile: ColumnProfile) -> FieldScanResult:
+        return FieldScanResult(
+            field_name=col_profile.column_name,
+            inferred_pii_type="FREE_TEXT_PII",
+            confidence=1.0,
+            reasoning="Trường văn bản tự do chứa thông tin PII nhúng.",
+        )
+
     def _negative_result(self, col_profile: ColumnProfile, negative_type: str) -> FieldScanResult:
         return FieldScanResult(
             field_name=col_profile.column_name,
@@ -72,7 +97,7 @@ class RuleBasedScanner:
         )
 
     def classify(self, col_profile: ColumnProfile) -> FieldScanResult | None:
-        """Chỉ trả về kết quả nếu khớp 100% (chắc chắn PII hoặc chắc chắn KHÔNG phải); mập mờ thì trả None."""
+        """Chỉ trả về kết quả khi chắc chắn là PII hoặc chắc chắn không phải; mập mờ thì trả None."""
         tbl_name = (col_profile.table_name or "").lower()
         col_name = col_profile.column_name.lower().replace(".", "_")
 
@@ -96,20 +121,10 @@ class RuleBasedScanner:
                 reasoning="Cột không có dữ liệu (toàn NULL): không cần chia sẻ.",
             )
 
-        # Bước 0.4: Kiểm tra Free-text chứa PII nhúng (SĐT, Email, CCCD)
+        # Bước 0.4: Trường tên là văn bản tự do có PII nhúng.
         if set(name_tokens(col_name)) & {"notes", "note", "body", "description", "comment", "message", "chu"}:
-            phone_sub = re.compile(r"(0|84|\+84)[35789]\d{8}")
-            cccd_sub = re.compile(r"\b\d{12}\b")
-            email_sub = re.compile(r"[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+")
-            for s in col_profile.samples:
-                s_str = str(s)
-                if phone_sub.search(s_str) or cccd_sub.search(s_str) or email_sub.search(s_str):
-                    return FieldScanResult(
-                        field_name=col_profile.column_name,
-                        inferred_pii_type="FREE_TEXT_PII",
-                        confidence=1.0,
-                        reasoning="Trường văn bản tự do chứa thông tin PII nhúng (SĐT/CCCD/Email).",
-                    )
+            if self._embeds_pii(col_profile.samples):
+                return self._free_text_result(col_profile)
 
         # Bước 1: Tên cột chắc chắn là PII (address, phone, fax, dob, email, tax_code, national_id...)
         high_conf = self._check_column_name(col_profile.column_name, HIGH_CONFIDENCE_COLUMNS)
@@ -131,7 +146,9 @@ class RuleBasedScanner:
                 inferred_pii_type=name_type,
                 confidence=0.95,
                 reasoning=(
-                    "Tên gắn với một người (họ tên)." if is_person else "Tên của vật/tổ chức/địa danh, không phải người."
+                    "Tên gắn với một người (họ tên)."
+                    if is_person
+                    else "Tên của vật/tổ chức/địa danh, không phải người."
                 ),
             )
 
@@ -150,17 +167,22 @@ class RuleBasedScanner:
                 reasoning="Ngày/giờ sự kiện, không phải ngày sinh: không tự định danh được cá nhân.",
             )
 
-        # Bước 3: Regex trên NỘI DUNG (khớp 100% mẫu) - trước luật khóa *_id chung chung,
+        # Bước 3: Regex trên NỘI DUNG (khớp đủ tỷ lệ mẫu) - trước luật khóa *_id chung chung,
         # để citizen_id / ref_id chứa CCCD, SĐT, email vẫn bị bắt.
         for pii_type in REGEX_PATTERNS.keys():
             match_ratio = self._check_samples_regex(pii_type, col_profile.samples)
-            if match_ratio == 1.0 and len(col_profile.samples) > 0:
+            threshold = _DISTINCT_FORMAT_THRESHOLD if pii_type in _DISTINCT_FORMATS else self.match_threshold
+            if match_ratio >= threshold:
                 return FieldScanResult(
                     field_name=col_profile.column_name,
                     inferred_pii_type=pii_type,
                     confidence=1.0,
-                    reasoning=f"100% samples matched strict Regex for {pii_type}.",
+                    reasoning=f"{match_ratio:.0%} samples matched strict Regex for {pii_type}.",
                 )
+
+        # Bước 3.5: Tên không cho biết gì nhưng nội dung là văn bản hay chuỗi JSON có PII nhúng.
+        if self._embeds_pii(col_profile.samples):
+            return self._free_text_result(col_profile)
 
         # Bước 4: Khóa kỹ thuật *_id chung chung (product_id...). national_id, patient_id... bị loại trừ.
         if is_generic_id_column(col_profile.column_name):

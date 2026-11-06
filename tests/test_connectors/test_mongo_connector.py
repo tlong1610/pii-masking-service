@@ -1,75 +1,38 @@
 import mongomock
 
-from piimask.connectors.mongo_connector import (
-    MongoConnector,
-    _flatten_document,
-    _infer_data_type,
-)
+from piimask.connectors.mongo_connector import MongoConnector
 
 
-def test_flatten_document():
-    nested = {
-        "_id": "ALFKI",
-        "contact": {
-            "phone": "0327540543",
-            "email": "alfki@example.vn",
-        },
-        "identity": {
-            "cccd": "033254456184",
-            "nested_level2": {
-                "tag": "vip",
-            },
-        },
-        "status": "active",
-    }
-    flattened = _flatten_document(nested)
-
-    assert flattened["_id"] == "ALFKI"
-    assert flattened["contact.phone"] == "0327540543"
-    assert flattened["contact.email"] == "alfki@example.vn"
-    assert flattened["identity.cccd"] == "033254456184"
-    assert flattened["identity.nested_level2.tag"] == "vip"
-    assert flattened["status"] == "active"
-
-    # Test level 3 is preserved as object when max_depth = 2
-    deep_nested = {
-        "level1": {
-            "level2": {
-                "level3": {
-                    "level4": "deep_val"
-                }
-            }
-        }
-    }
-    flattened_max2 = _flatten_document(deep_nested, max_depth=2)
-    # Path has 2 dots: level1.level2.level3 (2 levels of nesting)
-    assert "level1.level2.level3" in flattened_max2
-    assert flattened_max2["level1.level2.level3"] == {"level4": "deep_val"}
-    assert "level1.level2.level3.level4" not in flattened_max2
-
-
-def test_infer_data_type():
-    assert _infer_data_type(True) == "boolean"
-    assert _infer_data_type(42) == "integer"
-    assert _infer_data_type(3.14) == "float"
-    assert _infer_data_type("text") == "string"
-    assert _infer_data_type(["a", "b"]) == "array"
-    assert _infer_data_type({"k": "v"}) == "object"
+def _connector(documents):
+    client = mongomock.MongoClient()
+    client["src"]["khach"].insert_many(documents)
+    return MongoConnector("mongodb://mockup", database_name="src", client=client)
 
 
 def test_scanner_contract_keeps_real_path_and_marks_primary_key():
-    client = mongomock.MongoClient()
-    client["src"]["khach"].insert_one({"_id": "k1", "contact": {"phone": "0912345678"}})
-    tasks = MongoConnector("mongodb://mockup", database_name="src", client=client).to_scanner_contract()
-
+    tasks = _connector([{"_id": "k1", "contact": {"phone": "0912345678"}}]).to_scanner_contract()
     by_path = {task["field_path"]: task for task in tasks}
     assert by_path["contact.phone"]["column_profile"].column_name == "contact_phone"
     assert by_path["contact.phone"]["column_profile"].samples == ["0912345678"]
     assert by_path["_id"]["column_profile"].is_primary_key is True
 
 
+def test_contract_covers_arrays_deep_fields_and_fields_in_late_documents():
+    documents = [{"_id": index, "a": 1} for index in range(300)]
+    documents[-1]["cuoi"] = {"b": {"c": {"d": {"e": "x"}}}}
+    documents[-1]["mang"] = [{"so": "0912345678"}]
+    tasks = _connector(documents).to_scanner_contract()
+    by_path = {task["field_path"]: task["column_profile"] for task in tasks}
+    assert by_path["cuoi.b.c.d.e"].samples == ["x"]
+    assert by_path["mang[].so"].column_name == "mang_so"
+
+
+def test_contract_can_be_limited_to_some_collections():
+    connector = _connector([{"_id": 1, "a": 1}])
+    assert connector.to_scanner_contract(collections=[]) == []
+    assert connector.collection_names() == ["khach"]
+
+
 def test_iter_documents_reads_every_document():
-    client = mongomock.MongoClient()
-    client["src"]["khach"].insert_many([{"_id": index} for index in range(5)])
-    connector = MongoConnector("mongodb://mockup", database_name="src", client=client)
+    connector = _connector([{"_id": index} for index in range(5)])
     assert len(list(connector.iter_documents("khach", batch_size=2))) == 5

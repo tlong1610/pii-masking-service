@@ -35,5 +35,3 @@ def test_ml_ner_scanner(monkeypatch):
 
     assert matches_sorted[2].pii_type == "LOCATION"
     assert "Nha Trang" in matches_sorted[2].text
-
-

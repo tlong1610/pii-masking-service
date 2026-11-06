@@ -1,4 +1,3 @@
-
 from flashtext import KeywordProcessor
 
 # Re-use EntityMatch from regex_ner
@@ -12,6 +11,7 @@ class DictionaryNERScanner:
     Tốc độ O(N) theo chiều dài văn bản, không phụ thuộc số lượng từ khóa trong từ điển.
     Rất lý tưởng để quét danh sách Tên riêng, Địa danh, Tên bệnh viện, Tên thuốc...
     """
+
     def __init__(self, case_sensitive: bool = False):
         self.keyword_processor = KeywordProcessor(case_sensitive=case_sensitive)
 
@@ -41,14 +41,8 @@ class DictionaryNERScanner:
             # Lấy nguyên văn chuỗi match từ text gốc (giữ nguyên in hoa/thường)
             matched_text = text[start:end]
 
-            matches.append(EntityMatch(
-                start=start,
-                end=end,
-                pii_type=pii_type,
-                text=matched_text
-            ))
+            matches.append(EntityMatch(start=start, end=end, pii_type=pii_type, text=matched_text))
 
         # Sắp xếp lại theo thứ tự xuất hiện trong text
         matches.sort(key=lambda x: x.start)
         return matches
-

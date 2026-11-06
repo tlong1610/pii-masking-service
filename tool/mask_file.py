@@ -8,21 +8,19 @@ import argparse
 import codecs
 import csv
 import gzip
-import itertools
 import os
 import sys
-from collections.abc import Callable
+from collections.abc import Callable, Iterable
 from pathlib import Path
 
 from piimask.config import get_settings
 from piimask.detection.rule_engine import RuleBasedScanner
 from piimask.policy import FieldDecision, decide, undecided
-from piimask.schemas import ColumnProfile, PolicyAction
-from piimask.transform.mask_engine import apply_action
+from piimask.profile import FieldProfiler
+from piimask.schemas import PolicyAction
+from piimask.transform.mask_engine import apply_action, guard_value
 from tool.export import require_secret
 
-_SCAN_ROWS = 100
-_SAMPLES = 5
 _DELIMITERS = ",;\t|"
 _LOG_ENCODING = {"encoding": "utf-8", "errors": "surrogateescape", "newline": ""}
 
@@ -35,24 +33,15 @@ def detect_encoding(path: Path) -> str:
     return "utf-8-sig" if head.startswith(codecs.BOM_UTF8) else "utf-8"
 
 
-def _column_profile(name: str, values: list[str]) -> ColumnProfile:
-    filled = [value for value in values if value.strip()]
-    return ColumnProfile(
-        column_name=name,
-        data_type="string",
-        is_primary_key=False,
-        is_foreign_key=False,
-        samples=list(dict.fromkeys(filled))[:_SAMPLES],
-    )
-
-
-def plan_columns(header: list[str], rows: list[list[str]]) -> list[FieldDecision]:
+def plan_columns(header: list[str], rows: Iterable[list[str]]) -> list[FieldDecision]:
+    """Đọc hết các dòng để mẫu rải khắp file. Cột không có giá trị nào vẫn có quyết định."""
+    profiler = FieldProfiler()
+    profiler.add(dict.fromkeys(header))
+    for row in rows:
+        profiler.add(dict(zip(header, row, strict=False)))
     scanner = RuleBasedScanner()
-    decisions = []
-    for position, name in enumerate(header):
-        profile = _column_profile(name, [row[position] for row in rows if position < len(row)])
-        decisions.append(decide(name, scanner.classify(profile)))
-    return decisions
+    profiles = {profile.column_name: profile for profile in profiler.profiles()}
+    return [decide(name, scanner.classify(profiles[name]), samples=profiles[name].samples) for name in header]
 
 
 def _replace_atomically(target: Path, write: Callable[[Path], None]) -> None:
@@ -75,15 +64,17 @@ def mask_csv(source: Path, target: Path, *, secret: str, key_version: str) -> li
     with source.open(encoding=encoding, newline="") as file:
         reader = csv.reader(file, delimiter=delimiter)
         header = next(reader)
-        decisions = plan_columns(header, list(itertools.islice(reader, _SCAN_ROWS)))
+        decisions = plan_columns(header, reader)
 
     # Dòng có nhiều ô hơn tiêu đề: ô thừa chưa có quyết định nên bị che.
     extra = undecided("").action
 
     def mask_cell(position: int, cell: str) -> str:
         action = decisions[position].action if position < len(decisions) else extra
-        if not cell or action == PolicyAction.KEEP.value:
+        if not cell:
             return cell
+        if action == PolicyAction.KEEP.value:
+            return guard_value(cell, decisions[position].guard_exempt)
         return apply_action(cell, action, secret=secret, key_version=key_version)[1]
 
     def write(part: Path) -> None:

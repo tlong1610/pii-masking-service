@@ -106,7 +106,7 @@ def test_every_file_has_column_labels_with_group(output):
     labels = _jsonl(labels_dir / "file_fields.jsonl")
     labelled = {label["file"] for label in labels}
     on_disk = {str(path.relative_to(files)) for path in files.rglob("*") if path.is_file()}
-    assert on_disk - labelled == {"log/app.log", "log/app.log.gz", "log/secrets.log"}
+    assert on_disk - labelled == {"log/app.log", "log/app.log.gz", "log/secrets.log", "log/json_numbers.log"}
     groups = {label["pii_type"]: label["group"] for label in labels}
     assert groups["BANK_ACCOUNT"] == "nhay_cam" and groups["CCCD"] == "co_ban"
     assert groups[None] is None
@@ -137,3 +137,14 @@ def test_secret_log_spans_point_at_values_and_has_lines_without_secrets(output):
         for span in item["labels"]:
             value = lines[item["line"] - 1][span["start"] : span["end"]]
             assert value and " " not in value
+
+
+def test_json_log_has_pii_as_numbers(output):
+    files, labels_dir = output
+    lines = (files / "log/json_numbers.log").read_text(encoding="utf-8").splitlines()
+    first = json.loads(lines[0])
+    assert isinstance(first["cccd"], int) and isinstance(first["lat"], float)
+    items = [item for item in _jsonl(labels_dir / "file_spans.jsonl") if item["file"] == "log/json_numbers.log"]
+    assert len(items) == len(lines)
+    span = next(label for label in items[0]["labels"] if label["type"] == "CCCD")
+    assert lines[0][span["start"] : span["end"]] == str(first["cccd"])

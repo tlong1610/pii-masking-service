@@ -10,6 +10,11 @@ def scanner():
     return RuleBasedScanner(match_threshold=0.5)
 
 
+@pytest.fixture
+def scanner_default():
+    return RuleBasedScanner()
+
+
 def test_tracking_code_not_cccd(scanner):
     # Tracking code giống CCCD (12 số) không được tính là CCCD
     profile = ColumnProfile(
@@ -253,3 +258,32 @@ def test_secret_columns_by_name(scanner, name, expected_type):
 )
 def test_secret_columns_by_content_under_meaningless_name(scanner, samples, expected_type):
     assert scanner.classify(_typed("f17", "string", samples)).inferred_pii_type == expected_type
+
+
+def test_mixed_column_of_emails_and_system_codes_is_email(scanner_default):
+    samples = ["a.b@example.com"] * 3 + ["SYSTEM"] * 7
+    assert scanner_default.classify(_typed("nguoi_lap", "string", samples)).inferred_pii_type == PIIType.EMAIL.value
+
+
+def test_phone_column_mixed_with_longer_numbers_is_phone(scanner_default):
+    samples = ["0912345678"] * 7 + ["091234567890"] * 3
+    assert scanner_default.classify(_typed("f17", "string", samples)).inferred_pii_type == PIIType.PHONE.value
+
+
+def test_column_with_few_digit_matches_stays_undecided(scanner_default):
+    samples = ["123456789012"] * 3 + ["ABC-1"] * 7
+    assert scanner_default.classify(_typed("f17", "string", samples)) is None
+
+
+def test_sentence_with_embedded_pii_is_free_text_under_any_name(scanner_default):
+    samples = ["không có gì", "khách gọi 0912345678 nhé"]
+    assert scanner_default.classify(_typed("f17", "string", samples)).inferred_pii_type == "FREE_TEXT_PII"
+
+
+def test_json_string_with_pii_is_free_text(scanner_default):
+    result = scanner_default.classify(_typed("payload", "string", ['{"phone":"0912345678"}']))
+    assert result.inferred_pii_type == "FREE_TEXT_PII"
+
+
+def test_all_null_column_is_empty_even_with_a_pii_name(scanner_default):
+    assert scanner_default.classify(_typed("session_id", "string", [])).inferred_pii_type == "EMPTY_COLUMN"

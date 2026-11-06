@@ -88,7 +88,7 @@ def test_log_line_that_cannot_be_masked_is_withheld_and_line_count_stays(tmp_pat
     def boom(text):
         raise RuntimeError("lỗi")
 
-    monkeypatch.setattr("piimask.detection.ner_orchestrator.redact_free_text", boom)
+    monkeypatch.setattr("piimask.transform.mask_engine.mask_text", boom)
     source = tmp_path / "in.log"
     source.write_text("gọi 0912345678\nb\n", encoding="utf-8")
     mask_log(source, tmp_path / "out.log", **KEYS)
@@ -114,3 +114,18 @@ def test_refuses_same_file_and_unknown_format(tmp_path):
         mask_file(source, source, **KEYS)
     with pytest.raises(ValueError, match="parquet"):
         mask_file(tmp_path / "a.parquet", tmp_path / "b.parquet", **KEYS)
+
+
+def test_csv_kept_column_goes_through_last_guard(tmp_path):
+    source = tmp_path / "in.csv"
+    source.write_text("amount\n100\n200\n300\ngọi 0912345678\n", encoding="utf-8")
+    mask_csv(source, tmp_path / "out.csv", **KEYS)
+    assert (tmp_path / "out.csv").read_text(encoding="utf-8") == "amount\n100\n200\n300\ngọi [PHONE]\n"
+
+
+def test_csv_samples_cover_rows_after_the_first_hundred(tmp_path):
+    source = tmp_path / "in.csv"
+    rows = "".join(f"{'' if index < 500 else '0912345678'}\n" for index in range(600))
+    source.write_text(f"cot_la\n{rows}", encoding="utf-8")
+    decisions = mask_csv(source, tmp_path / "out.csv", **KEYS)
+    assert decisions[0].pii_type == "PHONE"

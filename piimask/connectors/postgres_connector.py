@@ -41,7 +41,7 @@ class PostgresConnector:
                 # 1. Quét danh sách các bảng (Tables)
                 cur.execute(
                     "SELECT table_name FROM information_schema.tables WHERE table_schema = %s AND table_type = 'BASE TABLE'",
-                    (schema_name,)
+                    (schema_name,),
                 )
                 tables = [row["table_name"] for row in cur.fetchall()]
                 if table_names:
@@ -49,7 +49,8 @@ class PostgresConnector:
                     tables = [t for t in tables if t in allowed]
 
                 # 2. Quét toàn bộ Primary Keys (Khóa chính)
-                cur.execute("""
+                cur.execute(
+                    """
                     SELECT c.table_name, c.column_name
                     FROM information_schema.columns c
                     JOIN information_schema.key_column_usage kcu
@@ -57,12 +58,15 @@ class PostgresConnector:
                     JOIN information_schema.table_constraints tc
                         ON kcu.constraint_name = tc.constraint_name AND tc.constraint_type = 'PRIMARY KEY'
                     WHERE c.table_schema = %s
-                """, (schema_name,))
+                """,
+                    (schema_name,),
+                )
                 pks = cur.fetchall()
                 pk_set = {(row["table_name"], row["column_name"]) for row in pks}
 
                 # 3. Quét toàn bộ Foreign Keys (Khóa ngoại) và xây dựng đồ thị quan hệ
-                cur.execute("""
+                cur.execute(
+                    """
                     SELECT
                         tc.table_name AS source_table, kcu.column_name AS source_column,
                         ccu.table_name AS target_table, ccu.column_name AS target_column
@@ -70,7 +74,9 @@ class PostgresConnector:
                     JOIN information_schema.key_column_usage AS kcu ON tc.constraint_name = kcu.constraint_name
                     JOIN information_schema.constraint_column_usage AS ccu ON ccu.constraint_name = tc.constraint_name
                     WHERE tc.constraint_schema = %s AND tc.constraint_type = 'FOREIGN KEY'
-                """, (schema_name,))
+                """,
+                    (schema_name,),
+                )
                 fks = cur.fetchall()
 
                 # Gom nhóm FK theo từng bảng nguồn
@@ -79,27 +85,30 @@ class PostgresConnector:
                     src_table = fk["source_table"]
                     if src_table not in fk_map:
                         fk_map[src_table] = []
-                    fk_map[src_table].append({
-                        "from_column": fk["source_column"],
-                        "to_table": fk["target_table"],
-                        "to_column": fk["target_column"]
-                    })
+                    fk_map[src_table].append(
+                        {
+                            "from_column": fk["source_column"],
+                            "to_table": fk["target_table"],
+                            "to_column": fk["target_column"],
+                        }
+                    )
 
                 # 4. Duyệt qua từng bảng để lấy danh sách cột và Samples
                 for table in tables:
                     # Thông tin quan hệ của bảng này
                     relations_data = fk_map.get(table, [])
-                    relations = [
-                        TableRelation(**r) for r in relations_data
-                    ]
+                    relations = [TableRelation(**r) for r in relations_data]
                     fk_columns = {r["from_column"] for r in relations_data}
 
                     # Quét danh sách cột của bảng
-                    cur.execute("""
+                    cur.execute(
+                        """
                         SELECT column_name, data_type
                         FROM information_schema.columns
                         WHERE table_schema = %s AND table_name = %s
-                    """, (schema_name, table))
+                    """,
+                        (schema_name, table),
+                    )
                     columns_info = cur.fetchall()
 
                     column_profiles = []
@@ -116,7 +125,7 @@ class PostgresConnector:
                                 sql.Identifier(col_name),
                                 sql.Identifier(table),
                                 sql.Identifier(col_name),
-                                sql.Literal(sample_size)
+                                sql.Literal(sample_size),
                             )
 
                             try:
@@ -141,15 +150,8 @@ class PostgresConnector:
                         column_profiles.append(col_prof)
 
                     # Gom lại thành Profile của bảng
-                    table_profile = TableProfile(
-                        table_name=table,
-                        relations=relations,
-                        columns=column_profiles
-                    )
+                    table_profile = TableProfile(table_name=table, relations=relations, columns=column_profiles)
                     tables_profile.append(table_profile)
 
         # 5. Trả về Profile toàn cục của cả Database
-        return DatabaseProfile(
-            database_name=db_name,
-            tables=tables_profile
-        )
+        return DatabaseProfile(database_name=db_name, tables=tables_profile)

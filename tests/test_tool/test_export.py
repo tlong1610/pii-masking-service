@@ -96,28 +96,43 @@ def test_nested_array_child_links_to_child_row(tmp_path):
     assert cells[0]["_parent_key"] == packs[0]["_row_key"]
 
 
-def test_field_outside_scanned_documents_is_masked(tmp_path):
-    # Quét theo trường chỉ xem 100 document đầu: trường xuất hiện sau đó chưa có quyết định.
+def test_field_only_in_late_document_is_scanned(tmp_path):
     docs = [_doc(index) for index in range(1, 121)]
-    docs[-1]["GhiChuMoi"] = f"gọi {PHONE}"
+    docs[-1]["GhiChuMoi"] = f"gọi {PHONE} nhé"
     report = _export(tmp_path, docs)
-    row = _rows(tmp_path / "contracts.csv")[-1]
-    assert row["GhiChuMoi"] == "***"
+    assert _rows(tmp_path / "contracts.csv")[-1]["GhiChuMoi"] == "gọi [PHONE] nhé"
     decision = next(item for item in report["collections"]["contracts"]["fields"] if item["path"] == "GhiChuMoi")
-    assert decision["reason"] == "ngoai_pham_vi_quet"
+    assert decision["pii_type"] == "FREE_TEXT_PII"
 
 
-def test_field_nested_deeper_than_scan_is_masked(tmp_path):
+def test_field_nested_deeper_than_two_levels_is_scanned(tmp_path):
     _export(tmp_path, [_doc(1, a={"b": {"c": {"d": PHONE}}})])
     (row,) = _rows(tmp_path / "contracts.csv")
-    assert row["a.b.c.d"] == "***"
+    assert row["a.b.c.d"] == "091***678"
 
 
-def test_array_fields_are_masked_until_scanner_covers_arrays(tmp_path):
-    report = _export(tmp_path, [_doc(1)])
-    assert {row["Stock"] for row in _rows(tmp_path / "contracts__Batteries.csv")} == {"***"}
+def test_field_in_array_is_scanned(tmp_path):
+    report = _export(tmp_path, [_doc(1, Contacts=[{"Email": EMAIL}])])
+    assert _rows(tmp_path / "contracts__Contacts.csv")[0]["Email"] == hash_value(
+        EMAIL, secret=SECRET, key_version=VERSION
+    )
     fields = {item["path"]: item for item in report["collections"]["contracts"]["fields"]}
-    assert fields["Batteries[].Serial"]["reason"] == "ngoai_pham_vi_quet"
+    assert fields["Contacts[].Email"]["pii_type"] == "EMAIL"
+
+
+def test_json_string_field_stays_valid_json(tmp_path):
+    payload = json.dumps({"phone": PHONE, "n": 123456789012})
+    _export(tmp_path, [_doc(1, payload=payload)])
+    (row,) = _rows(tmp_path / "contracts.csv")
+    assert json.loads(row["payload"]) == {"phone": "[PHONE]", "n": "[CCCD]"}
+
+
+def test_undecided_field_is_masked_whole(tmp_path):
+    report = _export(tmp_path, [_doc(1, f17="abc")])
+    (row,) = _rows(tmp_path / "contracts.csv")
+    assert row["f17"] == "***"
+    fields = {item["path"]: item for item in report["collections"]["contracts"]["fields"]}
+    assert fields["f17"]["reason"] == "chua_ket_luan"
 
 
 def test_report_has_decisions_but_no_values(tmp_path):
@@ -184,3 +199,25 @@ def test_xlsx_refuses_more_rows_than_the_format_holds(tmp_path, monkeypatch):
         writer.write(["y"])
     writer.abort()
     assert not writer.part.exists()
+
+
+def test_last_guard_masks_pii_in_a_kept_field_and_reports_count(tmp_path):
+    docs = [_doc(index, StoreName=f"Showroom {index}") for index in range(1, 40)]
+    docs[-1]["StoreName"] = f"gọi {PHONE}"
+    report = _export(tmp_path, docs)
+    rows = _rows(tmp_path / "contracts.csv")
+    assert rows[0]["StoreName"] == "Showroom 1"
+    assert rows[-1]["StoreName"] == "gọi [PHONE]"
+    fields = {item["path"]: item for item in report["collections"]["contracts"]["fields"]}
+    assert fields["StoreName"]["action"] == "KEEP" and fields["StoreName"]["guard_hits"] == 1
+
+
+def test_waybill_format_is_routine_in_its_field_but_phone_there_is_still_caught(tmp_path):
+    docs = [_doc(index, TrackingCode=f"4006911725{index:02d}") for index in range(1, 40)]
+    docs[-1]["TrackingCode"] = f"gọi {PHONE}"
+    report = _export(tmp_path, docs)
+    rows = _rows(tmp_path / "contracts.csv")
+    assert rows[0]["TrackingCode"] == "400691172501"
+    assert rows[-1]["TrackingCode"] == "gọi [PHONE]"
+    fields = {item["path"]: item for item in report["collections"]["contracts"]["fields"]}
+    assert list(fields["TrackingCode"]["guard_exempt"]) == ["CCCD"]

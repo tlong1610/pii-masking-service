@@ -42,8 +42,9 @@ docker compose run --rm --user "$(id -u):$(id -g)" export      # xuất CSV, XLS
 
 Nạp lại mockup: `docker compose run --rm seed`. Xóa cả dữ liệu MongoDB: `docker compose down -v`.
 
-Tool đọc bằng user chỉ đọc `mockup_ro`, nối bằng HMAC. Trường chưa có kết luận, gồm cả trường trong mảng và trường
-lồng sâu hơn phạm vi quét, bị che toàn bộ. Xem hành động từng trường ở `data/export/report.json`.
+Tool đọc bằng user chỉ đọc `mockup_ro`. Bộ quét đọc hết collection nên thấy đủ trường, kể cả trong mảng và lồng sâu, và
+lấy mẫu rải khắp collection. Trường chưa có kết luận bị che toàn bộ. Ô của trường giữ nguyên vẫn qua lớp chặn cuối bằng
+regex, gặp PII thì che riêng giá trị đó. Xem hành động và số lần chặn của từng trường ở `data/export/report.json`.
 
 Chạy tool trên máy thay vì trong Docker: đặt `MONGO_URI` là URI của user chỉ đọc (xem `.env.example`) rồi
 `python -m tool.export --join-key IdNumber`. Che một file: `python -m tool.mask_file <vào> <ra>`.
