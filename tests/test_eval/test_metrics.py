@@ -24,7 +24,9 @@ def test_field_invisible_to_core_counts_as_missed():
 
 
 def test_non_pii_conclusion_is_not_flagged():
-    result = score_fields(_gold(("a.id", "CUSTOMER_ID"), ("a.fee", None)), {"a.id": "NOT_PERSONAL_DATA", "a.fee": "MONEY_ALONE"})
+    result = score_fields(
+        _gold(("a.id", "CUSTOMER_ID"), ("a.fee", None)), {"a.id": "NOT_PERSONAL_DATA", "a.fee": "MONEY_ALONE"}
+    )
     assert result["recall"] == 0.0
     assert result["false_positives"] == 0
 
