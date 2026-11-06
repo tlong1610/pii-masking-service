@@ -25,6 +25,7 @@ from mockup.heldout import STYLES, heldout_names, random_names, rename_document,
 from piimask.connectors.mongo_connector import MongoConnector
 from piimask.detection.ner_orchestrator import NERPipelines
 from piimask.detection.rule_engine import RuleBasedScanner
+from piimask.transform.text_masker import mask_text
 from tool.export import export_database
 
 _REPO = Path(__file__).resolve().parent.parent
@@ -32,6 +33,7 @@ _DATABASE = "mockup"
 _BSON_OPTIONS = json_util.RELAXED_JSON_OPTIONS.with_options(tz_aware=True)
 _APP_LOGS = ("log/app.log", "log/app.log.gz")
 _SECRET_LOGS = ("log/secrets.log",)
+_JSON_LOGS = ("log/json_numbers.log",)
 
 
 def _read_jsonl(path: Path) -> list[dict]:
@@ -100,7 +102,7 @@ def recall_by_style(section: dict, labels: list[dict]) -> dict:
 
 
 def scan_texts(pipeline: NERPipelines, texts: list[str]) -> list[list[tuple[int, int]]]:
-    return [[(match.start, match.end) for match in pipeline.redact_with_matches(text)[1]] for text in texts]
+    return [[(entity.start, entity.end) for entity in mask_text(text, pipeline=pipeline).entities] for text in texts]
 
 
 def evaluate_tickets(collections: dict, labels_dir: Path, pipeline: NERPipelines) -> tuple[dict, float]:
@@ -129,6 +131,18 @@ def evaluate_logs(
     elapsed = time.perf_counter() - started
     result = score_spans([(item["labels"], found) for item, found in zip(spans, predictions, strict=True)])
     return result, elapsed, len(texts)
+
+
+def evaluate_json_validity(data_dir: Path, pipeline: NERPipelines) -> dict:
+    """Dòng JSON sau khi che phải còn hợp lệ với cùng bộ khóa."""
+    lines = (data_dir / "files" / _JSON_LOGS[0]).read_text(encoding="utf-8").splitlines()
+    valid = 0
+    for line in lines:
+        try:
+            valid += set(json.loads(mask_text(line, pipeline=pipeline).text)) == set(json.loads(line))
+        except ValueError:
+            pass
+    return {"lines": len(lines), "valid_after_mask": valid}
 
 
 def evaluate_events(data_dir: Path, labels_dir: Path) -> dict:
@@ -216,6 +230,8 @@ def build_report(data_dir: Path, labels_dir: Path, rename_seed: int = 1) -> dict
     tickets, ticket_seconds = evaluate_tickets(collections, labels_dir, pipeline)
     logs, log_seconds, log_count = evaluate_logs(data_dir, labels_dir, pipeline)
     secrets, _, _ = evaluate_logs(data_dir, labels_dir, pipeline, _SECRET_LOGS)
+    json_logs, _, _ = evaluate_logs(data_dir, labels_dir, pipeline, _JSON_LOGS)
+    json_logs["json_validity"] = evaluate_json_validity(data_dir, pipeline)
     events = evaluate_events(data_dir, labels_dir)
     leak = {
         "goc": evaluate_leak(collections, labels),
@@ -235,6 +251,7 @@ def build_report(data_dir: Path, labels_dir: Path, rename_seed: int = 1) -> dict
             "mongo_free_text": tickets,
             "log_lines": logs,
             "log_secrets": secrets,
+            "log_json": json_logs,
             "log_events": events,
         },
         "leak": leak,
@@ -267,6 +284,8 @@ def main() -> None:
     print_section("Văn bản tự do (tickets)", report["sections"]["mongo_free_text"])
     print_section("Dòng log (.log, .gz)", report["sections"]["log_lines"])
     print_section("Log bí mật (secrets.log)", report["sections"]["log_secrets"])
+    print_section("Log JSON có PII dạng số (json_numbers.log)", report["sections"]["log_json"])
+    print(f"  {report['sections']['log_json']['json_validity']}")
     print_section("Log object (events.jsonl)", report["sections"]["log_events"])
     print(f"\nRò rỉ trên bộ nhỏ: {report['leak']}")
     print(f"\nChưa đo: {report['not_measured']}")

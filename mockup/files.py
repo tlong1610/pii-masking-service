@@ -73,6 +73,7 @@ _EVENTS = "log/events.jsonl"
 
 
 _SECRET_LOG = "log/secrets.log"
+_JSON_LOG = "log/json_numbers.log"
 
 
 def _customer_rows(v: FakeValues, customers: list[dict]) -> tuple[list[dict], list[list[dict]]]:
@@ -322,6 +323,32 @@ def write_secret_log(data_dir: Path, v: FakeValues, log_lines: int) -> list[dict
         lines.append(line)
         position_labels.append({"file": _SECRET_LOG, "line": index + 1, "labels": labels})
     (data_dir / _SECRET_LOG).write_text("".join(f"{line}\n" for line in lines), encoding="utf-8")
+    return position_labels
+
+
+def _numeric_json_line(v: FakeValues, index: int) -> tuple[str, list[dict]]:
+    """Dòng log JSON có PII ở dạng số: che bằng thẻ không có dấu nháy sẽ làm hỏng JSON."""
+    cccd, tax_code = "1" + v.digits(11), "8" + v.digits(9)
+    latitude = round(v.rng.uniform(8.5, 23.0), 5)
+    payload = {
+        "ts": (v.date() + timedelta(seconds=index)).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "event": "kyc",
+        "cccd": int(cccd),
+        "tax_code": int(tax_code),
+        "lat": latitude,
+        "attempt": v.rng.randint(1, 5),
+        "amount": v.rng.randrange(500_000, 6_000_000, 1000),
+    }
+    return _json_line(payload, [("CCCD", cccd), ("TAX_CODE", tax_code), ("GPS", str(latitude))])
+
+
+def write_json_log(data_dir: Path, v: FakeValues, log_lines: int) -> list[dict]:
+    lines, position_labels = [], []
+    for index in range(log_lines):
+        line, labels = _numeric_json_line(v, index)
+        lines.append(line)
+        position_labels.append({"file": _JSON_LOG, "line": index + 1, "labels": labels})
+    (data_dir / _JSON_LOG).write_text("".join(f"{line}\n" for line in lines), encoding="utf-8")
     return position_labels
 
 

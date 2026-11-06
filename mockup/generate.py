@@ -7,7 +7,7 @@ from pathlib import Path
 from bson import json_util
 
 from mockup.documents import make_bill, make_contract, make_customer, make_device, make_ticket
-from mockup.files import write_files, write_secret_log
+from mockup.files import write_files, write_json_log, write_secret_log
 from mockup.labels import catalog, field_labels
 from mockup.values import FakeValues
 
@@ -86,6 +86,7 @@ def write_mockup(data_dir: Path, labels_dir: Path, seed: int = DEFAULT_SEED, siz
         data_dir / "files", FakeValues(seed + 1), collections["customers"], sizes["file_rows"], sizes["log_lines"]
     )
     file_spans += write_secret_log(data_dir / "files", FakeValues(seed + 4), sizes["log_lines"])
+    file_spans += write_json_log(data_dir / "files", FakeValues(seed + 5), sizes["log_lines"])
     _write_jsonl(labels_dir / "file_fields.jsonl", [json.dumps(item, ensure_ascii=False) for item in file_fields])
     _write_jsonl(labels_dir / "file_spans.jsonl", [json.dumps(item, ensure_ascii=False) for item in file_spans])
 
