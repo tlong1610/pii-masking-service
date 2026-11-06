@@ -51,7 +51,7 @@ def plan_columns(header: list[str], rows: list[list[str]]) -> list[FieldDecision
     decisions = []
     for position, name in enumerate(header):
         profile = _column_profile(name, [row[position] for row in rows if position < len(row)])
-        decisions.append(decide(name, scanner.tier1_static_filter(profile)))
+        decisions.append(decide(name, scanner.classify(profile)))
     return decisions
 
 

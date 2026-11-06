@@ -52,7 +52,7 @@ def scan_fields(collections: dict[str, list[dict]]) -> dict[str, str | None]:
     connector = MongoConnector("mongodb://mockup", database_name=_DATABASE, client=client)
     predicted = {}
     for task in connector.to_scanner_contract():
-        result = scanner.tier1_static_filter(task["column_profile"])
+        result = scanner.classify(task["column_profile"])
         key = f"{task['collection_name']}.{task['field_path']}"
         predicted[key] = result.inferred_pii_type if result else None
     return predicted

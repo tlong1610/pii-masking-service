@@ -1,7 +1,6 @@
-"""Entity-level redaction for free-text values (Luồng B): Regex -> Dictionary -> ML NER, mask-and-pass.
+"""Che theo thực thể cho văn bản tự do: Regex -> Từ điển -> GLiNER, mỗi tầng che xong mới chuyển cho tầng sau.
 
-Used by the REDACT action when building snapshots and by the scanner to tell whether a free-text
-column carries PII. Only entity *types* ever leave this module for metadata; matched text stays in memory.
+Dùng cho hành động REDACT và API. Giá trị khớp chỉ ở trong bộ nhớ.
 """
 
 from __future__ import annotations
@@ -9,7 +8,6 @@ from __future__ import annotations
 import json
 import logging
 import threading
-from collections.abc import Iterable
 
 from piimask.detection.dict_ner import DictionaryNERScanner
 from piimask.detection.redactor import TextRedactor
@@ -99,28 +97,6 @@ def get_ner_pipeline() -> NERPipelines:
     return _pipeline
 
 
-def reset_ner_pipeline() -> None:
-    """Drop the cached pipeline (tests / settings change)."""
-    global _pipeline
-    with _pipeline_lock:
-        _pipeline = None
-
-
 def redact_free_text(text: str) -> str:
-    """Replace every detected entity with its type tag, e.g. 'gọi 0912345678' -> 'gọi [PHONE]'."""
+    """Thay mỗi thực thể bằng thẻ loại của nó, ví dụ 'gọi 0912345678' -> 'gọi [PHONE]'."""
     return get_ner_pipeline().redact_document(text)
-
-
-def detect_entity_types(samples: Iterable[object]) -> tuple[list[str], int]:
-    """Entity types found across samples and how many samples had one. Never returns matched text."""
-    pipeline = get_ner_pipeline()
-    types: set[str] = set()
-    hits = 0
-    for sample in samples:
-        if not isinstance(sample, str) or not sample.strip():
-            continue
-        _, matches = pipeline.redact_with_matches(sample)
-        if matches:
-            hits += 1
-            types.update(m.pii_type for m in matches)
-    return sorted(types), hits

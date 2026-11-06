@@ -11,7 +11,6 @@ def _result(pii_type):
         confidence=1.0,
         recommended_action="KEEP",
         reasoning="",
-        tier="TIER_1",
     )
 
 

@@ -11,10 +11,9 @@ class EntityMatch(BaseModel):
 
 class RegexNERScanner:
     """
-    Tầng 1 cho luồng B (Entity-Level Redaction).
+    Tầng 1 của phễu che văn bản tự do.
     Nhiệm vụ: Trích xuất các thực thể nhạy cảm (PII) dựa trên Regex và Rule từ bên trong khối văn bản dài (Free-text).
-    Thay vì trả về kết quả cho cả cột (như Cascade 3 tầng hiện tại),
-    module này trả về chính xác vị trí (start, end) của thực thể để tiến hành mask/redact.
+    Thay vì trả về kết quả cho cả cột, module này trả về chính xác vị trí (start, end) của thực thể để tiến hành mask/redact.
     """
     def __init__(self):
         # Biểu thức chính quy tìm kiếm bên trong text (không dùng ^ và $ như RuleBasedScanner)

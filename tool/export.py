@@ -40,7 +40,7 @@ def build_plans(connector: MongoConnector, join_keys: frozenset[str]) -> dict[st
     plans: dict[str, dict[str, FieldDecision]] = {}
     for task in connector.to_scanner_contract():
         path = task["field_path"]
-        result = scanner.tier1_static_filter(task["column_profile"])
+        result = scanner.classify(task["column_profile"])
         plans.setdefault(task["collection_name"], {})[path] = decide(path, result, join_keys)
     for plan in plans.values():
         plan[_ID_FIELD] = FieldDecision(_ID_FIELD, None, None, PolicyAction.HMAC.value, "khoa_chinh")
