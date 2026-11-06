@@ -3,7 +3,7 @@
 Skeleton đã chạy trọn trên mockup, nhưng độ chính xác còn xa mục tiêu.
 
 > **API hiện chưa dùng được với dữ liệu thật.** API trả `status: OK` trong khi chưa che được họ tên, địa chỉ, ngày sinh,
-> mật khẩu, token và GPS, và chưa có xác thực. Chỉ dùng với mockup cho tới khi xong mục 1, 2, 4, 8 và 9 của backlog.
+> mật khẩu, token và GPS, và chưa có xác thực. Chỉ dùng với mockup cho tới khi xong mục 1, 2, 5, 8 và 9 của backlog.
 
 ## Skeleton chạy những gì
 
@@ -75,16 +75,20 @@ bằng thẻ không có dấu nháy làm hỏng JSON.
 
 So với Bước 4 trong `docs/quy-trinh-mvp.md`: làm các lỗ hổng che trước, PostgreSQL và MySQL xuống sau. Lý do là recall hiện 50–60%,
 nhóm nhạy cảm trong log 0%, trong khi connector chỉ lặp lại cách làm của MongoDB. Thứ tự backlog là tạm thời, có thể đổi
-theo kết quả đo.
+theo kết quả đo. Mã khách và số khung được đưa lên ngay sau mục 2 vì chiếm toàn bộ giá trị gốc còn sót ở trường có
+cấu trúc, chỉ cần quy tắc và chính sách, và danh mục PII cần kết quả này.
 
 ## Backlog Sprint 1 (12/11–25/11)
 
+Mục tiêu trước CP1 (18/11): xong mục 1 đến 4 dưới đây. GLiNER làm sau nếu không kịp.
+
 1. Che mật khẩu, token, khóa API, session, IP, GPS trong log.
-2. Quét trong mảng, trường lồng sâu, chuỗi JSON lồng; sửa cách lấy mẫu của bộ quét; sửa lỗi làm hỏng JSON khi che số trong
-   dòng log JSON (thêm ca này vào mockup trước).
-3. Danh mục trường PII dạng JSON kèm JSON Schema.
-4. Bật GLiNER, đo riêng bật và tắt, đưa vào image.
-5. Mã khách, số khung, serial theo chính sách ngữ cảnh, gồm điều kiện khách doanh nghiệp.
+2. Quét trong mảng, trường lồng sâu, chuỗi JSON lồng; liệt kê đủ trường và lấy mẫu rải khắp collection; lớp chặn cuối khi
+   xuất quét regex trên mọi giá trị chuỗi, kể cả trường đã kết luận KEEP; sửa lỗi làm hỏng JSON khi che số trong dòng log
+   JSON (thêm ca này vào mockup trước); bộ mockup held-out với tên trường khác hẳn và chế độ eval đổi tên ngẫu nhiên.
+3. Mã khách, số khung, serial theo chính sách ngữ cảnh, gồm điều kiện khách doanh nghiệp.
+4. Danh mục trường PII dạng JSON kèm JSON Schema.
+5. Bật GLiNER, đo riêng bật và tắt, đưa vào image.
 6. Che Excel, JSON, Parquet; thêm vào eval.
 7. PostgreSQL, MySQL cùng mockup.
 8. Regex ngày sinh, số điện thoại viết cách quãng; giảm báo nhầm.
